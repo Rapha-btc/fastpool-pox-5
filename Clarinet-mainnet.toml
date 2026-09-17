@@ -1,0 +1,30 @@
+# Mainnet-fork manifest, used ONLY by tests/mainnet/*.fork.test.ts.
+#
+#   pnpm test:fork
+#
+# `[repl.remote_data]` makes simnet read state from mainnet on demand: real
+# contract code, real balances, real DEX pool reserves. That is what the default
+# manifest cannot do -- there, mainnet contracts come in as `requirements`,
+# which copies their *source* and deploys them empty, so a pool has no
+# liquidity and `contracts/mock-dex-adapter.clar` has to stand in.
+#
+# This manifest declares NO contracts and NO requirements on purpose. Everything
+# under test is deployed at runtime from `build/mainnet/`, because those sources
+# carry the mainnet pox-5 principal; the ones in `contracts/` carry the testnet
+# one and would not resolve against a fork.
+[project]
+name = "fastpool-pox-5-mainnet-fork"
+description = "Mainnet-fork tests for the STX-rewards signer manager"
+authors = []
+telemetry = false
+cache_dir = "./.cache"
+requirements = []
+
+[repl.remote_data]
+enabled = true
+api_url = "https://api.hiro.so"
+# Give the test wallets mainnet-form (SP...) addresses, so the deployed
+# principals and the impersonated mainnet accounts are the same shape.
+use_mainnet_wallets = true
+
+[contracts]

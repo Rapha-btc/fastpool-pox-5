@@ -38,7 +38,7 @@
 //   MIN_STX_OUT      set it explicitly and skip quoting entirely
 //   ADAPTER/ORACLE   override the adapter / oracle principals
 //   For `distribute`:
-//   BATCH            stackers per transaction (default 300, the contract's bound)
+//   BATCH            stakers per transaction (default 300, the contract's bound)
 //   DRY_RUN=1        print what would be sent, broadcast nothing
 
 import {
@@ -146,9 +146,9 @@ async function burnHeight() {
   return BigInt(r.burn_block_height);
 }
 
-// Stackers as pox-5 sees them: the authoritative list for a cycle, read from
+// Stakers as pox-5 sees them: the authoritative list for a cycle, read from
 // the manager's own `validate-stake` events.
-async function stackersFromEvents() {
+async function stakersFromEvents() {
   const found = new Set();
   for (let offset = 0; offset < 4000; offset += 100) {
     const url = `${API_URL}/extended/v1/contract/${CONTRACT}/events?limit=100&offset=${offset}`;
@@ -160,7 +160,7 @@ async function stackersFromEvents() {
       if (!hex) continue;
       try {
         const v = cvToValue(hexToCV(hex), true);
-        if (v?.topic?.value === 'validate-stake' && v?.stacker?.value) found.add(v.stacker.value);
+        if (v?.topic?.value === 'validate-stake' && v?.staker?.value) found.add(v.staker.value);
       } catch { /* not our print */ }
     }
   }
@@ -193,17 +193,17 @@ const cmds = {
     console.log(`local ${local}  pox-5 ${remote}  ${m.matches === true ? 'MATCH' : 'MISMATCH'}`);
     if (m.matches !== true) {
       console.log(`  mirror is high by ${local - remote} uSTX -- run \`repair\`, then \`pin\`.`);
-      console.log('  (expected after a stacker unstakes mid-lock; see plan §3)');
+      console.log('  (expected after a staker unstakes mid-lock; see plan §3)');
     }
   },
 
   async repair() {
-    const stackers = await stackersFromEvents();
-    if (!stackers.length) bail('no stackers found in contract events');
-    console.log(`repairing ${stackers.length} stackers for cycle ${cycle()}`);
+    const stakers = await stakersFromEvents();
+    if (!stakers.length) bail('no stakers found in contract events');
+    console.log(`repairing ${stakers.length} stakers for cycle ${cycle()}`);
     // Each entry costs a pox-5 call, so the contract bounds this list at 100.
-    for (let i = 0; i < stackers.length; i += 100) {
-      const batch = stackers.slice(i, i + 100);
+    for (let i = 0; i < stakers.length; i += 100) {
+      const batch = stakers.slice(i, i + 100);
       await call('repair-mirror-many', [
         Cl.list(batch.map((s) => Cl.principal(s))), Cl.uint(cycle()),
       ]);
@@ -287,11 +287,11 @@ const cmds = {
       console.log('  Distributing now pays only the STX leg; the rest waits for a swap or the deadline.');
     }
     const batch = Math.min(Number(process.env.BATCH ?? CONTRACT_BATCH_MAX), CONTRACT_BATCH_MAX);
-    const stackers = await stackersFromEvents();
-    if (!stackers.length) bail('no stackers found in contract events');
-    console.log(`distributing to ${stackers.length} stackers in batches of ${batch}`);
-    for (let i = 0; i < stackers.length; i += batch) {
-      const chunk = stackers.slice(i, i + batch);
+    const stakers = await stakersFromEvents();
+    if (!stakers.length) bail('no stakers found in contract events');
+    console.log(`distributing to ${stakers.length} stakers in batches of ${batch}`);
+    for (let i = 0; i < stakers.length; i += batch) {
+      const chunk = stakers.slice(i, i + batch);
       await call('distribute-rewards-many', [
         Cl.list(chunk.map((x) => Cl.principal(x))), Cl.uint(cycle()),
       ]);

@@ -20,9 +20,16 @@
 // ones, which is exactly why `clarinet check` can type-check the adapters
 // against the real routers.
 //
-// This script does that one substitution and nothing else, so a reviewer can
-// diff build/mainnet against contracts/ and see a single changed principal per
-// file.
+// It also strips `#[env(simnet)]` code -- the Rendezvous harness living inside
+// the signer manager. Clarinet strips that itself at publish time, so this is
+// not what keeps it off mainnet; it is so that build/mainnet IS the production
+// artifact. The STXER simulations and the mainnet-fork tests deploy these files
+// directly rather than through `clarinet deployments apply`, and they should be
+// exercising the shape that actually ships.
+//
+// A reviewer diffing build/mainnet against contracts/ should therefore see
+// exactly two kinds of change: the pox-5 principal, and the removal of
+// annotated test code.
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 
@@ -59,17 +66,70 @@ const deployer = process.env.DEPLOYER ?? 'SPMPMA1V6P430M8C91QS1G9XJ95S59JS1TZFZ4
 const outDir = 'build/mainnet';
 mkdirSync(outDir, { recursive: true });
 
+/**
+ * Drop every top-level form annotated `;; #[env(simnet)]`.
+ *
+ * The annotation applies to the expression that follows it, so this walks
+ * forward from the marker balancing parens -- counting only real code, not
+ * parens inside comments or strings.
+ */
+function stripSimnetCode(src) {
+  const lines = src.split('\n');
+  const out = [];
+  let removed = 0;
+  for (let i = 0; i < lines.length; i++) {
+    if (!/^\s*;;\s*#\[env\(simnet\)\]\s*$/.test(lines[i])) {
+      out.push(lines[i]);
+      continue;
+    }
+    // Skip the annotation, then the whole form it annotates.
+    let j = i + 1;
+    while (j < lines.length && lines[j].trim() === '') j++;
+    let depth = 0;
+    let started = false;
+    for (; j < lines.length; j++) {
+      let inString = false;
+      for (let k = 0; k < lines[j].length; k++) {
+        const c = lines[j][k];
+        if (inString) {
+          if (c === '"') inString = false;
+        } else if (c === '"') inString = true;
+        else if (c === ';') break;
+        else if (c === '(') {
+          depth++;
+          started = true;
+        } else if (c === ')') depth--;
+      }
+      if (started && depth === 0) break;
+    }
+    removed++;
+    i = j;
+    // Also drop the comment block that introduced it.
+    while (out.length && /^\s*;;/.test(out[out.length - 1])) out.pop();
+    while (out.length && out[out.length - 1].trim() === '') out.pop();
+  }
+  // Whatever the removals leave behind at the end of the file is orphaned
+  // commentary for code that is no longer there -- and comments are bytes, which
+  // this contract pays for as `read_length` on every call.
+  while (out.length && (out[out.length - 1].trim() === '' || /^\s*;;/.test(out[out.length - 1]))) {
+    out.pop();
+  }
+  return { source: `${out.join('\n').replace(/\n{3,}/g, '\n\n')}\n`, removed };
+}
+
 const rewritten = [];
 for (const [name, path] of SUITE) {
   const src = readFileSync(path, 'utf8');
-  let out = src.split(TESTNET_POX5).join(MAINNET_POX5);
-  const hits = src.split(TESTNET_POX5).length - 1;
+  const stripped = stripSimnetCode(src);
+  let out = stripped.source.split(TESTNET_POX5).join(MAINNET_POX5);
+  const hits = stripped.source.split(TESTNET_POX5).length - 1;
   const jingHits = out.split(JING_MARKET_LOCAL).length - 1;
   out = out.split(JING_MARKET_LOCAL).join(JING_MARKET_MAINNET);
   writeFileSync(`${outDir}/${name}.clar`, out);
   rewritten.push({ name, path, out: `${outDir}/${name}.clar`, hits });
   const extra = jingHits ? `, ${jingHits} jing-market ref(s)` : '';
-  console.log(`${name.padEnd(36)} ${String(hits).padStart(3)} pox-5 principal(s)${extra} rewritten`);
+  const simnet = stripped.removed ? `, ${stripped.removed} #[env(simnet)] form(s) stripped` : '';
+  console.log(`${name.padEnd(36)} ${String(hits).padStart(3)} pox-5 principal(s)${extra}${simnet}`);
 }
 
 // Sanity: nothing may still point at the testnet boot address.
@@ -82,6 +142,13 @@ for (const r of rewritten) {
   if (body.includes(JING_MARKET_LOCAL) && !body.includes(JING_MARKET_MAINNET)) {
     console.error(`FATAL: ${r.out} still points at the vendored Jing market`);
     process.exit(1);
+  }
+  // Belt and braces: no test symbol may survive into a production artifact.
+  for (const marker of ['#[env(simnet)]', 'invariant-', 'test-', 'update-context']) {
+    if (body.includes(marker)) {
+      console.error(`FATAL: ${r.out} still contains simnet-only code (${marker})`);
+      process.exit(1);
+    }
   }
 }
 

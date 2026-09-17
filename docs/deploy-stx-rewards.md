@@ -3,7 +3,9 @@
 The suite is five contracts. This is the order to publish them, the wiring they
 need before they can run a cycle, and the checks to run at each step.
 
-Design rationale lives in [plan-fastpool-stx-rewards.md](plan-fastpool-stx-rewards.md).
+Design rationale lives in [plan-fastpool-stx-rewards.md](plan-fastpool-stx-rewards.md);
+the guarantees themselves, and where each is checked, in
+[properties-stx-rewards.md](properties-stx-rewards.md).
 
 ---
 
@@ -34,8 +36,14 @@ copy and the simnet tests use. Mainnet has the same contract at
 to mainnet fails analysis** — the implemented trait would not resolve.
 
 ```bash
-node scripts/build-mainnet.mjs        # contracts/ -> build/mainnet/, one substitution
+node scripts/build-mainnet.mjs        # contracts/ -> build/mainnet/
 ```
+
+It makes exactly two kinds of change, and refuses to finish if either is
+incomplete: the pox-5 principal, and the removal of `#[env(simnet)]` code (the
+Rendezvous harness at the bottom of the signer manager). Clarinet strips that
+itself at publish time, so this is not what keeps it off mainnet -- it is so
+`build/mainnet/` is the artifact the fork tests and simulations deploy.
 
 It refuses to finish if any output still mentions the testnet address, and it
 regenerates `deployments/stx-rewards.mainnet-plan.yaml`. Diff `build/mainnet`
@@ -59,6 +67,29 @@ The `clarinet check` is doing real work for the adapters: every argument in
 transposed argument or a wrong token is a compile error here rather than an
 incident later.
 
+Then run the local mainnet-fork tests, which execute the adapters against real
+Bitflow liquidity without submitting anything:
+
+```bash
+node scripts/build-mainnet.mjs
+pnpm test:fork
+```
+
+And the STXER simulations, which additionally cover what a local fork cannot --
+the miner-commit baseline (a fork serves no burnchain tenure data) and the full
+claim/swap/distribute lifecycle:
+
+```bash
+node scripts/build-mainnet.mjs
+node simulations/1-adapter-swap.mjs      # both adapters, real pools
+node simulations/2-full-lifecycle.mjs    # swap + distribute, end to end
+node simulations/3-price-baseline.mjs    # the floor vs the market
+node simulations/summarize.mjs <id>      # decode any of them
+```
+
+See `simulations/README.md`. These are the closest thing to a rehearsal before
+the first live cycle -- and the last observed run of section 6's measurement.
+
 ## 4. Publish
 
 ```bash
@@ -78,7 +109,9 @@ the two adapters. The plan already encodes it, one batch per contract.
 Every call here is admin-only, from the deployer (seeded as the first admin).
 
 ```
-1. update-fees             <bips>            pool fee, in sBTC, e.g. u400 = 4%
+1. update-fees             <bips>            pool fee, in sBTC, max u500 (5%).
+                                             A RAISE only takes effect 2 cycles
+                                             later; a cut applies at once.
 2. set-price-oracle        <oracle>          .price-oracle-jing   (mainnet)
 3. (set-max-slippage-bips / set-enforce-price-floor -- LEAVE ALONE; see §6)
 4. set-dex-adapter         <dlmm> true
@@ -100,7 +133,7 @@ get-operator            -> the keeper, not the deployer
 get-price-oracle        -> .price-oracle-jing
 is-dex-adapter          -> true for both adapters
 get-enforce-price-floor -> false  (the baseline is informational at launch)
-get-fees-bips           -> your chosen value
+get-active-fee-bips     -> your chosen value (a raise waits 2 cycles)
 ```
 
 And sanity-check the oracle itself before anyone stakes:
@@ -200,9 +233,9 @@ REWARD_CYCLE=<n> node scripts/stx-rewards.mjs distribute
 ## 9. Operational watch items
 
 - **The 3-day window.** If the operator does not swap, the pot pays out as sBTC
-  and stackers do not get what they came for. Alert at half the window
+  and stakers do not get what they came for. Alert at half the window
   (~216 burn blocks after the claim), not at the deadline.
-- **Mirror drift is normal.** A stacker who unstakes mid-lock leaves the mirror
+- **Mirror drift is normal.** A staker who unstakes mid-lock leaves the mirror
   high for cycles that were future at the time. `pin` fails, `repair` fixes it.
   This is expected, not an incident.
 - **Rotate the operator** with `set-operator` the moment the keeper key is
@@ -210,7 +243,7 @@ REWARD_CYCLE=<n> node scripts/stx-rewards.mjs distribute
   and nothing else — no other function is affected.
 - **Dust accrues and stays.** Floor-division remainders are reserved inside the
   liability counters and are not sweepable by design. Under one µSTX and one
-  satoshi per stacker per cycle.
+  satoshi per staker per cycle.
 
 ## 10. Known gaps at first deploy
 

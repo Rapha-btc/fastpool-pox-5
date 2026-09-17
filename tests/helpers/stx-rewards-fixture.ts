@@ -18,7 +18,7 @@ export const POOL_STX = 1_000_000_000_000;
 
 export const accounts = simnet.getAccounts();
 export const deployer = accounts.get("deployer")!;
-export const stackers = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => accounts.get(`wallet_${i}`)!);
+export const stakers = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => accounts.get(`wallet_${i}`)!);
 export const amounts = [
   100_000_000_000, 300_000_000_000, 55_000_000_000, 70_000_000_000,
   120_000_000_000, 90_000_000_000, 45_000_000_000, 210_000_000_000,
@@ -56,9 +56,9 @@ export const stxBalance = (who: string) =>
 // `{ type, value }` pair, so every read below goes one level deeper.
 const fields = (cv: ClarityValue) => cvToValue(cv, true) as Record<string, { value: any }>;
 
-/** `get-stacker-rewards`, as a plain object of numbers. */
-export function stackerRewards(who: string, cycle: number) {
-  const t = fields(mgrRead("get-stacker-rewards", [Cl.principal(who), Cl.uint(cycle)]));
+/** `get-staker-rewards`, as a plain object of numbers. */
+export function stakerRewards(who: string, cycle: number) {
+  const t = fields(mgrRead("get-staker-rewards", [Cl.principal(who), Cl.uint(cycle)]));
   return Object.fromEntries(
     Object.entries(t).map(([k, v]) => [k, Number(v.value)]),
   ) as Record<string, number>;
@@ -93,19 +93,26 @@ export const expectOk = (r: any, label: string) => {
   return r.result;
 };
 
-/** Stake everyone against the manager, run the cycle out, deliver a reward pot. */
-export function setup(numCycles = 2) {
+/**
+ * Stake everyone against the manager, run the cycle out, deliver a reward pot.
+ *
+ * `stakes` overrides the default split, so property tests can drive randomised
+ * share vectors through the same path; it is truncated to the wallets simnet
+ * actually has.
+ */
+export function setup(numCycles = 2, stakes: number[] = amounts) {
   registerSigner(deployer, MGR);
 
   const cycle = currentCycle(deployer);
   const startBurnHt = readNum("reward-cycle-to-burn-height", [Cl.uint(cycle)]);
-  stackers.forEach((who, i) => {
+  const active = stakers.slice(0, stakes.length);
+  active.forEach((who, i) => {
     const r = simnet.callPublicFn(
       POX5,
       "stake",
       [
         Cl.principal(mgrPrincipal()),
-        Cl.uint(amounts[i]),
+        Cl.uint(stakes[i]),
         Cl.uint(numCycles),
         Cl.uint(startBurnHt),
         Cl.none(),
@@ -118,7 +125,7 @@ export function setup(numCycles = 2) {
   const rewardCycle = cycle + 1;
   advancePastCycle(rewardCycle);
   deliverPot();
-  return { manager: mgrPrincipal(), rewardCycle, firstCycle: rewardCycle };
+  return { manager: mgrPrincipal(), rewardCycle, firstCycle: rewardCycle, stakers: active };
 }
 
 /** Mine until `cycle` is over. */
@@ -129,7 +136,7 @@ export function advancePastCycle(cycle: number) {
 
 /** Move sBTC into pox-5 and crystallize it into rewards. */
 export function deliverPot(amount = POT) {
-  fundRewards(stackers[0], amount);
+  fundRewards(stakers[0], amount);
   simnet.callPublicFn(POX5, "calculate-rewards", [Cl.list([])], deployer);
 }
 

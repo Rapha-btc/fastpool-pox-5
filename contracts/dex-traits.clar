@@ -16,7 +16,6 @@
 ;; The returned value is informational only. The signer manager credits stakers
 ;; from its own measured STX balance delta, never from this number.
 (define-trait dex-adapter-trait (
-  ;; (amount-sats, min-stx-out) -> micro-STX delivered to tx-sender
   (swap-sbtc-to-stx
     (uint uint)
     (response uint uint)
@@ -27,7 +26,6 @@
 ;; `min-stx-out`. It is not a pricing feed: see `docs/plan-fastpool-stx-rewards.md`
 ;; section 8.
 (define-trait price-oracle-trait (
-  ;; sats -> micro-STX at the baseline price
   (sats-to-ustx
     (uint)
     (response uint uint)
@@ -45,7 +43,6 @@
 ;; A separate trait rather than a wider `dex-adapter-trait` so that AMM
 ;; adapters, which have no use for a buffer, keep the narrower signature.
 (define-trait dex-adapter-proof-trait (
-  ;; (amount-sats, min-stx-out, proof) -> micro-STX delivered to tx-sender
   (swap-sbtc-to-stx-with-proof
     (uint uint (buff 8192))
     (response uint uint)

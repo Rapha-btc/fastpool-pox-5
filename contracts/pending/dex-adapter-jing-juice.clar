@@ -80,7 +80,7 @@
           ;; deposit-x: selling sBTC.
           true
         ))))
-        ;; Informational only -- the signer manager credits stackers from its
+        ;; Informational only -- the signer manager credits stakers from its
         ;; own measured STX balance delta, never from this number.
         (ok (get token-y-received result))
       )

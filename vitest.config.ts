@@ -23,6 +23,10 @@ export default defineConfig({
   test: {
     // use vitest-environment-clarinet
     environment: "clarinet",
+    // The mainnet-fork tests need a different manifest (Clarinet-mainnet.toml,
+    // with remote data on) and hit the network, so they are not part of the
+    // default run. `pnpm test:fork` runs them.
+    exclude: ["**/node_modules/**", "**/*.fork.test.ts"],
     pool: "forks",
     // clarinet handles test isolation by resetting the simnet between tests
     isolate: false,

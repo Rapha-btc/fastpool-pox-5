@@ -12,3 +12,6 @@ coverage
 costs-reports.json
 node_modules
 build/
+tests/mainnet/last-run.txt
+# rendezvous' local replay cache for failing seeds; regenerated on failure.
+.rendezvous-regressions/

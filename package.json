@@ -10,7 +10,10 @@
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"pnpm run test:report\"",
     "deploy:testnet": "./scripts/deploy-testnet.sh",
     "deployment:from-tx": "node scripts/tx-to-deployment.mjs",
-    "build:claim-plan": "node scripts/build-claim-plan.mjs"
+    "test:fork": "rm -f tests/mainnet/last-run.txt && vitest run --config vitest.fork.config.ts -- --manifest ./Clarinet-mainnet.toml",
+    "test:rv": "rv . fastpool-stx-rewards-signer-manager invariant",
+    "test:rv:prop": "rv . fastpool-stx-rewards-signer-manager test",
+    "pdf": "node scripts/build-properties-pdf.mjs"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +28,9 @@
     "vitest-environment-clarinet": "^3.0.0"
   },
   "devDependencies": {
-    "@stacks/wallet-sdk": "^7.2.0"
+    "@stacks/rendezvous": "^1.0.3",
+    "@stacks/wallet-sdk": "^7.2.0",
+    "fast-check": "^4.9.0",
+    "stxer": "^0.11.0"
   }
 }

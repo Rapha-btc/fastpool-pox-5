@@ -54,16 +54,15 @@
 (define-constant PRICE_SCALE u10000000000)
 
 (define-read-only (sats-to-ustx (sats uint))
-  (ok
-    (/
-      (* sats
-        (try! (contract-call?
-          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.rfq-sbtc-stx-jing-v2-3
-          get-native-price
-        ))
-      )
-      PRICE_SCALE
-    ))
+  (ok (/
+    (* sats
+      (try! (contract-call?
+        'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.rfq-sbtc-stx-jing-v2-3
+        get-native-price
+      ))
+    )
+    PRICE_SCALE
+  ))
 )
 
 ;; The raw baseline, for the keeper and for anyone auditing a swap after the

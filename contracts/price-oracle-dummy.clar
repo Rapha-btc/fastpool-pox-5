@@ -7,7 +7,7 @@
 ;; to bring the guard online and to make every slippage test deterministic.
 ;;
 ;; The intended replacement derives the baseline from miner commitments: the
-;; sats miners pay to stackers over a cycle, divided by the STX coinbase minted
+;; sats miners pay to stakers over a cycle, divided by the STX coinbase minted
 ;; in it (a fixed 1000 STX per tenure). See section 8 of
 ;; docs/plan-fastpool-stx-rewards.md.
 

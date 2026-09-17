@@ -42,15 +42,13 @@
       swap-y-for-x-simple-range-multi
       'SM1FKXGNZJWSTWDWXQZJNF7B5TV5ZB235JTCXYXKD.dlmm-pool-stx-sbtc-v-2-bps-15
       'SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2
-      'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
-      amount-sats
-      min-stx-out
-      MAX_STEPS
+      'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token amount-sats
+      min-stx-out MAX_STEPS
       ;; No deadline: the signer manager's swap is a single atomic transaction,
       ;; and its own `min-stx-out` check is the real protection.
       none
     ))))
-    ;; Informational only -- the signer manager credits stackers from its own
+    ;; Informational only -- the signer manager credits stakers from its own
     ;; measured STX balance delta, never from this number.
     (ok (get out result))
   )

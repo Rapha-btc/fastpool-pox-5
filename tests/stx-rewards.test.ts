@@ -25,14 +25,15 @@ import {
   readNum,
   sbtcBalance,
   setup,
-  stackerRewards,
-  stackers,
+  stakerRewards,
+  stakers,
   stxBalance,
   swap,
   swapStatus,
   swapWithProof,
   expectOk,
 } from "./helpers/stx-rewards-fixture";
+import { registerSigner } from "./helpers/rewards-fixture";
 
 const errCode = (r: any) => Number((r.result as any).value.value);
 const total = amounts.reduce((a, b) => a + b, 0);
@@ -64,7 +65,7 @@ describe("mirror and pinning", () => {
   it("refuses to pin a cycle that was never claimed", () => {
     const { rewardCycle } = setup();
     const r = simnet.callPublicFn(MGR, "pin-shares", [Cl.uint(rewardCycle)], deployer);
-    expect(errCode(r)).toBe(1020); // ERR_CYCLE_NOT_CLAIMED
+    expect(errCode(r)).toBe(1023); // ERR_CYCLE_NOT_CLAIMED
   });
 
   it("refuses to repair a pinned cycle", () => {
@@ -73,10 +74,10 @@ describe("mirror and pinning", () => {
     const r = simnet.callPublicFn(
       MGR,
       "repair-mirror-many",
-      [Cl.list([Cl.principal(stackers[0])]), Cl.uint(rewardCycle)],
+      [Cl.list([Cl.principal(stakers[0])]), Cl.uint(rewardCycle)],
       deployer,
     );
-    expect(errCode(r)).toBe(1012); // ERR_SHARES_ALREADY_PINNED
+    expect(errCode(r)).toBe(1025); // ERR_SHARES_ALREADY_PINNED
   });
 
   it("repairs a mirror that drifted from a mid-lock unstake, then pins", () => {
@@ -89,7 +90,7 @@ describe("mirror and pinning", () => {
       POX5,
       "unstake",
       [Cl.principal(mgrPrincipal())],
-      stackers[0],
+      stakers[0],
     );
     expectOk(un, "unstake");
 
@@ -102,13 +103,13 @@ describe("mirror and pinning", () => {
     expect(before.local).toBeGreaterThan(before.pox5);
 
     const failed = simnet.callPublicFn(MGR, "pin-shares", [Cl.uint(driftedCycle)], deployer);
-    expect(errCode(failed)).toBe(1008); // ERR_SHARE_MIRROR_MISMATCH
+    expect(errCode(failed)).toBe(1024); // ERR_SHARE_MIRROR_MISMATCH
 
     expectOk(
       simnet.callPublicFn(
         MGR,
         "repair-mirror-many",
-        [Cl.list([Cl.principal(stackers[0])]), Cl.uint(driftedCycle)],
+        [Cl.list([Cl.principal(stakers[0])]), Cl.uint(driftedCycle)],
         deployer,
       ),
       "repair",
@@ -119,7 +120,75 @@ describe("mirror and pinning", () => {
       simnet.callPublicFn(MGR, "pin-shares", [Cl.uint(driftedCycle)], deployer),
       "pin after repair",
     );
-    expect(mgrNum("get-mirrored-shares", [Cl.principal(stackers[0]), Cl.uint(driftedCycle)])).toBe(0);
+    expect(mgrNum("get-mirrored-shares", [Cl.principal(stakers[0]), Cl.uint(driftedCycle)])).toBe(0);
+  });
+});
+
+describe("lock periods", () => {
+  // pox-5 accepts 1..MAX_NUM_CYCLES (u96). `validate-stake!` slices
+  // CYCLE_OFFSETS to the lock length, so a list shorter than pox-5's cap turns
+  // a perfectly legal stake into ERR_INVALID_LOCK_PERIOD. It was 12 entries
+  // once, which silently capped the pool at 12-cycle locks.
+  for (const numCycles of [1, 12, 13, 40, 96]) {
+    it(`mirrors every cycle of a ${numCycles}-cycle lock`, () => {
+      registerSigner(deployer, MGR);
+      const cycle = readNum("current-pox-reward-cycle", []);
+      const startBurnHt = readNum("reward-cycle-to-burn-height", [Cl.uint(cycle)]);
+      const amount = 100_000_000_000;
+
+      const r = simnet.callPublicFn(
+        POX5,
+        "stake",
+        [
+          Cl.principal(mgrPrincipal()),
+          Cl.uint(amount),
+          Cl.uint(numCycles),
+          Cl.uint(startBurnHt),
+          Cl.none(),
+        ],
+        stakers[0],
+      );
+      expectOk(r, `stake for ${numCycles} cycles`);
+
+      // Shares mirrored for the whole lock, and nothing past its end.
+      for (let i = 0; i < numCycles; i++) {
+        expect(
+          mgrNum("get-mirrored-shares", [
+            Cl.principal(stakers[0]),
+            Cl.uint(cycle + 1 + i),
+          ]),
+          `cycle ${cycle + 1 + i} of ${numCycles}`,
+        ).toBe(amount);
+      }
+      expect(
+        mgrNum("get-mirrored-shares", [
+          Cl.principal(stakers[0]),
+          Cl.uint(cycle + 1 + numCycles),
+        ]),
+      ).toBe(0);
+    });
+  }
+
+  it("refuses a lock longer than pox-5 itself allows", () => {
+    registerSigner(deployer, MGR);
+    const cycle = readNum("current-pox-reward-cycle", []);
+    const startBurnHt = readNum("reward-cycle-to-burn-height", [Cl.uint(cycle)]);
+    const r = simnet.callPublicFn(
+      POX5,
+      "stake",
+      [
+        Cl.principal(mgrPrincipal()),
+        Cl.uint(100_000_000_000),
+        Cl.uint(97), // MAX_NUM_CYCLES + 1
+        Cl.uint(startBurnHt),
+        Cl.none(),
+      ],
+      stakers[0],
+    );
+    // pox-5 rejects it before the callback is reached, so this never becomes
+    // our ERR_INVALID_LOCK_PERIOD -- which is why that error is unreachable in
+    // practice and stays as a defensive guard.
+    expect(r.result.type).toBe("err");
   });
 });
 
@@ -139,15 +208,15 @@ describe("validate-stake! guards", () => {
         Cl.uint(startBurnHt),
         Cl.some(Cl.bufferFromHex("00")),
       ],
-      stackers[0],
+      stakers[0],
     );
     // pox-5 propagates the callback's error verbatim through `try!`.
-    expect(errCode(r)).toBe(1016); // ERR_CALLDATA_NOT_SUPPORTED
+    expect(errCode(r)).toBe(1003); // ERR_CALLDATA_NOT_SUPPORTED (shared code with max500)
   });
 });
 
 describe("swap", () => {
-  it("swaps the whole pot and pays every stacker STX pro-rata", () => {
+  it("swaps the whole pot and pays every staker STX pro-rata", () => {
     const { rewardCycle, pot } = ready();
     const expected = quote(pot);
     expectOk(swap(rewardCycle, pot, expected), "swap");
@@ -159,19 +228,19 @@ describe("swap", () => {
     expect(mgrNum("get-unswapped-sats")).toBe(0);
     expect(mgrNum("get-unpaid-stx")).toBe(expected);
 
-    const before = stackers.map(stxBalance);
-    const r = distributeMany(stackers, rewardCycle);
+    const before = stakers.map(stxBalance);
+    const r = distributeMany(stakers, rewardCycle);
     expectOk(r, "distribute-rewards-many");
-    const paid = stackers.map((w, i) => stxBalance(w) - before[i]);
+    const paid = stakers.map((w, i) => stxBalance(w) - before[i]);
 
     // Everyone gets their share of the same fill, floored.
-    stackers.forEach((_, i) => {
+    stakers.forEach((_, i) => {
       expect(paid[i]).toBe(Math.floor((expected * amounts[i]) / total));
     });
     // The pot is fully accounted for: payouts plus the rounding dust left behind.
     const dust = expected - paid.reduce((a, b) => a + b, 0);
     expect(dust).toBeGreaterThanOrEqual(0);
-    expect(dust).toBeLessThan(stackers.length);
+    expect(dust).toBeLessThan(stakers.length);
     expect(mgrNum("get-unpaid-stx")).toBe(dust);
   });
 
@@ -181,41 +250,44 @@ describe("swap", () => {
     const legB = pot - legA;
 
     expectOk(swap(rewardCycle, legA, quote(legA)), "leg A");
-    const afterA = stackerRewards(stackers[0], rewardCycle);
+    const afterA = stakerRewards(stakers[0], rewardCycle);
     expect(afterA["stx-due"]).toBe(
       Math.floor((quote(legA) * amounts[0]) / total),
     );
 
-    const before = stxBalance(stackers[0]);
-    expectOk(distribute(stackers[0], rewardCycle), "distribute after leg A");
-    expect(stxBalance(stackers[0]) - before).toBe(afterA["stx-due"]);
+    const before = stxBalance(stakers[0]);
+    expectOk(distribute(stakers[0], rewardCycle), "distribute after leg A");
+    expect(stxBalance(stakers[0]) - before).toBe(afterA["stx-due"]);
 
     // Second leg through the same adapter; the watermark means only the
     // difference is paid out.
     expectOk(swap(rewardCycle, legB, quote(legB)), "leg B");
-    const due = stackerRewards(stackers[0], rewardCycle)["stx-due"];
-    const before2 = stxBalance(stackers[0]);
-    expectOk(distribute(stackers[0], rewardCycle), "distribute after leg B");
-    expect(stxBalance(stackers[0]) - before2).toBe(due);
+    const due = stakerRewards(stakers[0], rewardCycle)["stx-due"];
+    const before2 = stxBalance(stakers[0]);
+    expectOk(distribute(stakers[0], rewardCycle), "distribute after leg B");
+    expect(stxBalance(stakers[0]) - before2).toBe(due);
 
-    expect(stackerRewards(stackers[0], rewardCycle)["stx-due"]).toBe(0);
+    expect(stakerRewards(stakers[0], rewardCycle)["stx-due"]).toBe(0);
     expect(swapStatus(rewardCycle).remainingSats).toBe(0);
   });
 
-  it("re-distributing a stacker with nothing due is an error, not a second payment", () => {
+  it("re-distributing a staker with nothing due is an error, not a second payment", () => {
     const { rewardCycle, pot } = ready();
     expectOk(swap(rewardCycle, pot, quote(pot)), "swap");
-    expectOk(distribute(stackers[0], rewardCycle), "first");
-    const balance = stxBalance(stackers[0]);
-    const r = distribute(stackers[0], rewardCycle);
-    expect(errCode(r)).toBe(1013); // ERR_NOTHING_TO_DISTRIBUTE
-    expect(stxBalance(stackers[0])).toBe(balance);
+    expectOk(distribute(stakers[0], rewardCycle), "first");
+    const balance = stxBalance(stakers[0]);
+    const r = distribute(stakers[0], rewardCycle);
+    expect(errCode(r)).toBe(1001); // ERR_NO_CLAIMABLE_REWARDS (shared code with max500)
+    expect(stxBalance(stakers[0])).toBe(balance);
   });
 
   it("takes the fee in sBTC before the DEX sees anything, and it is withdrawable", () => {
+    // Queue the rate BEFORE staking: like max500, a fee increase only becomes
+    // snapshottable FEE_ACTIVATION_DELAY_CYCLES later, and `setup` advances
+    // exactly that far while it runs the cycle out.
+    expectOk(simnet.callPublicFn(MGR, "update-fees", [Cl.uint(500)], deployer), "fees");
     const { rewardCycle } = setup();
     armSwap();
-    expectOk(simnet.callPublicFn(MGR, "update-fees", [Cl.uint(500)], deployer), "fees");
     const pot = claimPot(rewardCycle);
 
     const fee = Math.floor((pot * 500) / 10_000);
@@ -257,7 +329,7 @@ describe("swap", () => {
       "enable floor",
     );
     const floor = Math.floor((quote(pot) * 8000) / 10_000); // 20% default tolerance
-    expect(errCode(swap(rewardCycle, pot, floor - 1))).toBe(1017); // ERR_MIN_OUT_TOO_LOW
+    expect(errCode(swap(rewardCycle, pot, floor - 1))).toBe(1031); // ERR_MIN_OUT_TOO_LOW
     expectOk(swap(rewardCycle, pot, floor), "at the floor");
   });
 
@@ -274,20 +346,20 @@ describe("swap", () => {
     const { rewardCycle, pot } = ready();
     expect(
       errCode(swap(rewardCycle, pot, quote(pot), deployer, `${deployer}.price-oracle-dummy`)),
-    ).toBe(1006); // ERR_ADAPTER_NOT_ALLOWED
+    ).toBe(1028); // ERR_ADAPTER_NOT_ALLOWED
     expect(
       errCode(
         swap(rewardCycle, pot, quote(pot), deployer, adapterPrincipal(), adapterPrincipal()),
       ),
-    ).toBe(1018); // ERR_WRONG_ORACLE
-    expect(errCode(swap(rewardCycle, pot, quote(pot), stackers[1]))).toBe(1002); // ERR_UNAUTHORIZED_OPERATOR
+    ).toBe(1029); // ERR_WRONG_ORACLE
+    expect(errCode(swap(rewardCycle, pot, quote(pot), stakers[1]))).toBe(1020); // ERR_UNAUTHORIZED_OPERATOR
   });
 
   it("reverts the whole transaction when the adapter under-delivers", () => {
     const { rewardCycle, pot } = ready();
     expectOk(simnet.callPublicFn(ADAPTER, "set-mode", [Cl.uint(1)], deployer), "mode");
     const r = swap(rewardCycle, pot, quote(pot));
-    expect(errCode(r)).toBe(1007); // ERR_SLIPPAGE
+    expect(errCode(r)).toBe(1032); // ERR_SLIPPAGE
     // Nothing moved: the pot is intact and no STX was credited.
     expect(swapStatus(rewardCycle).swappedSats).toBe(0);
     expect(mgrNum("get-unswapped-sats")).toBe(pot);
@@ -296,19 +368,19 @@ describe("swap", () => {
 
   it("refuses to swap more than the pot has left", () => {
     const { rewardCycle, pot } = ready();
-    expect(errCode(swap(rewardCycle, pot + 1, quote(pot + 1)))).toBe(1009);
+    expect(errCode(swap(rewardCycle, pot + 1, quote(pot + 1)))).toBe(1027); // ERR_SWAP_EXCEEDS_POT
     expectOk(swap(rewardCycle, pot, quote(pot)), "exact pot");
-    expect(errCode(swap(rewardCycle, 1, 0))).toBe(1009); // nothing left
+    expect(errCode(swap(rewardCycle, 1, 0))).toBe(1027); // nothing left
   });
 
   it("hands swap rights to a rotated operator and takes them from the old one", () => {
     const { rewardCycle, pot } = ready();
     expectOk(
-      simnet.callPublicFn(MGR, "set-operator", [Cl.principal(stackers[1])], deployer),
+      simnet.callPublicFn(MGR, "set-operator", [Cl.principal(stakers[1])], deployer),
       "set-operator",
     );
-    expect(errCode(swap(rewardCycle, pot, quote(pot), deployer))).toBe(1002);
-    expectOk(swap(rewardCycle, pot, quote(pot), stackers[1]), "new operator swaps");
+    expect(errCode(swap(rewardCycle, pot, quote(pot), deployer))).toBe(1020);
+    expectOk(swap(rewardCycle, pot, quote(pot), stakers[1]), "new operator swaps");
   });
 });
 
@@ -332,19 +404,19 @@ describe("swap-rewards-with-proof", () => {
   it("holds the proof path to the same min-stx-out as the plain path", () => {
     const { rewardCycle, pot } = ready();
     expectOk(simnet.callPublicFn(ADAPTER, "set-mode", [Cl.uint(1)], deployer), "under-deliver");
-    expect(errCode(swapWithProof(rewardCycle, pot, quote(pot), PROOF))).toBe(1007); // ERR_SLIPPAGE
+    expect(errCode(swapWithProof(rewardCycle, pot, quote(pot), PROOF))).toBe(1032); // ERR_SLIPPAGE
     expect(swapStatus(rewardCycle).swappedSats).toBe(0);
     expect(mgrNum("get-unswapped-sats")).toBe(pot);
   });
 
   it("is operator-gated and allowlisted like the plain path", () => {
     const { rewardCycle, pot } = ready();
-    expect(errCode(swapWithProof(rewardCycle, pot, quote(pot), PROOF, stackers[1]))).toBe(1002);
+    expect(errCode(swapWithProof(rewardCycle, pot, quote(pot), PROOF, stakers[1]))).toBe(1020);
     expect(
       errCode(
         swapWithProof(rewardCycle, pot, quote(pot), PROOF, deployer, oraclePrincipal()),
       ),
-    ).toBe(1006); // ERR_ADAPTER_NOT_ALLOWED
+    ).toBe(1028); // ERR_ADAPTER_NOT_ALLOWED
   });
 
   it("accumulates legs with the plain path on the same cycle", () => {
@@ -364,7 +436,7 @@ describe("the 3-day swap window", () => {
   it("holds the sBTC leg at zero while the window is open", () => {
     const { rewardCycle } = ready();
     expect(swapStatus(rewardCycle).windowOpen).toBe(true);
-    const due = stackerRewards(stackers[0], rewardCycle);
+    const due = stakerRewards(stakers[0], rewardCycle);
     expect(due["sbtc-due"]).toBe(0);
     expect(due["sbtc-gross-due"]).toBe(0);
     // ...even though the pot is entirely unswapped.
@@ -372,21 +444,22 @@ describe("the 3-day swap window", () => {
   });
 
   it("pays the whole pot as sBTC, net of fees, when the operator never swaps", () => {
+    // See the note in the fee test above: queued before the delay elapses.
+    expectOk(simnet.callPublicFn(MGR, "update-fees", [Cl.uint(500)], deployer), "fees");
     const { rewardCycle } = setup();
     armSwap();
-    expectOk(simnet.callPublicFn(MGR, "update-fees", [Cl.uint(500)], deployer), "fees");
     const pot = claimPot(rewardCycle);
 
     simnet.mineEmptyBurnBlocks(433);
     expect(swapStatus(rewardCycle).windowOpen).toBe(false);
-    expect(errCode(swap(rewardCycle, pot, quote(pot)))).toBe(1010); // ERR_SWAP_WINDOW_CLOSED
+    expect(errCode(swap(rewardCycle, pot, quote(pot)))).toBe(1026); // ERR_SWAP_WINDOW_CLOSED
 
-    const before = stackers.map(sbtcBalance);
-    expectOk(distributeMany(stackers, rewardCycle), "distribute");
-    const paid = stackers.map((w, i) => sbtcBalance(w) - before[i]);
+    const before = stakers.map(sbtcBalance);
+    expectOk(distributeMany(stakers, rewardCycle), "distribute");
+    const paid = stakers.map((w, i) => sbtcBalance(w) - before[i]);
 
     let fees = 0;
-    stackers.forEach((_, i) => {
+    stakers.forEach((_, i) => {
       const gross = Math.floor((pot * amounts[i]) / total);
       const fee = Math.floor((gross * 500) / 10_000);
       fees += fee;
@@ -405,11 +478,11 @@ describe("the 3-day swap window", () => {
     simnet.mineEmptyBurnBlocks(433);
     const leftover = pot - swapped;
 
-    const stxBefore = stackers.map(stxBalance);
-    const sbtcBefore = stackers.map(sbtcBalance);
-    expectOk(distributeMany(stackers, rewardCycle), "distribute both legs");
+    const stxBefore = stakers.map(stxBalance);
+    const sbtcBefore = stakers.map(sbtcBalance);
+    expectOk(distributeMany(stakers, rewardCycle), "distribute both legs");
 
-    stackers.forEach((w, i) => {
+    stakers.forEach((w, i) => {
       expect(stxBalance(w) - stxBefore[i]).toBe(
         Math.floor((quote(swapped) * amounts[i]) / total),
       );
@@ -422,40 +495,38 @@ describe("the 3-day swap window", () => {
 });
 
 describe("reserves and sweeps", () => {
-  it("never lets a sweep reach sBTC or STX owed to stackers", () => {
+  it("never lets a sweep reach sBTC or STX owed to stakers", () => {
     const { rewardCycle, pot } = ready();
-    // Whole pot pulled in, nothing swapped: it is all stacker liability.
+    // Whole pot pulled in, nothing swapped: it is all staker liability.
     expect(mgrNum("get-unswapped-sats")).toBe(pot);
-    expect(errCode(simnet.callPublicFn(MGR, "sweep-sbtc-dust", [Cl.principal(deployer)], deployer))).toBe(
-      1014, // ERR_NO_DUST
-    );
+    expect(errCode(simnet.callPublicFn(MGR, "sweep-sbtc-dust", [Cl.principal(deployer)], deployer)))
+      .toBe(1033); // ERR_NO_DUST
 
     expectOk(swap(rewardCycle, pot, quote(pot)), "swap");
     // Now it is all STX liability instead.
-    expect(errCode(simnet.callPublicFn(MGR, "sweep-stx-dust", [Cl.principal(deployer)], deployer))).toBe(
-      1014,
-    );
+    expect(errCode(simnet.callPublicFn(MGR, "sweep-stx-dust", [Cl.principal(deployer)], deployer)))
+      .toBe(1033); // ERR_NO_DUST
 
-    expectOk(distributeMany(stackers, rewardCycle), "distribute");
+    expectOk(distributeMany(stakers, rewardCycle), "distribute");
 
     // What is left is the floor-division remainder, and it stays reserved:
-    // `unpaid-stx` is only reduced by what stackers were actually paid, so the
+    // `unpaid-stx` is only reduced by what stakers were actually paid, so the
     // remainder is inside the liability and no sweep can reach it. That
-    // strands well under a micro-STX per stacker per cycle, and buys the
-    // guarantee that an admin call can never touch stacker funds.
+    // strands well under a micro-STX per staker per cycle, and buys the
+    // guarantee that an admin call can never touch staker funds.
     expect(stxBalance(mgrPrincipal())).toBe(mgrNum("get-unpaid-stx"));
     expect(
       errCode(simnet.callPublicFn(MGR, "sweep-stx-dust", [Cl.principal(deployer)], deployer)),
-    ).toBe(1014);
+    ).toBe(1033); // ERR_NO_DUST
   });
 
   it("recovers STX that arrived outside the reward path", () => {
     const { rewardCycle, pot } = ready();
     expectOk(swap(rewardCycle, pot, quote(pot)), "swap");
-    expectOk(distributeMany(stackers, rewardCycle), "distribute");
+    expectOk(distributeMany(stakers, rewardCycle), "distribute");
 
     const stray = 7_000_000;
-    simnet.transferSTX(stray, mgrPrincipal(), stackers[3]);
+    simnet.transferSTX(stray, mgrPrincipal(), stakers[3]);
 
     const before = stxBalance(deployer);
     expectOk(

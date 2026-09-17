@@ -68,8 +68,7 @@
         )
       )))
       (if (> delivered u0)
-        (try! (as-contract?
-          ((with-stx delivered))
+        (try! (as-contract? ((with-stx delivered))
           (try! (stx-transfer? delivered tx-sender recipient))
         ))
         true

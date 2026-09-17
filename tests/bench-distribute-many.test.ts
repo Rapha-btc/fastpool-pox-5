@@ -1,12 +1,12 @@
-// Cost benchmark for `distribute-rewards-many` at the 300-stacker batch bound.
+// Cost benchmark for `distribute-rewards-many` at the 300-staker batch bound.
 //
 // The distribution path makes no pox-5 calls at all, so the binding cost is the
-// transfers themselves: one `stx-transfer?` per stacker on the swap path, and
-// one sBTC `transfer` per stacker on the timeout path. This measures both
+// transfers themselves: one `stx-transfer?` per staker on the swap path, and
+// one sBTC `transfer` per staker on the timeout path. This measures both
 // against the block limits so the batch bound can be set from data rather than
 // from a guess.
 //
-// Devnet.toml only funds a handful of wallets, so the 300 stackers here are
+// Devnet.toml only funds a handful of wallets, so the 300 stakers here are
 // derived from deterministic private keys and funded from the deployer. simnet
 // does not verify signatures, so any principal with a balance can stake.
 //
@@ -41,7 +41,7 @@ const STAKE = 10_000_000_000; // 10k STX each
 const POT = 200_000_000;
 
 /** 300 deterministic principals, funded and staked against the manager. */
-function makeStackers(n: number) {
+function makeStakers(n: number) {
   return Array.from({ length: n }, (_, i) => {
     const key = (i + 1).toString(16).padStart(64, "0") + "01";
     return privateKeyToAddress(key);
@@ -70,16 +70,16 @@ function report(label: string, costs: any) {
 
 describe("cost: distribute-rewards-many at 300", () => {
   it(
-    "pays 300 stackers in one transaction, on both the STX and the sBTC leg",
+    "pays 300 stakers in one transaction, on both the STX and the sBTC leg",
     { timeout: 300_000 },
     () => {
-      const stackers = makeStackers(BATCH);
+      const stakers = makeStakers(BATCH);
       registerSigner(deployer, MGR);
       armSwap();
 
       const cycle = currentCycle(deployer);
       const startBurnHt = readNum("reward-cycle-to-burn-height", [Cl.uint(cycle)]);
-      stackers.forEach((who) => {
+      stakers.forEach((who) => {
         simnet.transferSTX(STAKE + 1_000_000, who, deployer);
         const r = simnet.callPublicFn(
           POX5,
@@ -105,23 +105,23 @@ describe("cost: distribute-rewards-many at 300", () => {
       const swapped = Math.floor(pot / 2);
       expectOk(swap(rewardCycle, swapped, quote(swapped)), "swap half");
 
-      const stxRun = distributeMany(stackers, rewardCycle);
+      const stxRun = distributeMany(stakers, rewardCycle);
       expectOk(stxRun, "distribute STX leg");
       expect(Number((stxRun.result as any).value.value.paid.value)).toBe(BATCH);
-      report("300 stackers, STX leg", (stxRun as any).costs);
+      report("300 stakers, STX leg", (stxRun as any).costs);
 
       // --- sBTC leg: let the window close on the rest, distribute again.
       simnet.mineEmptyBurnBlocks(433);
-      const sbtcRun = distributeMany(stackers, rewardCycle);
+      const sbtcRun = distributeMany(stakers, rewardCycle);
       expectOk(sbtcRun, "distribute sBTC leg");
       expect(Number((sbtcRun.result as any).value.value.paid.value)).toBe(BATCH);
-      report("300 stackers, sBTC leg", (sbtcRun as any).costs);
+      report("300 stakers, sBTC leg", (sbtcRun as any).costs);
 
       // --- and a no-op pass, which is the fold cost with nothing to pay.
-      const noop = distributeMany(stackers, rewardCycle);
+      const noop = distributeMany(stakers, rewardCycle);
       expectOk(noop, "no-op pass");
       expect(Number((noop.result as any).value.value.paid.value)).toBe(0);
-      report("300 stackers, nothing due", (noop as any).costs);
+      report("300 stakers, nothing due", (noop as any).costs);
 
       writeFileSync(OUT_PATH, out.join("\n\n") + "\n");
     },

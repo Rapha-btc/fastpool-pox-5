@@ -13,27 +13,27 @@ keeper script, and the miner-commit oracle -- are still proposals. See §17.
 
 ## 1. Background
 
-**Stacking in pox-5.** A stacker locks STX against a *signer manager* — a smart
+**Stacking in pox-5.** A staker locks STX against a *signer manager* — a smart
 contract implementing pox-5's `signer-manager-trait`. pox-5 calls back into that
-contract (`validate-stake!`) to authorize the stacker, and at the end of each
+contract (`validate-stake!`) to authorize the staker, and at the end of each
 reward cycle it holds the pool's rewards until the signer manager claims them.
 
 **pox-5 pays rewards in sBTC.** Not STX, not L1 bitcoin — sBTC, the SIP-010
-token. Whatever a pool wants its stackers to actually receive, the signer
+token. Whatever a pool wants its stakers to actually receive, the signer
 manager is where that conversion happens.
 
-**FAST Pool runs several signer managers, one per reward type.** A stacker picks
+**FAST Pool runs several signer managers, one per reward type.** A staker picks
 their reward by picking which contract they lock against:
 
-| contract | stacker receives |
+| contract | staker receives |
 | --- | --- |
 | **`fastpool-stx-rewards-signer-manager`** (this plan) | **STX** |
 | `max500` and other siblings | sBTC, L1 BTC, other arrangements |
 
 That is the central design decision, and it is what keeps this contract small:
-**there is no per-stacker reward preference to store, freeze, or branch on.**
+**there is no per-staker reward preference to store, freeze, or branch on.**
 Everyone locked against `fastpool-stx-rewards-signer-manager` gets STX at the same price. A
-stacker who wants something else unstakes and re-stakes against a different
+staker who wants something else unstakes and re-stakes against a different
 contract.
 
 **Scope.** STX stacking only. Bond stacking is refused at the contract boundary
@@ -41,6 +41,56 @@ contract.
 only as fee withdrawals and as the timeout fallback in §10.
 
 ---
+
+## 1a. Reading this next to `max500`
+
+`contracts/signer-manager-stx-rewards.clar` is deliberately laid out to be
+diffed against `contracts/signer-manager.clar` (deployed as
+`fastpool-max500-signer-manager`). Everything that is not the swap feature is
+kept identical on purpose, so that what *is* different stands out as the
+feature rather than as noise.
+
+**Same section order, same section names**, in both files:
+
+```
+;;; pox-5 callbacks        ;;; Admin functions
+;;; Signer rewards         ;;; Private helpers
+   ...                     ;;; Read-only views
+```
+
+Both put every private helper under `;;; Private helpers` and every read-only
+under `;;; Read-only views`, after the public entry points, rather than
+interleaving them. Clarity allows forward references, so this costs nothing.
+
+**Two sections exist only here**, and they are exactly the feature:
+
+| section | what it adds |
+| --- | --- |
+| `;;; Share mirror settlement` | `repair-mirror-many`, `pin-shares` -- the local share mirror that replaces per-staker pox-5 settlement |
+| `;;; Swap settlement` | `swap-rewards`, `swap-rewards-with-proof` -- sBTC to STX |
+
+`;;; Staker rewards` replaces max500's payout machinery: max500 pays sBTC or L1
+bitcoin per staker, this one pays STX pro-rata from a swapped pot.
+
+**Shared error codes.** u1001-u1007 mean the same thing in both contracts, so a
+failed transaction reads the same whichever manager produced it. Everything
+specific to this contract is numbered from u1020, clear of max500's u1001-u1017,
+so a number can never mean one thing here and another there.
+
+**Shared vocabulary and rules.** `staker` (not "stacker") throughout, matching
+pox-5 and max500. `BIPS_DENOMINATOR u10000`. `MAX_FEE_BIPS u500` -- the same 5%
+ceiling, so a staker moving between the pools does not find a different cap. And
+the same `FEE_ACTIVATION_DELAY_CYCLES u2` rule: a fee *increase* is queued two
+cycles out so stakers can leave before it applies to them, while a *decrease*
+takes effect at once. `update-fees`, `current-cycle`, `get-active-fee-bips` and
+`get-pending-fees` are line-for-line the max500 versions.
+
+What is genuinely different, and only this:
+
+- rewards leave as STX, not sBTC or L1 bitcoin
+- bonds and pox-addr calldata are refused rather than supported
+- the share mirror, so distribution makes no pox-5 calls
+- the swap window, the operator role, the adapters and the price baseline
 
 ## 2. How a cycle works
 
@@ -56,29 +106,29 @@ only as fee withdrawals and as the timeout fallback in §10.
   │      Only while the window is open. Fee taken in sBTC,
   │      remainder swapped for STX on a DEX.
   │
-  └─ 4. distribute-rewards[-many](stackers, cycle) ×1..n ─ permissionless
+  └─ 4. distribute-rewards[-many](stakers, cycle) ×1..n ─ permissionless
          STX paid pro-rata. Anything left unswapped when the
          window closed is paid as sBTC instead.
 ```
 
 Step 3 is a **separate transaction** from step 4, and the DEX is never called
 from inside the payout loop. That keeps an external, untrusted contract out of
-the path that moves stackers' money.
+the path that moves stakers' money.
 
 ### Why swap the whole pot at once
 
-The obvious alternative is to swap each stacker's share as they claim it. It is
+The obvious alternative is to swap each staker's share as they claim it. It is
 worse on every axis:
 
-| | per-stacker swap | pot swap (this plan) |
+| | per-staker swap | pot swap (this plan) |
 | --- | --- | --- |
-| DEX calls per cycle | one per stacker | one to four |
+| DEX calls per cycle | one per staker | one to four |
 | price impact | paid N times, worst on the smallest amounts | paid once, on one size |
 | DEX pool fee | N × | 1 × |
 | splitting a large order across venues | impossible | natural |
 | price fairness | whoever claims first gets the best fill | everyone gets the same fill |
 
-**The fairness rule, stated plainly:** every stacker in a cycle receives STX at
+**The fairness rule, stated plainly:** every staker in a cycle receives STX at
 the same average execution price. Rounding dust from the pro-rata division stays
 in the contract.
 
@@ -86,21 +136,21 @@ in the contract.
 
 ## 3. The share mirror
 
-pox-5 knows each stacker's share of the pool. Asking it, per stacker, is
+pox-5 knows each staker's share of the pool. Asking it, per staker, is
 prohibitively expensive: pox-5's source is roughly 135 KB, and **every**
 `contract-call?` into it is charged that full size as `read_length` regardless of
-what the function does. Settling stackers one-by-one through pox-5 therefore
+what the function does. Settling stakers one-by-one through pox-5 therefore
 burns essentially the whole block read budget and caps a distribution at a few
-hundred stackers per block.
+hundred stakers per block.
 
 So this contract keeps its own copy of the numbers:
 
 ```clarity
-(define-map mirrored-shares       { stacker: principal, reward-cycle: uint } uint)
+(define-map mirrored-shares       { staker: principal, reward-cycle: uint } uint)
 (define-map mirrored-total-shares { reward-cycle: uint } uint)
 ```
 
-pox-5 calls `validate-stake!` on every path that **increases** a stacker's
+pox-5 calls `validate-stake!` on every path that **increases** a staker's
 shares, which is enough to maintain the mirror. It does **not** call back on
 `unstake`. So the mirror can drift — but only ever **upward**, because every
 unseen change is a decrease.
@@ -109,16 +159,16 @@ That one-sidedness is what makes a single, cheap integrity check sufficient:
 compare this contract's `mirrored-total-shares` for a cycle against pox-5's own
 signer-level total, `get-signer-pending-staked-ustx-per-cycle`. Since the mirror
 can only be too high, **equality proves it is exact.** One pox-5 call, not one
-per stacker.
+per staker.
 
 ### When the mirror actually drifts
 
-pox-5's `unstake` removes the stacker from cycles starting at
+pox-5's `unstake` removes the staker from cycles starting at
 `current-cycle + 1` only — it never touches the current or any past cycle. So:
 
 - Once a cycle has **ended**, pox-5's numbers for it are frozen. Nothing can
   move them afterwards.
-- But a stacker who locked for cycles 10–15 and unstaked during cycle 12 was
+- But a staker who locked for cycles 10–15 and unstaked during cycle 12 was
   removed from 13, 14 and 15 *while those were still future*. This contract
   never saw that. So when cycle 13 later ends and is claimed, **the mirror for
   cycle 13 is high and the equality check will fail.**
@@ -127,15 +177,15 @@ This is a normal, expected event, not a bug — so it must have a cheap,
 permissionless repair rather than blocking anything.
 
 ```clarity
-(define-public (repair-mirror-many (stackers (list 300 principal)) (reward-cycle uint)) …)
+(define-public (repair-mirror-many (stakers (list 300 principal)) (reward-cycle uint)) …)
 ```
 
-For each listed stacker it reads pox-5's authoritative
+For each listed staker it reads pox-5's authoritative
 `get-staker-shares-staked-for-cycle` and writes that value into
 `mirrored-shares`, adjusting `mirrored-total-shares` by the difference. It costs
 one pox-5 call for the batch. It refuses a cycle whose shares are already pinned
-(§6). Off-chain, the keeper knows exactly which stackers to pass: it holds the
-pool's stacker list and can diff the mirror against pox-5 with read-only calls.
+(§6). Off-chain, the keeper knows exactly which stakers to pass: it holds the
+pool's staker list and can diff the mirror against pox-5 with read-only calls.
 
 ---
 
@@ -143,20 +193,20 @@ pool's stacker list and can diff the mirror against pox-5 with read-only calls.
 
 ```clarity
 (define-public (validate-stake!
-  (stacker principal) (first-index uint) (num-indexes uint)
+  (staker principal) (first-index uint) (num-indexes uint)
   (amount-ustx uint) (amount-sats uint)
   (is-bond bool) (signer-calldata (optional (buff 500)))) …)
 ```
 
 - `authorize-pox-5` — reject any caller that is not the pox-5 contract. This
-  callback writes per-stacker state keyed by its `stacker` argument; if anyone
+  callback writes per-staker state keyed by its `staker` argument; if anyone
   could invoke it directly they could mint themselves shares.
 - **`(asserts! (not is-bond) ERR_BONDS_NOT_SUPPORTED)`** — this is how "no bond
   stacking" is enforced. A bond stake against this contract fails cleanly at
   pox-5 rather than silently doing something undefined.
 - **`(asserts! (is-none signer-calldata) ERR_CALLDATA_NOT_SUPPORTED)`** — sibling
   signer managers use calldata to register a bitcoin `pox-addr` for L1 payouts.
-  This contract has no such path, so a stacker who passes one gets a clear
+  This contract has no such path, so a staker who passes one gets a clear
   failure instead of quietly receiving STX when they expected BTC.
 - fold over the `num-indexes` cycles the stake covers (pox-5 caps a lock at 12),
   adding `amount-ustx` into `mirrored-shares` and `mirrored-total-shares`.
@@ -194,8 +244,8 @@ There is deliberately **no mirror check here**, so a drifted mirror (§3) can
 never block the pot from being pulled out of pox-5. The check happens at
 `pin-shares`, which is retryable after a repair.
 
-This contract never calls pox-5's per-stacker settlement
-(`claim-staker-rewards-for-signer`). pox-5's internal per-stacker ledger is
+This contract never calls pox-5's per-staker settlement
+(`claim-staker-rewards-for-signer`). pox-5's internal per-staker ledger is
 therefore left un-zeroed by design; **this contract's mirror is authoritative**
 for who is owed what. Because the pox-5 path is not exposed at all, the two can
 never be mixed and no double-payout is possible.
@@ -227,7 +277,7 @@ Pinning is what makes every later step cheap and stable:
   nothing can move under a pot that has already been priced.
 
 If pinning fails, the fix is mechanical: `repair-mirror-many` the affected
-stackers, then pin again. Nothing is lost and no deadline is at risk — the
+stakers, then pin again. Nothing is lost and no deadline is at risk — the
 timeout in §9 is measured from the claim, and pinning is a matter of minutes.
 
 ---
@@ -294,7 +344,7 @@ authorization in place of signature authorization. That is a change on their
 side, not something a wrapper can paper over. Routing around it by handing the
 operator custody of the sBTC is not an option — the whole point of the
 `as-contract?` allowances and the balance-delta accounting is that the operator
-never touches stacker funds.
+never touches staker funds.
 
 Bitflow DLMM and Bitflow standard are separate adapters despite sharing a venue:
 different call shapes and, more importantly, **different price-impact curves**.
@@ -402,7 +452,7 @@ Three independent guards, none of which requires trusting the adapter:
 1. **The `as-contract?` allowance is a hard spend cap.** `net-sats` is the most
    sBTC that can leave, whatever the adapter tries.
 2. **Credit from the measured balance delta, never the adapter's return value.**
-   A buggy or malicious adapter cannot inflate what stackers are owed.
+   A buggy or malicious adapter cannot inflate what stakers are owed.
 3. **Allowlist.** `(define-map dex-adapters principal bool)`, admin-managed,
    checked with `(contract-of adapter)`. A trait parameter is not authorization.
 
@@ -462,18 +512,18 @@ It also confirms the coinbase: `get-coinbase-ustx` reads **1000 STX**.
 Miners commit BTC to win a tenure and are paid the STX coinbase. The ratio of
 the two is a native, on-chain, expensive-to-manipulate estimate of STX priced in
 BTC — the "miner commit price". In PoX those commitments are precisely what
-flows to stackers, so this contract can reconstruct the network-wide figure from
+flows to stakers, so this contract can reconstruct the network-wide figure from
 numbers it and pox-5 already hold:
 
 ```
-sats_to_all_stackers(cycle) = pot-sats[cycle]
+sats_to_all_stakers(cycle) = pot-sats[cycle]
                               × pox-5 get-total-shares-staked-for-cycle(cycle)
                               / cycle-settlement[cycle].total-shares
 
 ustx_minted(cycle)          = pox-5 reward-cycle-length      ;; burn blocks in the cycle
                               × COINBASE_USTX                ;; 1000 STX per tenure, fixed
 
-baseline                    = sats_to_all_stackers / ustx_minted    ;; sats per uSTX
+baseline                    = sats_to_all_stakers / ustx_minted    ;; sats per uSTX
 ```
 
 **It measures miner willingness-to-pay, not spot**, and on mainnet today it runs
@@ -562,41 +612,41 @@ has to wait on an admin.
 ## 10. Distribution
 
 ```clarity
-(define-public (distribute-rewards      (stacker  principal)             (reward-cycle uint)) …)
-(define-public (distribute-rewards-many (stackers (list 300 principal))  (reward-cycle uint)) …)
+(define-public (distribute-rewards      (staker  principal)             (reward-cycle uint)) …)
+(define-public (distribute-rewards-many (stakers (list 300 principal))  (reward-cycle uint)) …)
 ```
 
-Both permissionless — anyone may trigger a payout on a stacker's behalf. Both
-compute the same two legs per stacker, with `D = cycle-settlement.total-shares`
-and `shares = mirrored-shares[stacker, cycle]`:
+Both permissionless — anyone may trigger a payout on a staker's behalf. Both
+compute the same two legs per staker, with `D = cycle-settlement.total-shares`
+and `shares = mirrored-shares[staker, cycle]`:
 
 ```
 ;; STX leg — available as soon as anything has been swapped
 stx-entitled   = stx-out × shares / D
-stx-due        = stx-entitled - stacker-stx-paid
+stx-due        = stx-entitled - staker-stx-paid
 
 ;; sBTC leg — zero until the swap window has closed
 unswapped      = pot-sats - swapped-sats                  (0 while window open)
 sbtc-entitled  = unswapped × shares / D                   (gross)
-sbtc-gross-due = sbtc-entitled - stacker-sbtc-accounted
+sbtc-gross-due = sbtc-entitled - staker-sbtc-accounted
 sbtc-fee       = sbtc-gross-due × fee-bips-for-cycle / 10000
 sbtc-due       = sbtc-gross-due - sbtc-fee
 ```
 
-**There is no branch.** Every stacker gets both legs; one of them is almost
+**There is no branch.** Every staker gets both legs; one of them is almost
 always zero. Fully-swapped cycle → `sbtc-due = 0`. Timed-out cycle → `stx-due =
 0`. Partially swapped then timed out → both non-zero, and the split is the same
 proportion for everyone.
 
 STX is paid with `stx-transfer?` inside `as-contract?` under a `(with-stx …)`
-allowance, one call per stacker — there is no `transfer-many` for STX, but these
+allowance, one call per staker — there is no `transfer-many` for STX, but these
 are cheap. sBTC is accumulated into a list and paid with a **single
 `transfer-many`** at the end of the batch.
 
-Both watermarks are **monotone**: `stacker-stx-paid` in micro-STX,
-`stacker-sbtc-accounted` in gross sats. When more of the pot is claimed or
+Both watermarks are **monotone**: `staker-stx-paid` in micro-STX,
+`staker-sbtc-accounted` in gross sats. When more of the pot is claimed or
 swapped later, the entitlements grow and the next call pays exactly the
-difference. Repeated calls for the same stacker are safe and idempotent.
+difference. Repeated calls for the same staker are safe and idempotent.
 
 **Fees are always sBTC.** On the swapped portion the fee was taken at swap time;
 on the fallback portion it is taken here. Both land in the same `earned-fees`
@@ -604,14 +654,14 @@ accumulator.
 
 ### On keeping `-many`
 
-The complexity in a mixed-reward signer manager comes from stackers having
-*different* output types, which forces a per-stacker branch. That does not exist
+The complexity in a mixed-reward signer manager comes from stakers having
+*different* output types, which forces a per-staker branch. That does not exist
 here: the two legs above are per-cycle proportions applied uniformly, so `-many`
 is a plain fold over one pair of formulas. Keep both entry points.
 
 **Batch size 300, measured.** The distribution path makes zero pox-5 calls, so
 the old `read_length` ceiling is gone. `tests/bench-distribute-many.test.ts`
-runs a real 300-stacker batch on both legs — 300 principals derived from
+runs a real 300-staker batch on both legs — 300 principals derived from
 deterministic keys, funded and staked — and reports:
 
 | pass | runtime | read count | read length | write count |
@@ -635,7 +685,7 @@ fires when the operator has been absent for three days.
 ## 11. Balances, reserves and dust
 
 The contract holds two assets. Each gets an explicit liability counter so an
-admin sweep can never reach stacker funds.
+admin sweep can never reach staker funds.
 
 | asset | held for | liability vars | sweepable |
 | --- | --- | --- | --- |
@@ -655,20 +705,20 @@ Every pro-rata split floors, so a cycle's payouts sum to slightly less than what
 came in. That remainder is **not** recoverable by either sweep, and this is a
 deliberate trade rather than an oversight.
 
-The liability counters are reduced only by what a stacker was actually paid, so
+The liability counters are reduced only by what a staker was actually paid, so
 the floored-away remainder stays *inside* the liability and the sweep sees
 nothing above it. Making it sweepable would mean computing
 `stx-out − Σ floor(stx-out × sᵢ / D)` on chain, which needs a pass over every
-stacker — and an admin-asserted "this cycle is fully distributed" shortcut would
+staker — and an admin-asserted "this cycle is fully distributed" shortcut would
 be exactly the hole the counters exist to close.
 
-The cost is under one micro-STX (and under one satoshi) per stacker per cycle:
-for 300 stackers over 100 cycles, roughly 0.03 STX. What the sweeps do recover
+The cost is under one micro-STX (and under one satoshi) per staker per cycle:
+for 300 stakers over 100 cycles, roughly 0.03 STX. What the sweeps do recover
 is anything that arrived outside the reward path — a stray transfer to the
 contract. `tests/stx-rewards.test.ts` covers both halves: the remainder is
 refused, a stray transfer is returned.
 
-`stx-get-balance` counts locked STX, but this contract never locks STX (stackers
+`stx-get-balance` counts locked STX, but this contract never locks STX (stakers
 lock their own against it), so the STX figure is clean.
 
 ---
@@ -703,7 +753,7 @@ clause means the operator's authority cannot be borrowed by an intermediate
 contract.
 
 The operator can only choose *when, where and at what price* to swap, and only
-inside the window and above the baseline floor. It can never move stacker funds:
+inside the window and above the baseline floor. It can never move staker funds:
 the `as-contract?` allowance caps the sBTC, the balance-delta measurement fixes
 the STX, and distribution is permissionless and formula-driven.
 
@@ -722,7 +772,7 @@ the STX, and distribution is permissionless and formula-driven.
   against the allowlist, and `(contract-of oracle)` against the pinned oracle
   principal.
 - **Treat the adapter as untrusted** within its `as-contract?` allowance, and
-  credit stackers from the measured balance delta rather than its return value.
+  credit stakers from the measured balance delta rather than its return value.
 - **No DEX call inside the distribution loop.**
 - **`validate-stake!` is pox-5-only**, and refuses bonds and calldata outright.
 - **Shares are frozen at pinning**, so nobody can stake into — or repair — a
@@ -750,14 +800,14 @@ split:
 
 Cases that must be covered:
 
-- pro-rata split across many stackers; sum of payouts + dust == `stx-out`
+- pro-rata split across many stakers; sum of payouts + dust == `stx-out`
 - partial swap → distribute → second `claim-rewards` → second swap → distribute
   again pays exactly the increment
-- repeated `distribute-rewards` for the same stacker is a no-op
+- repeated `distribute-rewards` for the same staker is a no-op
 - **timeout**: no swap at all → after `SWAP_WINDOW_BURN_BLOCKS` everyone is paid
   sBTC net of fees, and `swap-rewards` is refused
 - **partial timeout**: half swapped, window closes → both legs non-zero, in the
-  same proportion for every stacker, and the two totals reconcile to the pot
+  same proportion for every staker, and the two totals reconcile to the pot
 - sBTC leg is **zero** while the window is still open, even with an unswapped
   remainder
 - mirror drift after a mid-lock unstake → `pin-shares` fails →
@@ -772,7 +822,7 @@ Cases that must be covered:
   withdrawable
 - neither sweep can touch `unswapped-sats`, `earned-fees` or `unpaid-stx`
 - operator rotation: old operator immediately loses `swap-rewards`
-- **cost benchmark for a 300-stacker `distribute-rewards-many`** (both legs)
+- **cost benchmark for a 300-staker `distribute-rewards-many`** (both legs)
 
 ---
 
@@ -782,7 +832,7 @@ Cases that must be covered:
 
 1. `claim-rewards(cycle)`
 2. `check-mirror(cycle)`; if it does not match, `repair-mirror-many` the
-   diverged stackers, then `pin-shares(cycle)`
+   diverged stakers, then `pin-shares(cycle)`
 3. read `get-swap-status(cycle)` → sats remaining, and burn blocks left in the
    window
 4. quote all four adapters for the full size **and** for candidate splits —
@@ -797,7 +847,7 @@ Cases that must be covered:
 
 The keeper should alert loudly if a cycle reaches, say, half its window
 unswapped. Hitting the deadline is a fallback, not an outcome to be relaxed
-about: stackers who chose this contract chose STX.
+about: stakers who chose this contract chose STX.
 
 `bootstrap.mjs` subcommands to add: `pin`, `repair-mirror`, `swap`,
 `swap-status`, `distribute`, `set-operator`.
@@ -808,24 +858,24 @@ about: stackers who chose this contract chose STX.
 
 ```clarity
 ;; pox-5 callback
-validate-stake!            (stacker, first-index, num-indexes, amount-ustx,
+validate-stake!            (staker, first-index, num-indexes, amount-ustx,
                             amount-sats, is-bond, signer-calldata)  ;; pox-5 only
 
 ;; cycle lifecycle
 claim-rewards              (reward-cycle)                            ;; anyone
-repair-mirror-many         (stackers, reward-cycle)                  ;; anyone
+repair-mirror-many         (stakers, reward-cycle)                  ;; anyone
 pin-shares                 (reward-cycle)                            ;; anyone
 swap-rewards               (reward-cycle, adapter, oracle,
                             amount-sats, min-stx-out)                ;; operator
 swap-rewards-with-proof    (reward-cycle, adapter, oracle,
                             amount-sats, min-stx-out, proof)         ;; operator
-distribute-rewards         (stacker, reward-cycle)                   ;; anyone
-distribute-rewards-many    (stackers, reward-cycle)                  ;; anyone
+distribute-rewards         (staker, reward-cycle)                   ;; anyone
+distribute-rewards-many    (stakers, reward-cycle)                  ;; anyone
 
 ;; admin
 update-admin               (admin, enabled)
 set-operator               (new-operator)
-update-fees                (new-fees-bips)
+update-fees                (new-fees-bips)   ;; max 5%, raises wait 2 cycles
 set-dex-adapter            (adapter, enabled)
 set-price-oracle           (oracle)
 set-max-slippage-bips      (bips)
@@ -836,19 +886,22 @@ sweep-stx-dust             (recipient)
 register-self              (signer-manager, signer-key, auth-id, signer-sig)
 
 ;; read-only
-get-stacker-rewards        (stacker, reward-cycle)
+get-staker-rewards        (staker, reward-cycle)
        -> { stx-entitled, stx-paid, stx-due, sbtc-due, sbtc-fee }
 get-swap-status            (reward-cycle)
        -> { pot-sats, swapped-sats, remaining-sats, fee-sats, stx-out,
             total-shares, pinned, deadline, window-open }
 check-mirror               (reward-cycle) -> { local, pox-5, matches }
-get-mirrored-shares        (stacker, reward-cycle)
+get-mirrored-shares        (staker, reward-cycle)
 get-mirrored-total-shares  (reward-cycle)
 get-fee-bips-for-cycle     (reward-cycle)
 get-operator               ()
 get-price-oracle           ()
 get-max-slippage-bips      ()
 get-enforce-price-floor    ()
+current-cycle              ()
+get-active-fee-bips        ()
+get-pending-fees           ()
 is-admin                   (caller)
 is-dex-adapter             (adapter)
 get-earned-fees            ()
@@ -859,23 +912,20 @@ get-unpaid-stx             ()
 ### Error codes
 
 ```
-u1001 ERR_UNAUTHORIZED_ADMIN          u1010 ERR_SWAP_WINDOW_CLOSED
-u1002 ERR_UNAUTHORIZED_OPERATOR       u1011 (unused)
-u1003 ERR_UNAUTHORIZED_CALLER         u1012 ERR_SHARES_ALREADY_PINNED
-u1004 ERR_INVALID_FEES_BIPS           u1013 ERR_NOTHING_TO_DISTRIBUTE
-u1005 ERR_INSUFFICIENT_FEES           u1014 ERR_NO_DUST
-u1006 ERR_ADAPTER_NOT_ALLOWED         u1015 ERR_BONDS_NOT_SUPPORTED
-u1007 ERR_SLIPPAGE                    u1016 ERR_CALLDATA_NOT_SUPPORTED
-u1008 ERR_SHARE_MIRROR_MISMATCH       u1017 ERR_MIN_OUT_TOO_LOW
-u1009 ERR_SWAP_EXCEEDS_POT            u1018 ERR_WRONG_ORACLE
-                                      u1019 ERR_INVALID_LOCK_PERIOD
-                                      u1020 ERR_CYCLE_NOT_CLAIMED
-                                      u1021 ERR_NO_BASELINE
-```
+Shared with fastpool-max500-signer-manager -- same number, same meaning:
+u1001 ERR_NO_CLAIMABLE_REWARDS        u1005 ERR_INVALID_FEES_BIPS
+u1002 ERR_UNAUTHORIZED_ADMIN          u1006 ERR_UNAUTHORIZED_CALLER
+u1003 ERR_CALLDATA_NOT_SUPPORTED      u1007 ERR_INSUFFICIENT_FEES
 
-u1011 was reserved for a "shares not pinned" failure that the implementation
-does not need: `pin-shares` is idempotent and every path that needs a
-denominator calls it implicitly.
+Specific to this contract, numbered clear of max500's u1001-u1017:
+u1020 ERR_UNAUTHORIZED_OPERATOR       u1027 ERR_SWAP_EXCEEDS_POT
+u1021 ERR_BONDS_NOT_SUPPORTED         u1028 ERR_ADAPTER_NOT_ALLOWED
+u1022 ERR_INVALID_LOCK_PERIOD         u1029 ERR_WRONG_ORACLE
+u1023 ERR_CYCLE_NOT_CLAIMED           u1030 ERR_NO_BASELINE
+u1024 ERR_SHARE_MIRROR_MISMATCH       u1031 ERR_MIN_OUT_TOO_LOW
+u1025 ERR_SHARES_ALREADY_PINNED       u1032 ERR_SLIPPAGE
+u1026 ERR_SWAP_WINDOW_CLOSED          u1033 ERR_NO_DUST
+```
 
 ---
 
@@ -885,7 +935,7 @@ denominator calls it implicitly.
 | --- | --- | --- |
 | 1 | `validate-stake!`, share mirror, `repair-mirror-many`, `pin-shares`, `claim-rewards` + deadline, admin/operator roles, read-onlys, tests | **done** |
 | 2 | adapter trait, allowlist, mock adapter, dummy oracle, slippage floor, `swap-rewards` | **done** |
-| 3 | `distribute-rewards` / `-many` (both legs), reserves, sweeps, 300-stacker cost benchmark | **done** |
+| 3 | `distribute-rewards` / `-many` (both legs), reserves, sweeps, 300-staker cost benchmark | **done** |
 | 4 | real adapters — Bitflow DLMM + Bitflow standard, type-checked against live mainnet ABIs | **done**; ALEX and Velar blocked, see §7 |
 | 5 | keeper script (`scripts/stx-rewards.mjs`), mainnet build, deployment plan, runbook | **done** |
 | 6 | miner-commit price oracle replacing the dummy | **done** — `price-oracle-jing.clar` wraps Jing's `get-native-price` |
@@ -904,14 +954,60 @@ testnet.
 | `contracts/price-oracle-dummy.clar` | owner-set baseline, standing in until phase 6 |
 | `contracts/mock-dex-adapter.clar` | test DEX with injectable failure modes |
 | `tests/stx-rewards.test.ts` | 19 cases across the mirror, swap, window and sweep paths |
-| `tests/bench-distribute-many.test.ts` | the 300-stacker cost benchmark |
+| `tests/bench-distribute-many.test.ts` | the 300-staker cost benchmark |
 | `tests/helpers/stx-rewards-fixture.ts` | simnet setup: stake, run the cycle out, arm the DEX |
+| `tests/stx-rewards-properties.test.ts` | property tests over randomised share vectors |
+| the `#[env(simnet)]` block in the manager | Rendezvous invariants and Clarity property tests |
+| `tests/mainnet/*.fork.test.ts` | mainnet-fork tests -- real Bitflow pools, locally |
 | `contracts/dex-adapter-bitflow-dlmm.clar` | Bitflow DLMM, pinned to one pool |
 | `contracts/dex-adapter-bitflow-xyk.clar` | Bitflow constant-product, pinned to one pool |
 | `scripts/stx-rewards.mjs` | keeper: status, claim, mirror, repair, pin, quote, swap, distribute |
 | `scripts/build-mainnet.mjs` | rewrites the pox-5 principal for mainnet, emits the deployment plan |
 | `contracts/price-oracle-jing.clar` | production baseline: miner commits, via Jing's `get-native-price` |
 | `docs/deploy-stx-rewards.md` | deployment runbook and operator guidance |
+| `docs/properties-stx-rewards.md` | every guarantee, what enforces it, where it is checked |
+| `simulations/` | STXER simulations against a mainnet fork -- real pools, real oracle |
+
+### Four harnesses, and what each is for
+
+No single harness covers this contract, so there are four, each doing the thing
+the others cannot:
+
+| harness | run with | what only it can do |
+| --- | --- | --- |
+| example tests | `pnpm test` | drive pox-5 across reward cycles |
+| property tests | `pnpm test` | quantify a whole randomised share vector at once |
+| Rendezvous | `pnpm test:rv`, `pnpm test:rv:prop` | fuzz call SEQUENCES and read private state |
+| mainnet fork | `pnpm test:fork` | real DEX liquidity and real balances |
+
+**Rendezvous** matters most for the accounting. Its harness lives at the bottom
+of `contracts/signer-manager-stx-rewards.clar` itself, every definition marked
+`;; #[env(simnet)]`, so the invariants read `unpaid-stx`, `earned-fees` and
+`cycle-settlement` **directly** -- the contract does not have to expose its
+internals just to be testable.
+
+Clarinet strips annotated code from the publish source for any non-simnet
+network, and `clarinet check` validates twice, with and without it, so
+production code accidentally leaning on a test helper is a build error rather
+than a deploy-time surprise. `scripts/build-mainnet.mjs` strips it as well, so
+`build/mainnet/` is the production artifact the fork tests and simulations
+actually deploy -- 18% smaller than the source, which is 18% less
+`read_length` on every call into the contract. It
+then fuzzes random sequences of public calls and re-checks after every one, so
+an invariant has to survive any reachable state rather than a scripted path.
+The invariants are the solvency ones (`unpaid-stx` never exceeds the STX
+balance; fees plus the un-swapped pot never exceed the sBTC balance -- which is
+what makes the sweeps safe), the fee cap, and per-cycle consistency
+(`swapped-sats <= pot-sats`, a pinned denominator never moves, nobody is owed
+anything from a cycle with no shares).
+
+**The TypeScript property tests** cover what Clarity cannot express: summing an
+arbitrary-length vector of payouts and comparing it to the pot. That is where
+conservation, exact pro-rata, monotonicity in stake, order-independence and
+idempotence are pinned. fast-check is used as the *generator* rather than the
+runner -- simnet resets between tests, not between fast-check iterations, so
+`fc.sample` with a fixed seed draws the vectors up front and each becomes its
+own test.
 
 ### How the adapters are verified without a fork
 
@@ -921,13 +1017,39 @@ contracts in as `requirements` and type-check against them — and because every
 argument in both adapters is a **literal**, that check is meaningful: a
 transposed argument, a wrong token, a wrong pool is a compile error.
 
-Beyond that, the XYK adapter's exact argument tuple was executed against the
-live mainnet pool through its read-only quote, returning a real price. The DLMM
-adapter's shape is confirmed against the ABI and against decoded real swap
-transactions. Runtime proof of the DLMM write path only comes from mainnet,
-which is why the runbook's first live leg is a deliberately tiny one.
+Beyond that, **both adapters have now been executed against the live pools** on
+a mainnet fork, via the STXER simulations in `simulations/` -- 0.01 sBTC through
+each, real sBTC out, real STX back. That closes the runtime gap this section
+used to describe as only reachable on mainnet. The runbook's first live leg is
+still a deliberately tiny one, because a fork is not a broadcast.
+
+The same simulations run the full settlement path: `simulations/2-full-lifecycle.mjs`
+swaps a seeded pot through the real Bitflow pool and distributes the proceeds,
+and the pro-rata split lands exactly as specified -- three stakers at 50/33.3/16.7%
+paid to the micro-STX, with a single micro-STX of floor-division dust left
+reserved in the contract, which is the behaviour section 11 describes.
 
 ---
+
+## 17a. A bug this found in a sibling contract
+
+`CYCLE_OFFSETS` in this contract was 12 entries, under a comment claiming pox-5
+caps a lock at 12 cycles. It does not: `check-pox-lock-period` allows up to
+`MAX_NUM_CYCLES`, which is **96**, and pox-5 folds over a 96-entry list of its
+own. A 12-entry list makes `validate-stake!`'s `slice?` return `none` for any
+lock over 12 cycles, so a stake pox-5 would have accepted fails with
+`ERR_INVALID_LOCK_PERIOD` -- silently capping the pool at 12-cycle locks.
+
+Fixed here, and covered by `tests/stx-rewards.test.ts` at 1, 12, 13, 40 and 96
+cycles.
+
+**`contracts/signer-manager-accounting-multi.clar` has the same 12-entry list
+and the same wrong comment**, and uses it the same way for STX staking. It is
+not deployed, so this is latent rather than live. The 12 there is genuinely
+correct for its *other* use -- `BOND_LENGTH_CYCLES`, a bond term -- which is
+probably how the two got conflated. The deployed
+`fastpool-max500-signer-manager` is unaffected: it settles through pox-5 and
+never walks cycles itself.
 
 ## 18. Open decisions
 
