@@ -23,6 +23,7 @@
 
 (impl-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
 (use-trait signer-manager-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
+(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait.swap-vault-trait)
 
 ;;; Errors
 
@@ -59,10 +60,15 @@
 (define-constant ERR_ZERO_VAULT_FUNDING (err u1051))
 (define-constant ERR_RECOVERY_TOO_SOON (err u1052))
 (define-constant ERR_NO_ACTIVE_VAULT (err u1053))
+(define-constant ERR_NO_PENDING_SWAP_VAULT (err u1054))
+(define-constant ERR_INVALID_SWAP_VAULT (err u1055))
+(define-constant ERR_SWAP_VAULT_BUSY (err u1056))
+(define-constant ERR_SWAP_VAULT_COOLDOWN (err u1057))
 
 ;;; Constants
 
 (define-constant MAX_BIPS u10000)
+(define-constant SWAP_VAULT_COOLDOWN u4032)
 
 ;; The signer allows recovery after 432 burn blocks from the cycle's first claim.
 ;; The vault accepts recovery only when this signer manager calls it.
@@ -464,7 +470,105 @@
 
 ;;; Dedicated swap vault
 
-(define-constant SWAP_VAULT .fastpool-swap-vault)
+(define-data-var swap-vault principal .fastpool-swap-vault)
+(define-data-var pending-swap-vault (optional principal) none)
+(define-data-var pending-swap-vault-height uint u0)
+
+(define-read-only (get-swap-vault)
+  (var-get swap-vault)
+)
+
+(define-read-only (get-pending-swap-vault)
+  {
+    vault: (var-get pending-swap-vault),
+    proposed-at: (var-get pending-swap-vault-height),
+    executable-at: (+ (var-get pending-swap-vault-height) SWAP_VAULT_COOLDOWN),
+  }
+)
+
+(define-private (assert-active-vault (vault <swap-vault-interface>))
+  (ok (asserts! (is-eq (contract-of vault) (var-get swap-vault))
+    ERR_INVALID_SWAP_VAULT
+  ))
+)
+
+(define-private (assert-idle-vault (vault <swap-vault-interface>))
+  (let ((status (try! (contract-call? vault get-upgrade-status))))
+    (asserts! (is-eq (get pool status) current-contract) ERR_INVALID_SWAP_VAULT)
+    (asserts!
+      (and
+        (is-none (get batch-start status))
+        (is-eq (get jing-resting status) u0)
+        (is-eq (get jing-parked status) u0)
+      )
+      ERR_SWAP_VAULT_BUSY
+    )
+    (ok true)
+  )
+)
+
+(define-public (propose-swap-vault (new-vault <swap-vault-interface>))
+  (begin
+    (try! (authorize-admin))
+    (asserts! (not (is-eq (contract-of new-vault) (var-get swap-vault)))
+      ERR_INVALID_SWAP_VAULT
+    )
+    (try! (assert-idle-vault new-vault))
+    (var-set pending-swap-vault (some (contract-of new-vault)))
+    (var-set pending-swap-vault-height burn-block-height)
+    (print {
+      topic: "propose-swap-vault",
+      current: (var-get swap-vault),
+      proposed: (contract-of new-vault),
+      executable-at: (+ burn-block-height SWAP_VAULT_COOLDOWN),
+    })
+    (ok (contract-of new-vault))
+  )
+)
+
+(define-public (cancel-swap-vault-proposal)
+  (begin
+    (try! (authorize-admin))
+    (print {
+      topic: "cancel-swap-vault-proposal",
+      cancelled: (var-get pending-swap-vault),
+    })
+    (var-set pending-swap-vault none)
+    (var-set pending-swap-vault-height u0)
+    (ok true)
+  )
+)
+
+(define-public (confirm-swap-vault
+    (old-vault <swap-vault-interface>)
+    (new-vault <swap-vault-interface>)
+  )
+  (begin
+    (try! (authorize-admin))
+    (let ((proposed (unwrap! (var-get pending-swap-vault) ERR_NO_PENDING_SWAP_VAULT)))
+      (try! (assert-active-vault old-vault))
+      (asserts! (is-eq (contract-of new-vault) proposed) ERR_INVALID_SWAP_VAULT)
+      (asserts!
+        (>= burn-block-height
+          (+ (var-get pending-swap-vault-height) SWAP_VAULT_COOLDOWN)
+        )
+        ERR_SWAP_VAULT_COOLDOWN
+      )
+      (asserts! (is-none (var-get vault-cycle)) ERR_VAULT_BUSY)
+      (try! (assert-idle-vault old-vault))
+      (try! (assert-idle-vault new-vault))
+      (var-set swap-vault proposed)
+      (var-set pending-swap-vault none)
+      (var-set pending-swap-vault-height u0)
+      (print {
+        topic: "confirm-swap-vault",
+        old-vault: (contract-of old-vault),
+        new-vault: proposed,
+      })
+      (ok proposed)
+    )
+  )
+)
 
 (define-data-var vault-cycle (optional uint) none)
 
@@ -473,8 +577,12 @@
   uint
 )
 
-(define-public (fund-swap-vault (reward-cycle uint))
+(define-public (fund-swap-vault
+    (reward-cycle uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (asserts! (is-none (var-get vault-cycle)) ERR_VAULT_BUSY)
     (try! (pin-shares reward-cycle))
     (let (
@@ -488,7 +596,7 @@
         ((with-ft 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
           "sbtc-token" vault-sats
         ))
-        (try! (contract-call? SWAP_VAULT fund vault-sats))
+        (try! (contract-call? vault fund vault-sats))
       ))
       (var-set earned-fees (+ (var-get earned-fees) fee))
       (var-set unswapped-sats (- (var-get unswapped-sats) unfunded-sats))
@@ -504,58 +612,68 @@
   )
 )
 
-(define-public (finalize-swap-vault)
-  (let (
-      (reward-cycle (unwrap! (var-get vault-cycle) ERR_NO_ACTIVE_VAULT))
-      (before (stx-get-balance current-contract))
-      (amount (try! (contract-call? SWAP_VAULT finish)))
-      (settlement (get-settlement reward-cycle))
-    )
-    (asserts! (is-eq (- (stx-get-balance current-contract) before) amount)
-      ERR_VAULT_BUSY
-    )
-    (map-set cycle-settlement reward-cycle
-      (merge settlement { stx-out: (+ (get stx-out settlement) amount) })
-    )
-    (var-set unpaid-stx (+ (var-get unpaid-stx) amount))
-    (var-set vault-cycle none)
-    (ok amount)
-  )
-)
-
-(define-public (recover-swap-vault)
-  (let (
-      (reward-cycle (unwrap! (var-get vault-cycle) ERR_NO_ACTIVE_VAULT))
-      (settlement (get-settlement reward-cycle))
-    )
-    (asserts! (> burn-block-height (get deadline settlement))
-      ERR_RECOVERY_TOO_SOON
-    )
-    (let ((recovered (try! (contract-call? SWAP_VAULT emergency-recover))))
-      (map-set cycle-settlement reward-cycle
-        (merge settlement { stx-out: (+ (get stx-out settlement) (get stx recovered)) })
-      )
-      (map-set recovered-sbtc-by-cycle reward-cycle
-        (+ (default-to u0 (map-get? recovered-sbtc-by-cycle reward-cycle))
-          (get sbtc recovered)
-        ))
-      (var-set unpaid-stx (+ (var-get unpaid-stx) (get stx recovered)))
-      (var-set unswapped-sats (+ (var-get unswapped-sats) (get sbtc recovered)))
-      (var-set vault-cycle none)
-      (print {
-        topic: "recover-swap-vault",
-        reward-cycle: reward-cycle,
-        recovered: recovered,
-      })
-      (ok recovered)
-    )
-  )
-)
-
-(define-public (refloor-vault (update (buff 8192)))
+(define-public (finalize-swap-vault (vault <swap-vault-interface>))
   (begin
+    (try! (assert-active-vault vault))
+    (let (
+        (reward-cycle (unwrap! (var-get vault-cycle) ERR_NO_ACTIVE_VAULT))
+        (before (stx-get-balance current-contract))
+        (amount (try! (contract-call? vault finish)))
+        (settlement (get-settlement reward-cycle))
+      )
+      (asserts! (is-eq (- (stx-get-balance current-contract) before) amount)
+        ERR_VAULT_BUSY
+      )
+      (map-set cycle-settlement reward-cycle
+        (merge settlement { stx-out: (+ (get stx-out settlement) amount) })
+      )
+      (var-set unpaid-stx (+ (var-get unpaid-stx) amount))
+      (var-set vault-cycle none)
+      (ok amount)
+    )
+  )
+)
+
+(define-public (recover-swap-vault (vault <swap-vault-interface>))
+  (begin
+    (try! (assert-active-vault vault))
+    (let (
+        (reward-cycle (unwrap! (var-get vault-cycle) ERR_NO_ACTIVE_VAULT))
+        (settlement (get-settlement reward-cycle))
+      )
+      (asserts! (> burn-block-height (get deadline settlement))
+        ERR_RECOVERY_TOO_SOON
+      )
+      (let ((recovered (try! (contract-call? vault emergency-recover))))
+        (map-set cycle-settlement reward-cycle
+          (merge settlement { stx-out: (+ (get stx-out settlement) (get stx recovered)) })
+        )
+        (map-set recovered-sbtc-by-cycle reward-cycle
+          (+ (default-to u0 (map-get? recovered-sbtc-by-cycle reward-cycle))
+            (get sbtc recovered)
+          ))
+        (var-set unpaid-stx (+ (var-get unpaid-stx) (get stx recovered)))
+        (var-set unswapped-sats (+ (var-get unswapped-sats) (get sbtc recovered)))
+        (var-set vault-cycle none)
+        (print {
+          topic: "recover-swap-vault",
+          reward-cycle: reward-cycle,
+          recovered: recovered,
+        })
+        (ok recovered)
+      )
+    )
+  )
+)
+
+(define-public (refloor-vault
+    (update (buff 8192))
+    (vault <swap-vault-interface>)
+  )
+  (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT jing-refloor update)
+    (contract-call? vault jing-refloor update)
   )
 )
 
@@ -563,55 +681,81 @@
   (var-get vault-cycle)
 )
 
-(define-public (set-vault-window-blocks (blocks uint))
+(define-public (set-vault-window-blocks
+    (blocks uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-window-blocks blocks)
+    (contract-call? vault set-window-blocks blocks)
   )
 )
 
-(define-public (set-vault-leeway-bps (bps uint))
+(define-public (set-vault-leeway-bps
+    (bps uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-leeway-bps bps)
+    (contract-call? vault set-leeway-bps bps)
   )
 )
 
-(define-public (set-vault-slippage-bps (bps uint))
+(define-public (set-vault-slippage-bps
+    (bps uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-slippage-bps bps)
+    (contract-call? vault set-slippage-bps bps)
   )
 )
 
-(define-public (set-vault-max-chunk-sats (sats uint))
+(define-public (set-vault-max-chunk-sats
+    (sats uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-max-chunk-sats sats)
+    (contract-call? vault set-max-chunk-sats sats)
   )
 )
 
-(define-public (set-vault-dia-band-bps (bps uint))
+(define-public (set-vault-dia-band-bps
+    (bps uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-dia-band-bps bps)
+    (contract-call? vault set-dia-band-bps bps)
   )
 )
 
-(define-public (set-vault-router-cooldown (blocks uint))
+(define-public (set-vault-router-cooldown
+    (blocks uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-router-cooldown blocks)
+    (contract-call? vault set-router-cooldown blocks)
   )
 )
 
 (define-public (jing-take
     (amount uint)
     (update (buff 8192))
+    (vault <swap-vault-interface>)
   )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT jing-take amount update)
+    (contract-call? vault jing-take amount update)
   )
 )
 
@@ -622,19 +766,25 @@
     (xyk uint)
     (velar uint)
     (update (buff 8192))
+    (vault <swap-vault-interface>)
   )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT router-swap-split amount jing dlmm xyk velar
+    (contract-call? vault router-swap-split amount jing dlmm xyk velar
       update
     )
   )
 )
 
-(define-public (set-vault-no-pyth-slippage-bps (bps uint))
+(define-public (set-vault-no-pyth-slippage-bps
+    (bps uint)
+    (vault <swap-vault-interface>)
+  )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT set-no-pyth-slippage-bps bps)
+    (contract-call? vault set-no-pyth-slippage-bps bps)
   )
 )
 
@@ -643,10 +793,12 @@
     (dlmm uint)
     (xyk uint)
     (velar uint)
+    (vault <swap-vault-interface>)
   )
   (begin
+    (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? SWAP_VAULT router-swap-split-dia amount dlmm xyk velar)
+    (contract-call? vault router-swap-split-dia amount dlmm xyk velar)
   )
 )
 
