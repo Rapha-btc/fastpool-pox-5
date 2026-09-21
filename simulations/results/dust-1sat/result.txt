@@ -1,0 +1,34 @@
+simulation f369264466f1efa4bcfec6763b8db052
+
+PASS  1 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u1) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  2 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u2) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  3 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u3) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  10 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u10) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  100 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u100) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  1000 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u1000) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  10000 sat(s): does the router actually sell it?
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u10000) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+PASS  deploy dust-vault-unfixed
+        (ok true)
+PASS  deploy dust-vault-fixed
+        (ok true)
+PASS  unfixed vault starts empty
+        true
+PASS  fixed vault starts empty
+        true
+PASS  donate 1 sat to the unfixed vault
+        (ok true)
+PASS  donate 1 sat to the fixed vault
+        (ok true)
+PASS  UNFIXED: 1 sat makes it look non-empty, so the batch cannot close
+        false
+PASS  FIXED: 1 sat is tolerated, the batch can close
+        true
+
+15/15

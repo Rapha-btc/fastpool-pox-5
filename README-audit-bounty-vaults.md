@@ -234,9 +234,43 @@ dust arrives *after* the last swap and the balance is exactly 1 sat:
    they assert `amount == jing + dlmm + xyk + velar`, and there is no way to say
    which venue extra dust belongs to.
 
-Not simulated — an stxer fork run of the 1-sat case across all three vaults
-needs `PYTH_API_KEY`, which is not on disk. `clarinet check` is green on
-fastpool-pox-5 (9 contracts, 0 errors); the juice and citycoins trees have
+### Simulated on a mainnet fork
+
+`simulations/dust-1sat-stxer.mjs` deploys the fixed vault beside a copy with the
+fix backed out, donates one sat to each, and reads `is-empty`:
+
+| vault copy | `is-empty` after a 1-sat donation |
+|---|---|
+| unfixed (`is-eq (sbtc-balance) u0`) | **false** — the batch cannot close |
+| fixed (`<= (sbtc-balance) DUST_SATS`) | **true** — the batch closes |
+
+`simulations/dust-vaults-stxer.mjs` then asks whether a small balance can simply
+be swept instead, driving each vault's own `router-swap` (test copies with POOL
+repointed at the driver; all other logic is the production source):
+
+| vault | 1 sat | 500 | 1000 | 2000 |
+|---|---|---|---|---|
+| fastpool | `(err u3002)` | ok | ok | ok |
+| juice | `(err u3002)` | ok | ok | ok |
+
+`is-empty` reads true in every one of those cases. So `DUST_SATS u2` is the
+right threshold: from 500 sats up the vault just sells the balance, and only 1-2
+sats are genuinely unsweepable.
+
+A caution for anyone re-running this: an earlier attempt called
+`swap-router-sbtc-stx-jing-v5` **directly**, and every size returned `out u0` or
+`(err none)` — including 10,000 sats, which plainly does sell. The vaults call
+the router inside `as-contract?` with an allowance of
+`amount + (get min-token-x mins)`, the headroom the book's 1,000-sat minimum
+deposit needs, and without it the small legs cannot go through. The router must
+be exercised through a vault or not at all; `simulations/dust-router-stxer.mjs`
+is kept only as the record of that dead end.
+
+ccd016 was not covered by the vault run: it opens batches through
+`fund-from-treasury` rather than `fund`, so the driver never opened a window and
+every call returned `ERR_WINDOW_OPEN`.
+
+`clarinet check` is green on fastpool-pox-5; the juice and citycoins trees have
 pre-existing errors in unrelated files, and neither edited vault adds one.
 
 ---
