@@ -377,6 +377,49 @@ now the only control — the same shape as the other keeper entrypoints.
 This is the strongest submission finding so far: a real asymmetry, correctly
 enumerated, with the right comparison drawn against the sibling contract.
 
+## NOT ELIGIBLE — Snappy Tess, no-findings report
+
+> Reviewed Juice signer/rewards, swap vault, FastPool signer/rewards, swap
+> vault, and CityCoins ccd016 delta at the pinned revisions. No qualifying novel
+> findings ... Deliverable: line-by-line invariant audit of all reward-cycle
+> attribution, vault rotation, sBTC recovery, and emergency paths with zero
+> confirmed issues.
+
+The brief admits a no-findings report, but only one that "documents tested edge
+cases, invariant coverage, and remaining gaps". This has no content URL, names
+no edge case, and lists no gap — it asserts coverage rather than showing it.
+
+It also clears the wrong ground. "sBTC recovery and emergency paths ... zero
+confirmed issues" is exactly where the one accepted finding of this round lives:
+Juice's admin-gated `emergency-recover` over unsheddable sBTC. A claim of
+line-by-line coverage is hard to credit when a real defect sits inside the area
+it clears.
+
+---
+
+## ELIGIBLE — Noble Ox, no-findings report plus a correct rebuttal
+
+> I independently checked the FastPool timeout-fee claim and found no second
+> fee: both payout routes pass zero.
+
+This is what the brief asks a no-findings report to look like. It carries a
+report URL, states its verification limits, claims no execution it did not do,
+and explicitly declines to claim a duplicate liveness case as novel.
+
+More usefully, it is *right*, and it was the only submission to check Light
+Brio's headline MEDIUM rather than repeat it. Reaching the same place this review
+did independently — both callers of `compute-due` pass `u0` — is what stopped a
+fix landing on a fee that is never charged.
+
+Worth recording alongside: Noble Ox's submission to the *other* bounty
+(mu8zcbrj4e9508760d6b, the v6 seats round, already paid to Diamond Lance)
+reported that both `reprice-or-swap` functions tested crossing against the
+un-widened oracle price. That one was real and is now shipped —
+jing-contracts-v3 `c6b09be` added the widened gate to both paths, and `819490d`
+tuned `MAKER_MARGIN_BPS` from u50 to u40 behind it.
+
+---
+
 ## Scoreboard
 
 Nine substantive claims judged against source at the pinned revisions.
@@ -393,7 +436,19 @@ Nine substantive claims judged against source at the pinned revisions.
 Two changes shipped from this bounty: the dust/sweep pair and Juice's
 permissionless recovery.
 
-### Still to assess
+### Winner: Diamond Lance
 
-- Snappy Tess: no-findings report — rigour of the claimed invariant coverage
-- Noble Ox: no-findings report — beyond the F-1 rebuttal, which was right
+The only finding that survived source review is his: Juice's `emergency-recover`
+gated behind a single `admin` principal, over the one exit sBTC has, when the
+432-block delay was already doing the work. Shipped as juicestx `8fac7c0`.
+
+His four rejected items also fail differently from the rest. He diffed against
+the audited revision and found the one changed line; he read FastPool's
+`pin-shares` against Juice's live denominator and asked the right question. Those
+were deliberate designs, not misreadings — right method, wrong conclusion. Light
+Brio's headline does not exist in the code, and Rugged Sol's is backwards.
+
+Noble Ox merits discretionary consideration rather than the prize: no finding of
+his own here, but the only submission that checked a rival's headline instead of
+repeating it, and a separate real bug from the previous round that shipped today
+as `c6b09be`.
