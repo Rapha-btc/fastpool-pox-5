@@ -36,6 +36,14 @@
 (define-constant MAX_SLIPPAGE_BPS u1000)
 (define-constant MAX_DIA_BAND_BPS u5000)
 (define-constant MAX_CHUNK_SATS u100000000)
+
+;; sBTC transfers in are permissionless, so anyone can leave a sat or two in the
+;; vault. Dust that small cannot be sold - every router stage skips it and the
+;; swap returns zero - so an exact-zero emptiness test would let a 1-sat gift
+;; hold a batch open until the 432-block recovery. Treat it as empty instead;
+;; it simply rides into the next batch.
+(define-constant DUST_SATS u2)
+
 (define-constant MAX_COOLDOWN_BLOCKS u144)
 
 (define-constant VELAR_SLIPPAGE_BPS u60)
@@ -294,10 +302,10 @@
 )
 
 (define-public (jing-take
-    (amount uint)
+    (requested uint)
     (update (buff 8192))
   )
-  (begin
+  (let ((amount (sweep-amount requested)))
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
     (asserts! (window-elapsed) ERR_WINDOW_OPEN)
     (try! (check-amount amount))
@@ -322,10 +330,11 @@
 )
 
 (define-public (router-swap
-    (amount uint)
+    (requested uint)
     (update (buff 8192))
   )
   (let (
+      (amount (sweep-amount requested))
       (mid (try! (current-mid update)))
       (limit (floor-of mid))
       (min-out (floor-out amount limit))
@@ -541,6 +550,29 @@
   )
 )
 
+;; The amount a single-venue swap actually sells.
+;;
+;; A keeper sizes the final chunk from the balance it read a block earlier, so a
+;; sat donated in between leaves a remainder that keeps the batch open and forces
+;; a retry at the griefer's chosen pace. Once the whole balance fits in one chunk
+;; there is no reason to sell less than all of it, so sweep: the donation goes out
+;; with the funds and `close-if-empty` lands on zero in the same transaction.
+;;
+;; Above the cap the requested chunk is honoured unchanged - that is a mid-run
+;; slice, and sweeping it would breach `max-chunk-sats`.
+;;
+;; Split swaps are deliberately excluded: their amount must equal the sum of the
+;; per-venue legs, and there is no way to say which venue the extra dust belongs
+;; to.
+(define-private (sweep-amount (amount uint))
+  (let ((balance (sbtc-balance)))
+    (if (<= balance (var-get max-chunk-sats))
+      balance
+      amount
+    )
+  )
+)
+
 (define-private (sbtc-balance)
   (unwrap-panic (contract-call? 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token
     get-balance current-contract
@@ -647,7 +679,7 @@
       get-current-cycle
     )))
     (and
-      (is-eq (sbtc-balance) u0)
+      (<= (sbtc-balance) DUST_SATS)
       (is-eq
         (contract-call?
           'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
