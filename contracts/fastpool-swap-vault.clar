@@ -1,3 +1,11 @@
+;; The signer manager dispatches every vault call through
+;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait.swap-vault-trait
+;; (signer-manager-vault-stx-rewards.clar:26). Declaring it here makes the
+;; compiler prove conformance at check time instead of leaving a signature drift
+;; to surface at runtime, after deploy, when the contract can no longer change.
+;; The Juice vault has always declared its trait; this closes the gap.
+(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait.swap-vault-trait)
+
 (define-constant ERR_RECOVERY_TOO_SOON (err u16046))
 (define-constant ERR_BUSY (err u16045))
 (define-constant ERR_UNAUTHORIZED (err u16000))
@@ -26,7 +34,7 @@
 (define-constant WSTX_TOKEN 'SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2)
 (define-constant ASSET_WSTX "wstx")
 
-(define-constant JING_MARKET 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6)
+(define-constant JING_MARKET 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2)
 (define-constant JING_ROUTER 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5)
 
 (define-constant RECOVERY_DELAY_BLOCKS u432)
@@ -675,21 +683,21 @@
 
 (define-read-only (is-empty)
   (let ((cycle (contract-call?
-      'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
+      'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2
       get-current-cycle
     )))
     (and
       (<= (sbtc-balance) DUST_SATS)
       (is-eq
         (contract-call?
-          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
+          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2
           get-token-x-deposit cycle current-contract
         )
         u0
       )
       (is-eq
         (contract-call?
-          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
+          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2
           get-token-x-parked current-contract
         )
         u0
@@ -737,7 +745,7 @@
 
 (define-read-only (get-upgrade-status)
   (let ((cycle (contract-call?
-      'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
+      'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2
       get-current-cycle
     )))
     (ok {
@@ -747,11 +755,11 @@
       stx-balance: (stx-get-balance current-contract),
       batch-start: (var-get batch-start),
       jing-resting: (contract-call?
-        'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
+        'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2
         get-token-x-deposit cycle current-contract
       ),
       jing-parked: (contract-call?
-        'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6
+        'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-2
         get-token-x-parked current-contract
       ),
     })
