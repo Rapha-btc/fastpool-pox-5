@@ -23,6 +23,7 @@
 (define-constant ERR_COOLDOWN (err u16044))
 (define-constant ERR_OUT_OF_RANGE (err u16033))
 (define-constant ERR_SPLIT_MISMATCH (err u16040))
+(define-constant ERR_UPDATE_REQUIRED (err u16041))
 
 (define-constant PRICE_PRECISION u100000000)
 (define-constant DECIMAL_FACTOR u100)
@@ -212,32 +213,39 @@
   )
 )
 
-(define-public (emergency-recover)
+(define-public (emergency-recover (update (optional (buff 8192))))
   (begin
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
     (let (
         (start (unwrap! (var-get batch-start) ERR_NO_CLOCK))
         (cycle (contract-call? JING_MARKET get-current-cycle))
-        (resting (contract-call? JING_MARKET get-token-x-deposit cycle current-contract))
-        (parked (contract-call? JING_MARKET get-token-x-parked current-contract))
+        (escrowed (default-to u0
+          (get amount (contract-call? JING_MARKET get-token-x-pending-deposit current-contract))
+        ))
       )
       (asserts! (>= burn-block-height (+ start RECOVERY_DELAY_BLOCKS))
         ERR_RECOVERY_TOO_SOON
       )
-      (if (or (> resting u0) (> parked u0))
+      (if (> escrowed u0)
         (begin
-          (try! (reclaim-core))
+          (try! (contract-call? JING_MARKET settle-token-x-deposit current-contract
+            (unwrap! update ERR_UPDATE_REQUIRED) SBTC_TOKEN ASSET_SBTC
+          ))
           true
         )
         true
       )
-
-      (if (and (> resting u0) (> parked u0))
-        (begin
-          (try! (reclaim-core))
+      (let (
+          (resting (contract-call? JING_MARKET get-token-x-deposit cycle current-contract))
+          (parked (contract-call? JING_MARKET get-token-x-parked current-contract))
+        )
+        (if (or (> resting u0) (> parked u0))
+          (begin
+            (try! (reclaim-core))
+            true
+          )
           true
         )
-        true
       )
       (let (
           (sbtc (sbtc-balance))
@@ -288,7 +296,7 @@
     (asserts! (window-open) ERR_WINDOW_CLOSED)
     (try! (check-amount amount))
     (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC amount))
-      (try! (contract-call? JING_MARKET deposit-token-x amount floor (some u0) update
+      (try! (contract-call? JING_MARKET deposit-token-x amount floor (some u0)
         SBTC_TOKEN ASSET_SBTC
       ))
     ))
@@ -702,6 +710,12 @@
         )
         u0
       )
+      (is-none
+        (contract-call?
+          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3
+          get-token-x-pending-deposit current-contract
+        )
+      )
     )
   )
 )
@@ -716,7 +730,7 @@
     )
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
     (try! (as-contract? ()
-      (try! (contract-call? JING_MARKET set-token-x-limit floor (some u0) update))
+      (try! (contract-call? JING_MARKET set-token-x-limit floor (some u0)))
     ))
     (print {
       notification: "jing-refloor",
