@@ -1,5 +1,7 @@
 # Two-phase pool vault stxer simulations
 
+> Current 2026-09-23 v6-3 recovery and regression results: [cancel-only recovery verification](README-v6-3-recovery.md). The notes below describe the earlier verification; linked JSON artifacts now contain the current reruns.
+
 Run from either repository root:
 
 ```sh

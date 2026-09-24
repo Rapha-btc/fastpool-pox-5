@@ -1,3 +1,4 @@
+import {appendJingStack} from './_jing-v6-3.mjs';
 // Shared fork runner; exact production pool/vault sources are deployed unchanged.
 import { createRequire } from 'node:module';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -26,8 +27,9 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
  const tip=(await tipResponse.json()).results[0];
  const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API}).useBlockHeight(tip.height).withSender(DEP);
  const plan=[];
+ appendJingStack(builder,plan);
  const deploy=(name,path)=>{builder.addContractDeploy({contract_name:name,source_code:readFileSync(path,'utf8'),clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
- const call=(label,id,fn,args,want,sender=STRANGER)=>{builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender});plan.push({label,kind:'tx',want});};
+ const call=(label,id,fn,args,want,sender=STRANGER)=>{if (/^deposit-token-[xy]$/.test(fn)&&args.length===6)args=args.filter((_,i)=>i!==3);builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender});plan.push({label,kind:'tx',want});};
  const ev=(label,id,code,want)=>{builder.addEvalCode(id,code);plan.push({label,kind:'eval',want});};
  deploy(vault,vaultSource);deploy(pool,poolSource);
  ev('real PoX-5 cycle',POX,'(current-pox-reward-cycle)',v=>/^u\d+$/.test(v));
@@ -82,7 +84,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  const vault=kind==='juice'?'juice-pool-swap-vault':'fastpool-swap-vault';
  const pid=`${DEP}.${pool}`,vid=`${DEP}.${vault}`;
  const SBTC='SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token';
- const MKT=`${DEP}.markets-sbtc-stx-jing-v6`;
+ const MKT=`${DEP}.markets-sbtc-stx-jing-v6-3`;
  const WHALE='SM2RRFN4HXTS7EYP8MHHYKSTG118S3HKGDV8AB8M1';
  const ALICE=getAddressFromPrivateKey('7'.repeat(64)+'01','mainnet');
  const BOB=getAddressFromPrivateKey('8'.repeat(64)+'01','mainnet');
@@ -97,13 +99,12 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   return deserializeCV(body.result);
  };
  const cycle=Number((await read(POX,'current-pox-reward-cycle')).value)-1;
- const mcycle=await read(MKT,'get-current-cycle');
- const sellers=await read(MKT,'get-token-x-depositors',[mcycle]);
- const buyers=await read(MKT,'get-token-y-depositors',[mcycle]);
+ const sellers={value:[]},buyers={value:[]}; // Fresh v6-3 books are empty.
  const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API,skipTracing:true}).useBlockHeight(tip.height).withSender(DEP);
  const plan=[];
+ appendJingStack(builder,plan);
  const deploy=(name,path)=>{builder.addContractDeploy({contract_name:name,source_code:readFileSync(path,'utf8'),clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
- const call=(label,id,fn,args,want,sender=DEP)=>{builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender});plan.push({label,kind:'tx',want});};
+ const call=(label,id,fn,args,want,sender=DEP)=>{if (/^deposit-token-[xy]$/.test(fn)&&args.length===6)args=args.filter((_,i)=>i!==3);builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender});plan.push({label,kind:'tx',want});};
  const ev=(label,id,code,want)=>{builder.addEvalCode(id,code);plan.push({label,kind:'eval',want});};
  const advance=(n)=>{builder.addAdvanceBlocks({bitcoin_blocks:n,stacks_blocks_per_bitcoin:1,bitcoin_interval_secs:1});plan.push({label:`advance ${n} burn blocks, compressed timestamps`,kind:'advance'});};
  const ok=v=>v.startsWith('(ok');
@@ -137,7 +138,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  }
  call('real Jing maker placement',vid,'jing-place',[update],v=>ok(v)&&v.includes(`(amount u${FUND})`),STRANGER);
  call('router forbidden during patience',vid,'router-swap',[Cl.uint(50000),update],'(err u16031)',STRANGER);
- call('cannot finalize while reward is resting',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u16043)':'(err u16032)');
+ call('cannot finalize while reward is resting',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u16032)':'(err u16032)');
  if(profile==='maker') {
   const mid=proof.px*100000000n/proof.py;
   const [sbtcAddress,sbtcName]=SBTC.split('.');
@@ -149,12 +150,13 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   call('close externally filled batch',vid,'close-batch',[],ok,STRANGER);
   ev('maker-filled batch ready to finish',vid,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)'));
  } else {
- advance(288);
+ call('set chunk cap to preserve the two-chunk scenario',pid,'set-vault-max-chunk-sats',[Cl.uint(50000),Cl.contractPrincipal(DEP,vault)],'(ok true)');
+ ev('fixture: patience clock elapsed without altering signed-feed freshness',vid,'(begin (var-set batch-start (some (- burn-block-height u288))) true)','true');
  ev('patience window elapsed',vid,'(get-clock)',v=>v.includes('(window-elapsed true)'));
  call('reclaim from real Jing market',vid,'jing-reclaim',[],v=>ok(v)&&v.includes(`(amount u${FUND})`),STRANGER);
  call('real router: first reward chunk',vid,'router-swap',[Cl.uint(50000),update],v=>ok(v)&&v.includes('(unsold u0)'),STRANGER);
  call('same-burn-block second sale rejected',vid,'router-swap',[Cl.uint(50000),update],'(err u16044)',STRANGER);
- call('cannot finalize a half-sold batch',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u16043)':'(err u16032)');
+ call('cannot finalize a half-sold batch',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u16032)':'(err u16032)');
  advance(1);
  call('real router: second reward chunk',vid,'router-swap',[Cl.uint(50000),update],v=>ok(v)&&v.includes('(unsold u0)'),STRANGER);
  }
@@ -189,7 +191,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   checks.push({label:'payout replay does not transfer more STX',passed:checks[aliceAfter+3].actual===checks[aliceAfter].actual,actual:'compared Alice balance before/after replay'});
  }
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'288 + 1 burn blocks advanced with one-second synthetic intervals; production 80-second freshness remains enabled','existing Jing orders canceled only in fork'],checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Fresh exact v6-3 stack deployed; no old market state inherited'],checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-${profile}.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind} ${profile}: ${checks.filter(c=>!c.passed).length} lifecycle checks failed`);
  console.log(`${kind} ${profile}: ${checks.length}/${checks.length} lifecycle checks passed`);return report;

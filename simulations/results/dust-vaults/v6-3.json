@@ -1,0 +1,1066 @@
+{
+  "id": "7f59141b60e936923aab06d61902914f",
+  "url": "https://stxer.xyz/simulations/mainnet/7f59141b60e936923aab06d61902914f",
+  "checks": [
+    {
+      "label": "deploy exact jing-core-v6",
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "deploy exact jing-ladder-v1",
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "deploy exact markets-sbtc-stx-jing-v6-3",
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "deploy exact swap-router-sbtc-stx-jing-v5-3",
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "Jing sync-seat-count",
+      "kind": "tx",
+      "want": "(ok u10)",
+      "actual": "(ok u10)",
+      "passed": true
+    },
+    {
+      "label": "Jing set-verified-contract",
+      "kind": "tx",
+      "want": "(ok true)",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "Jing initialize",
+      "kind": "tx",
+      "want": "(ok true)",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "deploy CityCoins book",
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1: deploy test copy",
+      "vault": "fast",
+      "sats": 1,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1: real token funding",
+      "vault": "fast",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1: fund 1 sats",
+      "vault": "fast",
+      "sats": 1,
+      "actual": "(ok u1)",
+      "passed": true
+    },
+    {
+      "label": "fast/500: deploy test copy",
+      "vault": "fast",
+      "sats": 500,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/500: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/500: real token funding",
+      "vault": "fast",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/500: fund 500 sats",
+      "vault": "fast",
+      "sats": 500,
+      "actual": "(ok u500)",
+      "passed": true
+    },
+    {
+      "label": "fast/1000: deploy test copy",
+      "vault": "fast",
+      "sats": 1000,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1000: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1000: real token funding",
+      "vault": "fast",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1000: fund 1000 sats",
+      "vault": "fast",
+      "sats": 1000,
+      "actual": "(ok u1000)",
+      "passed": true
+    },
+    {
+      "label": "fast/2000: deploy test copy",
+      "vault": "fast",
+      "sats": 2000,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/2000: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/2000: real token funding",
+      "vault": "fast",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/2000: fund 2000 sats",
+      "vault": "fast",
+      "sats": 2000,
+      "actual": "(ok u2000)",
+      "passed": true
+    },
+    {
+      "label": "juice/1: deploy test copy",
+      "vault": "juice",
+      "sats": 1,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/1: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/1: real token funding",
+      "vault": "juice",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/1: fund 1 sats",
+      "vault": "juice",
+      "sats": 1,
+      "actual": "(ok u1)",
+      "passed": true
+    },
+    {
+      "label": "juice/500: deploy test copy",
+      "vault": "juice",
+      "sats": 500,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/500: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/500: real token funding",
+      "vault": "juice",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/500: fund 500 sats",
+      "vault": "juice",
+      "sats": 500,
+      "actual": "(ok u500)",
+      "passed": true
+    },
+    {
+      "label": "juice/1000: deploy test copy",
+      "vault": "juice",
+      "sats": 1000,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/1000: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/1000: real token funding",
+      "vault": "juice",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/1000: fund 1000 sats",
+      "vault": "juice",
+      "sats": 1000,
+      "actual": "(ok u1000)",
+      "passed": true
+    },
+    {
+      "label": "juice/2000: deploy test copy",
+      "vault": "juice",
+      "sats": 2000,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/2000: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/2000: real token funding",
+      "vault": "juice",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "juice/2000: fund 2000 sats",
+      "vault": "juice",
+      "sats": 2000,
+      "actual": "(ok u2000)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1: deploy test copy",
+      "vault": "ccd016",
+      "sats": 1,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1: real token funding",
+      "vault": "ccd016",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1: fund 1 sats",
+      "vault": "ccd016",
+      "sats": 1,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/500: deploy test copy",
+      "vault": "ccd016",
+      "sats": 500,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/500: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/500: real token funding",
+      "vault": "ccd016",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/500: fund 500 sats",
+      "vault": "ccd016",
+      "sats": 500,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1000: deploy test copy",
+      "vault": "ccd016",
+      "sats": 1000,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1000: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1000: real token funding",
+      "vault": "ccd016",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1000: fund 1000 sats",
+      "vault": "ccd016",
+      "sats": 1000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/2000: deploy test copy",
+      "vault": "ccd016",
+      "sats": 2000,
+      "kind": "deploy",
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/2000: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/2000: real token funding",
+      "vault": "ccd016",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "ccd016/2000: fund 2000 sats",
+      "vault": "ccd016",
+      "sats": 2000,
+      "actual": "(ok true)",
+      "passed": true
+    },
+    {
+      "label": "fast/1: accepted trade drains vault or refusal preserves funds",
+      "actual": "(err u3002); true; u1",
+      "passed": true
+    },
+    {
+      "label": "fast/500: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u27116629626938) (mid u27390534976706) (out u1363375) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "fast/1000: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u27116629626938) (mid u27390534976706) (out u2724012) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "fast/2000: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u27116629626938) (mid u27390534976706) (out u5448024) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "juice/1: accepted trade drains vault or refusal preserves funds",
+      "actual": "(err u3002); true; u1",
+      "passed": true
+    },
+    {
+      "label": "juice/500: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u27116629626938) (mid u27390534976706) (out u1363375) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "juice/1000: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u27116629626938) (mid u27390534976706) (out u2724012) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "juice/2000: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u27116629626938) (mid u27390534976706) (out u5448024) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1: accepted trade drains vault or refusal preserves funds",
+      "actual": "(err u3002); true; u1",
+      "passed": true
+    },
+    {
+      "label": "ccd016/500: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u27116629626938) (mid u27390534976706) (out u1363375) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "ccd016/1000: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u27116629626938) (mid u27390534976706) (out u2724012) (unsold u0))))); true; u0",
+      "passed": true
+    },
+    {
+      "label": "ccd016/2000: accepted trade drains vault or refusal preserves funds",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u27116629626938) (mid u27390534976706) (out u5448024) (unsold u0))))); true; u0",
+      "passed": true
+    }
+  ],
+  "fixtures": [
+    "Pool authority rebound in test copies; CityCoins DAO gate restricted to test sender",
+    "CityCoins receives a real token donation and an aged batch clock; treasury funding covered in main recovery matrix"
+  ],
+  "rows": [
+    {
+      "label": "deploy exact jing-core-v6",
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy exact jing-ladder-v1",
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy exact markets-sbtc-stx-jing-v6-3",
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy exact swap-router-sbtc-stx-jing-v5-3",
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "Jing sync-seat-count",
+      "kind": "tx",
+      "want": "(ok u10)",
+      "actual": "(ok u10)"
+    },
+    {
+      "label": "Jing set-verified-contract",
+      "kind": "tx",
+      "want": "(ok true)",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "Jing initialize",
+      "kind": "tx",
+      "want": "(ok true)",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy CityCoins book",
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1: deploy test copy",
+      "vault": "fast",
+      "sats": 1,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1: real token funding",
+      "vault": "fast",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1: fund 1 sats",
+      "vault": "fast",
+      "sats": 1,
+      "actual": "(ok u1)"
+    },
+    {
+      "label": "fast/1: router-swap 1",
+      "vault": "fast",
+      "sats": 1,
+      "measure": "swap",
+      "actual": "(err u3002)"
+    },
+    {
+      "label": "fast/1: is-empty after",
+      "vault": "fast",
+      "sats": 1,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "fast/1: sBTC balance after",
+      "vault": "fast",
+      "sats": 1,
+      "measure": "balance",
+      "actual": "u1"
+    },
+    {
+      "label": "fast/500: deploy test copy",
+      "vault": "fast",
+      "sats": 500,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/500: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/500: real token funding",
+      "vault": "fast",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/500: fund 500 sats",
+      "vault": "fast",
+      "sats": 500,
+      "actual": "(ok u500)"
+    },
+    {
+      "label": "fast/500: router-swap 500",
+      "vault": "fast",
+      "sats": 500,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u27116629626938) (mid u27390534976706) (out u1363375) (unsold u0)))))"
+    },
+    {
+      "label": "fast/500: is-empty after",
+      "vault": "fast",
+      "sats": 500,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "fast/500: sBTC balance after",
+      "vault": "fast",
+      "sats": 500,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "fast/1000: deploy test copy",
+      "vault": "fast",
+      "sats": 1000,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1000: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1000: real token funding",
+      "vault": "fast",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/1000: fund 1000 sats",
+      "vault": "fast",
+      "sats": 1000,
+      "actual": "(ok u1000)"
+    },
+    {
+      "label": "fast/1000: router-swap 1000",
+      "vault": "fast",
+      "sats": 1000,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u27116629626938) (mid u27390534976706) (out u2724012) (unsold u0)))))"
+    },
+    {
+      "label": "fast/1000: is-empty after",
+      "vault": "fast",
+      "sats": 1000,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "fast/1000: sBTC balance after",
+      "vault": "fast",
+      "sats": 1000,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "fast/2000: deploy test copy",
+      "vault": "fast",
+      "sats": 2000,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/2000: set-window-blocks u0",
+      "vault": "fast",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/2000: real token funding",
+      "vault": "fast",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fast/2000: fund 2000 sats",
+      "vault": "fast",
+      "sats": 2000,
+      "actual": "(ok u2000)"
+    },
+    {
+      "label": "fast/2000: router-swap 2000",
+      "vault": "fast",
+      "sats": 2000,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u27116629626938) (mid u27390534976706) (out u5448024) (unsold u0)))))"
+    },
+    {
+      "label": "fast/2000: is-empty after",
+      "vault": "fast",
+      "sats": 2000,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "fast/2000: sBTC balance after",
+      "vault": "fast",
+      "sats": 2000,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "juice/1: deploy test copy",
+      "vault": "juice",
+      "sats": 1,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/1: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/1: real token funding",
+      "vault": "juice",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/1: fund 1 sats",
+      "vault": "juice",
+      "sats": 1,
+      "actual": "(ok u1)"
+    },
+    {
+      "label": "juice/1: router-swap 1",
+      "vault": "juice",
+      "sats": 1,
+      "measure": "swap",
+      "actual": "(err u3002)"
+    },
+    {
+      "label": "juice/1: is-empty after",
+      "vault": "juice",
+      "sats": 1,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "juice/1: sBTC balance after",
+      "vault": "juice",
+      "sats": 1,
+      "measure": "balance",
+      "actual": "u1"
+    },
+    {
+      "label": "juice/500: deploy test copy",
+      "vault": "juice",
+      "sats": 500,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/500: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/500: real token funding",
+      "vault": "juice",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/500: fund 500 sats",
+      "vault": "juice",
+      "sats": 500,
+      "actual": "(ok u500)"
+    },
+    {
+      "label": "juice/500: router-swap 500",
+      "vault": "juice",
+      "sats": 500,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u27116629626938) (mid u27390534976706) (out u1363375) (unsold u0)))))"
+    },
+    {
+      "label": "juice/500: is-empty after",
+      "vault": "juice",
+      "sats": 500,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "juice/500: sBTC balance after",
+      "vault": "juice",
+      "sats": 500,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "juice/1000: deploy test copy",
+      "vault": "juice",
+      "sats": 1000,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/1000: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/1000: real token funding",
+      "vault": "juice",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/1000: fund 1000 sats",
+      "vault": "juice",
+      "sats": 1000,
+      "actual": "(ok u1000)"
+    },
+    {
+      "label": "juice/1000: router-swap 1000",
+      "vault": "juice",
+      "sats": 1000,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u27116629626938) (mid u27390534976706) (out u2724012) (unsold u0)))))"
+    },
+    {
+      "label": "juice/1000: is-empty after",
+      "vault": "juice",
+      "sats": 1000,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "juice/1000: sBTC balance after",
+      "vault": "juice",
+      "sats": 1000,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "juice/2000: deploy test copy",
+      "vault": "juice",
+      "sats": 2000,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/2000: set-window-blocks u0",
+      "vault": "juice",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/2000: real token funding",
+      "vault": "juice",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "juice/2000: fund 2000 sats",
+      "vault": "juice",
+      "sats": 2000,
+      "actual": "(ok u2000)"
+    },
+    {
+      "label": "juice/2000: router-swap 2000",
+      "vault": "juice",
+      "sats": 2000,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u27116629626938) (mid u27390534976706) (out u5448024) (unsold u0)))))"
+    },
+    {
+      "label": "juice/2000: is-empty after",
+      "vault": "juice",
+      "sats": 2000,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "juice/2000: sBTC balance after",
+      "vault": "juice",
+      "sats": 2000,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "ccd016/1: deploy test copy",
+      "vault": "ccd016",
+      "sats": 1,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1: real token funding",
+      "vault": "ccd016",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1: fund 1 sats",
+      "vault": "ccd016",
+      "sats": 1,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1: router-swap 1",
+      "vault": "ccd016",
+      "sats": 1,
+      "measure": "swap",
+      "actual": "(err u3002)"
+    },
+    {
+      "label": "ccd016/1: is-empty after",
+      "vault": "ccd016",
+      "sats": 1,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "ccd016/1: sBTC balance after",
+      "vault": "ccd016",
+      "sats": 1,
+      "measure": "balance",
+      "actual": "u1"
+    },
+    {
+      "label": "ccd016/500: deploy test copy",
+      "vault": "ccd016",
+      "sats": 500,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/500: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/500: real token funding",
+      "vault": "ccd016",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/500: fund 500 sats",
+      "vault": "ccd016",
+      "sats": 500,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/500: router-swap 500",
+      "vault": "ccd016",
+      "sats": 500,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u27116629626938) (mid u27390534976706) (out u1363375) (unsold u0)))))"
+    },
+    {
+      "label": "ccd016/500: is-empty after",
+      "vault": "ccd016",
+      "sats": 500,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "ccd016/500: sBTC balance after",
+      "vault": "ccd016",
+      "sats": 500,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "ccd016/1000: deploy test copy",
+      "vault": "ccd016",
+      "sats": 1000,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1000: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1000: real token funding",
+      "vault": "ccd016",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1000: fund 1000 sats",
+      "vault": "ccd016",
+      "sats": 1000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/1000: router-swap 1000",
+      "vault": "ccd016",
+      "sats": 1000,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u27116629626938) (mid u27390534976706) (out u2724012) (unsold u0)))))"
+    },
+    {
+      "label": "ccd016/1000: is-empty after",
+      "vault": "ccd016",
+      "sats": 1000,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "ccd016/1000: sBTC balance after",
+      "vault": "ccd016",
+      "sats": 1000,
+      "measure": "balance",
+      "actual": "u0"
+    },
+    {
+      "label": "ccd016/2000: deploy test copy",
+      "vault": "ccd016",
+      "sats": 2000,
+      "kind": "deploy",
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/2000: set-window-blocks u0",
+      "vault": "ccd016",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/2000: real token funding",
+      "vault": "ccd016",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/2000: fund 2000 sats",
+      "vault": "ccd016",
+      "sats": 2000,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "ccd016/2000: router-swap 2000",
+      "vault": "ccd016",
+      "sats": 2000,
+      "measure": "swap",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u27116629626938) (mid u27390534976706) (out u5448024) (unsold u0)))))"
+    },
+    {
+      "label": "ccd016/2000: is-empty after",
+      "vault": "ccd016",
+      "sats": 2000,
+      "measure": "empty",
+      "actual": "true"
+    },
+    {
+      "label": "ccd016/2000: sBTC balance after",
+      "vault": "ccd016",
+      "sats": 2000,
+      "measure": "balance",
+      "actual": "u0"
+    }
+  ]
+}

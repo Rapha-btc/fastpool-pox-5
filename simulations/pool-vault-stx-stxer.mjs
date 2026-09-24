@@ -1,3 +1,4 @@
+if(process.argv.includes('--recovery')) { await (await import('./_vault-recovery-v6-3.mjs')).runRecoveryMatrix('fastpool'); process.exit(0); }
 import { runPoolVaultFork, runPoolVaultLifecycle } from './_pool-vault-stxer.mjs';
 import { fileURLToPath } from 'node:url';
 const run=(process.argv.includes('--lifecycle')||process.argv.includes('--maker'))?runPoolVaultLifecycle:runPoolVaultFork;
