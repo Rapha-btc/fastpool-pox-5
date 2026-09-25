@@ -100,7 +100,7 @@ for (const v of VAULTS) {
     else builder.addEvalCode(cid,'(begin (var-set batch-start (some (- burn-block-height u1))) (ok true))');
     push(`${v.key}/${sats}: fund ${sats} sats`, { vault: v.key, sats });
 
-    builder.addContractCall({ contract_id: cid, function_name: 'router-swap', function_args: [Cl.uint(sats), update], sender: DEP });
+    builder.addContractCall({ contract_id: cid, function_name: 'router-swap', function_args: [update], sender: DEP });
     push(`${v.key}/${sats}: router-swap ${sats}`, { vault: v.key, sats, measure: 'swap' });
 
     builder.addEvalCode(cid, '(is-empty)');

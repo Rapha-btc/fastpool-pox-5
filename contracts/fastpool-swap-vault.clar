@@ -64,7 +64,7 @@
 (define-data-var window-blocks uint u288)
 (define-data-var leeway-bps uint u500)
 (define-data-var slippage-bps uint u100)
-(define-data-var max-chunk-sats uint u5000000)
+(define-data-var max-chunk-sats uint u1000000)
 (define-data-var dia-band-bps uint u1000)
 (define-data-var router-cooldown-blocks uint u1)
 (define-data-var last-router-swap uint u0)
@@ -338,19 +338,17 @@
   )
 )
 
-(define-public (router-swap
-    (requested uint)
-    (update (buff 8192))
-  )
+(define-public (router-swap (update (buff 8192)))
   (let (
-      (amount (sweep-amount requested))
+      ;; permissionless: always the whole balance or one full chunk, never a
+      ;; caller-chosen sliver that burns the shared cooldown
+      (amount (chunk-amount))
       (mid (try! (current-mid update)))
       (limit (floor-of mid))
       (min-out (floor-out amount limit))
       (mins (contract-call? JING_MARKET get-min-deposits))
     )
     (asserts! (window-elapsed) ERR_WINDOW_OPEN)
-    (asserts! (<= amount (var-get max-chunk-sats)) ERR_CHUNK_TOO_BIG)
     (try! (check-amount amount))
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
@@ -578,6 +576,20 @@
     (if (<= balance (var-get max-chunk-sats))
       balance
       amount
+    )
+  )
+)
+
+;; what a permissionless router-swap sells: the whole balance, or one full
+;; chunk when the balance is bigger
+(define-private (chunk-amount)
+  (let (
+      (balance (sbtc-balance))
+      (chunk (var-get max-chunk-sats))
+    )
+    (if (<= balance chunk)
+      balance
+      chunk
     )
   )
 )
