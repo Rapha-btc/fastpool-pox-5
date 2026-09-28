@@ -32,6 +32,8 @@
 (define-constant PRICE_PRECISION u100000000)
 (define-constant DECIMAL_FACTOR u100)
 (define-constant BPS_PRECISION u10000)
+;; the market's TAKER_REBATE_MAX_BPS (markets-sbtc-stx-jing-v6-3)
+(define-constant JING_REBATE_MAX_BPS u70)
 
 (define-constant POOL .signer-manager-vault-stx-rewards)
 (define-constant SBTC_TOKEN 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
@@ -193,13 +195,14 @@
 ;; what this vault has on the market: live + parked + pending escrow
 (define-private (market-total)
   (let ((cycle (contract-call? JING_MARKET get-current-cycle)))
-    (+
-      (contract-call? JING_MARKET get-token-x-deposit cycle current-contract)
+    (+ (contract-call? JING_MARKET get-token-x-deposit cycle current-contract)
       (contract-call? JING_MARKET get-token-x-parked current-contract)
       (default-to u0
-        (get amount (contract-call? JING_MARKET get-token-x-pending-deposit current-contract))
-      )
-    )
+        (get amount
+          (contract-call? JING_MARKET get-token-x-pending-deposit
+            current-contract
+          ))
+      ))
   )
 )
 
@@ -230,7 +233,8 @@
     (asserts! (var-get ready-to-finish) ERR_NO_CLOCK)
     ;; a dust-only batch (<= DUST_SATS, nothing sold) closes with 0 STX:
     ;; a 0 transfer fails, so skip it (as emergency-recover does)
-    (and (> balance u0)
+    (and
+      (> balance u0)
       (try! (as-contract? ((with-stx balance))
         (try! (stx-transfer? balance current-contract POOL))
       ))
@@ -251,7 +255,10 @@
         (start (unwrap! (var-get batch-start) ERR_NO_CLOCK))
         (cycle (contract-call? JING_MARKET get-current-cycle))
         (escrowed (default-to u0
-          (get amount (contract-call? JING_MARKET get-token-x-pending-deposit current-contract))
+          (get amount
+            (contract-call? JING_MARKET get-token-x-pending-deposit
+              current-contract
+            ))
         ))
       )
       (asserts! (>= burn-block-height (+ start RECOVERY_DELAY_BLOCKS))
@@ -263,7 +270,11 @@
           (resting (contract-call? JING_MARKET get-token-x-deposit cycle current-contract))
           (parked (contract-call? JING_MARKET get-token-x-parked current-contract))
         )
-        (if (or (> escrowed u0) (> resting u0) (> parked u0))
+        (if (or
+            (> escrowed u0)
+            (> resting u0)
+            (> parked u0)
+          )
           (begin
             (try! (reclaim-core))
             true
@@ -382,7 +393,13 @@
     (try! (check-amount amount))
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
-        ((with-ft SBTC_TOKEN ASSET_SBTC (+ amount (get min-token-x mins))))
+        ;; the market refunds the unfilled rest (under min-x) and the unused
+        ;; rebate (at most the max rebate on `amount`), and the router re-sells
+        ;; both: allow that on top of `amount`
+        ((with-ft SBTC_TOKEN ASSET_SBTC
+          (+ amount (get min-token-x mins)
+            (/ (* amount JING_REBATE_MAX_BPS) BPS_PRECISION)
+          )))
         (try! (contract-call? JING_ROUTER smart-swap-sbtc-for-stx amount limit
           (some update) mid u0
         ))
@@ -392,9 +409,7 @@
       (let ((sold (- amount (get unsold result))))
         (asserts! (> sold ROUTER_SLACK_SATS) ERR_BELOW_FLOOR)
         (asserts!
-          (>= (get out result)
-            (floor-out (- sold ROUTER_SLACK_SATS) limit)
-          )
+          (>= (get out result) (floor-out (- sold ROUTER_SLACK_SATS) limit))
           ERR_BELOW_FLOOR
         )
       )
@@ -756,12 +771,10 @@
         )
         u0
       )
-      (is-none
-        (contract-call?
-          'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3
-          get-token-x-pending-deposit current-contract
-        )
-      )
+      (is-none (contract-call?
+        'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3
+        get-token-x-pending-deposit current-contract
+      ))
     )
   )
 )
