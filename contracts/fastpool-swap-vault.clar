@@ -40,7 +40,9 @@
 
 (define-constant RECOVERY_DELAY_BLOCKS u432)
 (define-constant MAX_DIA_AGE u7200)
-(define-constant MAX_WINDOW_BLOCKS u1008)
+;; the patience window must close before recovery opens (batch start +
+;; RECOVERY_DELAY_BLOCKS, also the pool's own recovery deadline)
+(define-constant MAX_WINDOW_BLOCKS u288)
 (define-constant MAX_LEEWAY_BPS u1000)
 (define-constant MAX_SLIPPAGE_BPS u1000)
 (define-constant MAX_DIA_BAND_BPS u5000)
