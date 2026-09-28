@@ -190,8 +190,29 @@
 )
 
 ;; Anyone may close a batch after all sBTC and Jing positions are gone.
+;; what this vault has on the market: live + parked + pending escrow
+(define-private (market-total)
+  (let ((cycle (contract-call? JING_MARKET get-current-cycle)))
+    (+
+      (contract-call? JING_MARKET get-token-x-deposit cycle current-contract)
+      (contract-call? JING_MARKET get-token-x-parked current-contract)
+      (default-to u0
+        (get amount (contract-call? JING_MARKET get-token-x-pending-deposit current-contract))
+      )
+    )
+  )
+)
+
+;; dust on the market (a 1-sat jing-place after the sell-out) would keep
+;; is-empty false until the window ends: when wallet + market is at most
+;; DUST_SATS, cancel it home first (no oracle), so the batch closes now
 (define-public (close-batch)
-  (begin
+  (let ((on-market (market-total)))
+    (and
+      (> on-market u0)
+      (<= (+ on-market (sbtc-balance)) DUST_SATS)
+      (is-ok (reclaim-core))
+    )
     (asserts! (is-empty) ERR_SOME_FUNDS)
     (asserts! (is-some (var-get batch-start)) ERR_NO_CLOCK)
     (var-set batch-start none)
