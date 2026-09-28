@@ -207,9 +207,13 @@
   (let ((balance (stx-get-balance current-contract)))
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
     (asserts! (var-get ready-to-finish) ERR_NO_CLOCK)
-    (try! (as-contract? ((with-stx balance))
-      (try! (stx-transfer? balance current-contract POOL))
-    ))
+    ;; a dust-only batch (<= DUST_SATS, nothing sold) closes with 0 STX:
+    ;; a 0 transfer fails, so skip it (as emergency-recover does)
+    (and (> balance u0)
+      (try! (as-contract? ((with-stx balance))
+        (try! (stx-transfer? balance current-contract POOL))
+      ))
+    )
     (var-set ready-to-finish false)
     (print {
       notification: "finish",
