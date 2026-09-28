@@ -21,6 +21,10 @@
 (define-constant ERR_CHUNK_TOO_BIG (err u16039))
 (define-constant ERR_SOME_FUNDS (err u16043))
 (define-constant ERR_COOLDOWN (err u16044))
+(define-constant ERR_BELOW_FLOOR (err u16047))
+;; the router lets each leg land up to ROUND_SLACK (2) sats under the limit;
+;; four legs at most
+(define-constant ROUTER_SLACK_SATS u8)
 (define-constant ERR_OUT_OF_RANGE (err u16033))
 (define-constant ERR_SPLIT_MISMATCH (err u16040))
 (define-constant ERR_UPDATE_REQUIRED (err u16041))
@@ -347,7 +351,6 @@
       (amount (chunk-amount))
       (mid (try! (current-mid update)))
       (limit (floor-of mid))
-      (min-out (floor-out amount limit))
       (mins (contract-call? JING_MARKET get-min-deposits))
     )
     (asserts! (window-elapsed) ERR_WINDOW_OPEN)
@@ -356,9 +359,20 @@
     (let ((result (try! (as-contract?
         ((with-ft SBTC_TOKEN ASSET_SBTC (+ amount (get min-token-x mins))))
         (try! (contract-call? JING_ROUTER smart-swap-sbtc-for-stx amount limit
-          (some update) mid min-out
+          (some update) mid u0
         ))
       ))))
+      ;; sell what fits inside the floor, keep the rest: every router leg
+      ;; already enforces the limit, so the floor is checked on what sold
+      (let ((sold (- amount (get unsold result))))
+        (asserts! (> sold ROUTER_SLACK_SATS) ERR_BELOW_FLOOR)
+        (asserts!
+          (>= (get out result)
+            (floor-out (- sold ROUTER_SLACK_SATS) limit)
+          )
+          ERR_BELOW_FLOOR
+        )
+      )
       (close-if-empty)
       (ok (print {
         notification: "router-swap",
