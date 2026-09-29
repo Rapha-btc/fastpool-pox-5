@@ -28,7 +28,7 @@ The actual pool calls `recover-swap-vault` with the vault trait. Its dynamic cal
 | fastpool-liquidation | 39/39 | [stxer](https://stxer.xyz/simulations/mainnet/40a3b9c7d02a7710a3258de8b816ce8a) | [JSON](results/pool-vault-stx/fastpool-liquidation.json) |
 | fastpool-maker | 35/35 | [stxer](https://stxer.xyz/simulations/mainnet/56d0c6f8b9add6d59062821ffcf9a7f3) | [JSON](results/pool-vault-stx/fastpool-maker.json) |
 
-The older cross-vault dust diagnostic was also updated and rerun: **68/68**, [stxer](https://stxer.xyz/simulations/mainnet/7f59141b60e936923aab06d61902914f), [JSON](results/dust-vaults/v6-3.json). Including it, this repository records **733/733** checks. It exercises test copies of all three vaults at 1, 500, 1,000 and 2,000 sats. The 1-sat trades return `u3002` and retain the sat; the larger trades fill and leave zero sBTC. `is-empty` intentionally considers up to 2 sats dust. This diagnostic rebinds pool authority to the test sender; CCD016 uses a restricted test-sender DAO gate, a real token donation, and a batch-clock fixture. It is separate from the exact-source pool/DAO integration matrix.
+The older cross-vault dust diagnostic was also updated and rerun: **68/68**, [stxer](https://stxer.xyz/simulations/mainnet/a20fb1c3), [JSON](results/dust-vaults/v6-3.json) (rerun on the current vault sources; first run [7f59141b](https://stxer.xyz/simulations/mainnet/7f59141b60e936923aab06d61902914f)). Including it, this repository records **733/733** checks. It exercises test copies of all three vaults at 1, 500, 1,000 and 2,000 sats. The 1-sat trades return `u16047` (`ERR_BELOW_FLOOR`, since the L-1 partial-sale fix; `u3002` before) and retain the sat; the larger trades fill and leave zero sBTC. `is-empty` intentionally considers up to 2 sats dust. This diagnostic rebinds pool authority to the test sender; CCD016 uses a restricted test-sender DAO gate, a real token donation, and a batch-clock fixture. It is separate from the exact-source pool/DAO integration matrix.
 
 ## Fork setup and limits
 
@@ -66,3 +66,17 @@ Vault recovery source base: `ab1de34`; Jing source checkout: `24f3e23`.
 | `swap-router-sbtc-stx-jing-v5-3` | `dfc8165bb846c1e6bb2a95f1e3ac87d3a22bce0e5f2a8f6618a499c8a03f8cae` |
 | `fastpool-swap-vault` | `2f6d90f4fb14cff92cc4891bd2ab1f90f09156901a786299006e81534b536225` |
 | `signer-manager-vault-stx-rewards` | `91db429775c07f36308699f5678ab044e51e195b4e3b8f59feffb97f0c10d89c` |
+
+## Vault fixes (L-1, L-2, #6, #7), fork-tested
+
+`simulations/vault-fixes-stxer.mjs`, on the current vault and Jing sources
+(market `d1e3bbad`, router `dfc8165b`, core `67242f19`):
+
+| scenario | stxer | checks |
+|---|---|---|
+| L-1 partial `router-swap`: 40,079 sold, 59,921 kept, next call sells 30,061; a zero-sale call reverts u16047 without burning the cooldown | [f856210f](https://stxer.xyz/simulations/mainnet/f856210f) | 48/48 |
+| L-2 window cap (289 and 1008 refused u16033, 287 / 288 accepted) and #6 (a 2-sat funding closes, `finalize-swap-vault` `(ok u0)`, the next cycle funds) | [f63c0bdc](https://stxer.xyz/simulations/mainnet/f63c0bdc) | 45/45 |
+| #7 market dust: `close-batch` reclaims a 1-sat market position and closes; 3 sats still refused u16043 (the fork lowers the market minimum to 1 sat to build it) | [bf5d1b27](https://stxer.xyz/simulations/mainnet/bf5d1b27) | 79/79 |
+
+Reruns on the current sources: guards 22/22 ([7e2710bc](https://stxer.xyz/simulations/mainnet/7e2710bc)), maker 35/35 ([ee9a6d96](https://stxer.xyz/simulations/mainnet/ee9a6d96)), lifecycle 41/41 ([798ad356](https://stxer.xyz/simulations/mainnet/798ad356); a first run at 37/41 failed one chunk u16047 with the pools sitting right at the 1% floor), recovery matrix 569/569, dust-vaults 68/68.
+

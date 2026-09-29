@@ -5,4 +5,4 @@ const run=(process.argv.includes('--lifecycle')||process.argv.includes('--maker'
 await run({profile:process.argv.includes('--maker')?'maker':'liquidation',kind:'fastpool',
  poolSource:fileURLToPath(new URL('../contracts/signer-manager-vault-stx-rewards.clar',import.meta.url)),
  vaultSource:fileURLToPath(new URL('../contracts/fastpool-swap-vault.clar',import.meta.url)),
- resultDirectory:fileURLToPath(new URL('./results/pool-vault-stx',import.meta.url))});
+ resultDirectory:process.env.SIM_RESULTS_DIR||fileURLToPath(new URL('./results/pool-vault-stx',import.meta.url))});

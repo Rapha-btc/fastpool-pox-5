@@ -41,7 +41,7 @@ const VAULTS = [
     src: resolve(workspace, 'fastpool-pox-5/contracts/fastpool-swap-vault.clar'),
     pool: '(define-constant POOL .signer-manager-vault-stx-rewards)' },
   { key: 'juice', name: 'juice-pool-swap-vault',
-    src: resolve(workspace, 'stacking-juice/stx-juice/contracts/pox-5/juice-pool-swap-vault.clar'),
+    src: resolve(workspace, 'juicestx/contracts/pox-5/juice-pool-swap-vault.clar'),
     pool: '(define-constant POOL .juice-pool-stx-signer-stx-rewards)' },
   { key: 'ccd016', name: 'ccd016-swap-vault-mia-v2',
     src: resolve(workspace, 'citycoins-protocol/contracts/extensions/ccd016-swap-vault-mia-v2.clar'),

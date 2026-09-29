@@ -2,6 +2,7 @@ import {appendJingStack} from './_jing-v6-3.mjs';
 // Shared fork runner; exact production pool/vault sources are deployed unchanged.
 import { createRequire } from 'node:module';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const workspace=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
@@ -26,9 +27,9 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
  if(!tipResponse.ok)throw new Error(`tip HTTP ${tipResponse.status}`);
  const tip=(await tipResponse.json()).results[0];
  const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API}).useBlockHeight(tip.height).withSender(DEP);
- const plan=[];
- appendJingStack(builder,plan);
- const deploy=(name,path)=>{builder.addContractDeploy({contract_name:name,source_code:readFileSync(path,'utf8'),clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
+ const plan=[],sourceHashes={};
+ appendJingStack(builder,plan,sourceHashes);
+ const deploy=(name,path)=>{const source=readFileSync(path,'utf8');sourceHashes[name]=createHash('sha256').update(source).digest('hex');builder.addContractDeploy({contract_name:name,source_code:source,clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
  const call=(label,id,fn,args,want,sender=STRANGER)=>{if (/^deposit-token-[xy]$/.test(fn)&&args.length===6)args=args.filter((_,i)=>i!==3);builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender});plan.push({label,kind:'tx',want});};
  const ev=(label,id,code,want)=>{builder.addEvalCode(id,code);plan.push({label,kind:'eval',want});};
  deploy(vault,vaultSource);deploy(pool,poolSource);
@@ -69,7 +70,7 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
   return {label:p.label,passed,actual};
  });
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:'deployment-and-guards',block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:'deployment-and-guards',block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-deployment-guards.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind}: ${checks.filter(c=>!c.passed).length} fork checks failed`);
  console.log(`${kind}: ${checks.length}/${checks.length} fork checks passed`);
@@ -101,9 +102,9 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  const cycle=Number((await read(POX,'current-pox-reward-cycle')).value)-1;
  const sellers={value:[]},buyers={value:[]}; // Fresh v6-3 books are empty.
  const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API,skipTracing:true}).useBlockHeight(tip.height).withSender(DEP);
- const plan=[];
- appendJingStack(builder,plan);
- const deploy=(name,path)=>{builder.addContractDeploy({contract_name:name,source_code:readFileSync(path,'utf8'),clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
+ const plan=[],sourceHashes={};
+ appendJingStack(builder,plan,sourceHashes);
+ const deploy=(name,path)=>{const source=readFileSync(path,'utf8');sourceHashes[name]=createHash('sha256').update(source).digest('hex');builder.addContractDeploy({contract_name:name,source_code:source,clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
  const call=(label,id,fn,args,want,sender=DEP)=>{if (/^deposit-token-[xy]$/.test(fn)&&args.length===6)args=args.filter((_,i)=>i!==3);builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender});plan.push({label,kind:'tx',want});};
  const ev=(label,id,code,want)=>{builder.addEvalCode(id,code);plan.push({label,kind:'eval',want});};
  const advance=(n)=>{builder.addAdvanceBlocks({bitcoin_blocks:n,stacks_blocks_per_bitcoin:1,bitcoin_interval_secs:1});plan.push({label:`advance ${n} burn blocks, compressed timestamps`,kind:'advance'});};
@@ -194,7 +195,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   checks.push({label:'payout replay does not transfer more STX',passed:checks[aliceAfter+3].actual===checks[aliceAfter].actual,actual:'compared Alice balance before/after replay'});
  }
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Fresh exact v6-3 stack deployed; no old market state inherited'],checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Fresh exact v6-3 stack deployed; no old market state inherited'],checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-${profile}.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind} ${profile}: ${checks.filter(c=>!c.passed).length} lifecycle checks failed`);
  console.log(`${kind} ${profile}: ${checks.length}/${checks.length} lifecycle checks passed`);return report;
