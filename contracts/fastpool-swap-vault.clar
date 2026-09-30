@@ -32,8 +32,9 @@
 (define-constant PRICE_PRECISION u100000000)
 (define-constant DECIMAL_FACTOR u100)
 (define-constant BPS_PRECISION u10000)
-;; the market's TAKER_REBATE_MAX_BPS (markets-sbtc-stx-jing-v6-3)
-(define-constant JING_REBATE_MAX_BPS u70)
+;; most rebate dust the market (markets-sbtc-stx-jing-v6-3) refunds: under
+;; 1 sat per rounding, 1 for net + 1 for the batch share + 49 walk fills
+(define-constant JING_REBATE_DUST_SATS u51)
 
 (define-constant POOL .signer-manager-vault-stx-rewards)
 (define-constant SBTC_TOKEN 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
@@ -394,12 +395,9 @@
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
         ;; the market refunds the unfilled rest (under min-x) and the unused
-        ;; rebate (at most the max rebate on `amount`), and the router re-sells
-        ;; both: allow that on top of `amount`
+        ;; rebate dust, and the router re-sells both: allow that on top of `amount`
         ((with-ft SBTC_TOKEN ASSET_SBTC
-          (+ amount (get min-token-x mins)
-            (/ (* amount JING_REBATE_MAX_BPS) BPS_PRECISION)
-          )))
+          (+ amount (get min-token-x mins) JING_REBATE_DUST_SATS)))
         (try! (contract-call? JING_ROUTER smart-swap-sbtc-for-stx amount limit
           (some update) mid u0
         ))
