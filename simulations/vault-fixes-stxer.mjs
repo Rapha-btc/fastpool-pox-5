@@ -12,7 +12,7 @@ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,SBTC,WSTX} from './_jing-v6-3.mjs';
+import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,SBTC,WSTX,FORK_BLOCK} from './_jing-v6-3.mjs';
 const {Cl,ClarityVersion,cvToString,deserializeCV,makeUnsignedContractDeploy,PostConditionMode,getAddressFromPrivateKey}=stacks;
 const {SimulationBuilder,getSimulationResult,submitSimulationSteps,callContract,getNonce,setSender}=stxer;
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
@@ -27,7 +27,7 @@ const field=(s,name)=>uint(s.match(new RegExp(`\\(${name} u\\d+\\)`))?.[0]??'');
 const resultDir=process.env.SIM_RESULTS_DIR||resolve(root,'simulations/results/vault-fixes');
 const want=process.argv.slice(2),runs=[],checks=[],sourceHashes={};
 let sid,caseName,step=0;
-function save(){mkdirSync(resultDir,{recursive:true});writeFileSync(resolve(resultDir,'fastpool.json'),JSON.stringify({runs,checks,passed:checks.filter(c=>c.passed).length,total:checks.length,sourceHashes,fixtures:['PoX earned reward/share records seeded by Eval, backed by real fork sBTC transfers; lock admission not exercised','Patience clock aged by Eval (batch-start - 288) so the routed path is live on a fresh signed print','Opposite-side Jing makers are real public deposits; no market map writes']},null,2)+'\n');}
+function save(){mkdirSync(resultDir,{recursive:true});writeFileSync(resolve(resultDir,'fastpool.json'),JSON.stringify({forkBlock:FORK_BLOCK??null,runs,checks,passed:checks.filter(c=>c.passed).length,total:checks.length,sourceHashes,fixtures:['PoX earned reward/share records seeded by Eval, backed by real fork sBTC transfers; lock admission not exercised','Patience clock aged by Eval (batch-start - 288) so the routed path is live on a fresh signed print','Opposite-side Jing makers are real public deposits; no market map writes']},null,2)+'\n');}
 function check(label,actual,expect){const passed=typeof expect==='function'?expect(actual):actual===expect;checks.push({label:caseName+': '+label,actual:String(actual),expected:String(expect),passed,sid,step});console.log(`${passed?'ok':'FAIL'} ${checks.length}. ${caseName}: ${label}: ${String(actual).slice(0,420)}`);if(!passed){save();throw Error(`STOP ${caseName}: ${label}: ${actual}; expected ${expect}; step ${step}; https://stxer.xyz/simulations/mainnet/${sid}`);}}
 async function ev(label,id,code,expect){const r=await submitSimulationSteps(sid,{steps:[{Eval:[DEP,'',id,code]}]});step++;const s=decode(r.steps[0]);if(expect!==undefined)check(label,s,expect);else if(s.startsWith('ENGINE'))check(label,s,()=>false);return s;}
 async function tx(label,id,fn,args=[],expect=ok,sender=DEP){const r=await callContract(sid,{sender,contract:id,functionName:fn,functionArgs:args,fee:0});step++;check(label,r.vmError||r.result,expect);return r;}
@@ -69,15 +69,17 @@ async function stxMaker(sats,mid,update){
  check('STX maker bid is live',await ev('',MARKET,`(get-token-y-deposit (get-current-cycle) '${STX_WHALE})`),v=>uint(v)>0n);
 }
 function routing(r){const s=prints(r,ROUTER).find(p=>p.includes('smart-swap-sbtc-for-stx'));check('router print present',s??'missing',v=>v!=='missing');
- const g=n=>field(s,n);return {jingIn:g('jing-in'),dlmmIn:g('dlmm-in'),xykIn:g('xyk-in'),velarIn:g('velar-in'),unsold:g('unsold'),out:g('out'),min:uint(s.match(/\(min-stx-out u\d+\)/)?.[0]??'u0')};}
+ const g=n=>field(s,n);return {jingCap:g('jing-cap'),dlmmCap:g('dlmm-cap'),xykCap:g('xyk-cap'),velarCap:g('velar-cap'),jingIn:g('jing-in'),dlmmIn:g('dlmm-in'),xykIn:g('xyk-in'),velarIn:g('velar-in'),unsold:g('unsold'),out:g('out'),min:uint(s.match(/\(min-stx-out u\d+\)/)?.[0]??'u0')};}
 const floorOut=(n,limit)=>n*limit/10000000000n;
 
 // ---------------------------------------------------------------- L-1
 async function l1(){
  const done=await session('fastpool/L-1 partial router sale');
- const cycle=Number(uint(await ev('',POX,'(current-pox-reward-cycle)')))-1,FUND=100000n;
+ // 1,000,000 sats (the default max chunk): above what the book plus the AMMs can take
+ // inside the 40 bps floor at the tip (about 720k on 2026-09-30); 100,000 no longer left a rest
+ const cycle=Number(uint(await ev('',POX,'(current-pox-reward-cycle)')))-1,FUND=1000000n;
  // 40 bps floor: a fresh-print book fill (20 bps rebate) is inside it; AMM depth
- // inside 0.4% is what the pools happen to hold at the fork tip (logged, not assumed)
+ // inside 0.4% is what the pools happen to hold at the fork tip (logged caps, checked below)
  await tx('admin sets 40 bps floor',POOL,'set-vault-slippage-bps',[u(40),cp(VAULT)],'(ok true)');
  await fundCycle(cycle,FUND);
  await ev('vault holds the reward',MARKET,bal(VAULT),`u${FUND}`);
@@ -89,6 +91,9 @@ async function l1(){
  const r1=await tx('call 1: router-swap sells only what fits inside the floor',VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${FUND})`)&&field(v,'unsold')>0n,stranger);
  const res1=r1.result,limit=field(res1,'limit-price'),unsold1=field(res1,'unsold'),out1=field(res1,'out'),sold1=FUND-unsold1;
  const rt1=routing(r1);
+ const cap1=rt1.jingCap+rt1.dlmmCap+rt1.xykCap+rt1.velarCap;
+ check('call 1 capacity inside the floor (jing+dlmm+xyk+velar caps) is below the amount',`${rt1.jingCap}+${rt1.dlmmCap}+${rt1.xykCap}+${rt1.velarCap}=${cap1} < ${FUND}`,()=>cap1<FUND);
+ check('call 1 unsold = amount - sold, sold <= capacity',`unsold ${unsold1}, sold ${sold1}, cap ${cap1}`,()=>unsold1===FUND-sold1&&sold1<=cap1);
  check('call 1 legs add up to what sold',`${rt1.jingIn}+${rt1.dlmmIn}+${rt1.xykIn}+${rt1.velarIn}=${sold1}, unsold ${rt1.unsold}`,()=>rt1.jingIn+rt1.dlmmIn+rt1.xykIn+rt1.velarIn===sold1&&rt1.unsold===unsold1);
  check('call 1 book leg filled',String(rt1.jingIn),v=>rt1.jingIn>0n);
  check('call 1 sold more than ROUTER_SLACK_SATS',String(sold1),v=>sold1>8n);

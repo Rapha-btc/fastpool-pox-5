@@ -16,7 +16,7 @@
 //
 // CityCoins uses a direct token donation and an aged batch clock fixture.
 // Run: node simulations/dust-vaults-stxer.mjs [sats...]
-import {appendJingStack,freshProofAfter,SBTC} from './_jing-v6-3.mjs';
+import {appendJingStack,freshProofAfter,SBTC,FORK_BLOCK} from './_jing-v6-3.mjs';
 import { createRequire } from 'node:module';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -110,7 +110,7 @@ for (const v of VAULTS) {
   }
 }
 
-console.log(`submitting ${plan.length} steps at block ${tip.height} (amounts: ${LADDER.join(', ')})`);
+console.log(`submitting ${plan.length} steps at block ${FORK_BLOCK??tip.height} (amounts: ${LADDER.join(', ')})`);
 const id = await builder.run();
 console.log(`View: https://stxer.xyz/simulations/mainnet/${id}`);
 const result = await getSimulationResult(id, { stxerApi: API });
@@ -141,6 +141,6 @@ for(const v of VAULTS)for(const sats of LADDER){
  const filled=swap.actual.startsWith('(ok');
  checks.push({label:`${v.key}/${sats}: accepted trade drains vault or refusal preserves funds`,actual:swap.actual+'; '+empty.actual+'; '+balance.actual,passed:(filled||swap.actual.startsWith('(err'))&&empty.actual===(filled||sats<=2?'true':'false')&&balance.actual===`u${filled?0:sats}`});
 }
-writeFileSync(resolve(dir,'v6-3.json'),JSON.stringify({id,url:`https://stxer.xyz/simulations/mainnet/${id}`,checks,fixtures:['Pool authority rebound in test copies; CityCoins DAO gate restricted to test sender','CityCoins receives a real token donation and an aged batch clock; treasury funding covered in main recovery matrix'],rows},null,2)+'\n');
+writeFileSync(resolve(dir,'v6-3.json'),JSON.stringify({id,url:`https://stxer.xyz/simulations/mainnet/${id}`,forkBlock:FORK_BLOCK??tip.height,checks,fixtures:['Pool authority rebound in test copies; CityCoins DAO gate restricted to test sender','CityCoins receives a real token donation and an aged batch clock; treasury funding covered in main recovery matrix'],rows},null,2)+'\n');
 console.log(`${checks.filter(c=>c.passed).length}/${checks.length} checks green`);
 if(checks.some(c=>!c.passed))throw Error('Dust diagnostic failure: '+JSON.stringify(checks.filter(c=>!c.passed)));

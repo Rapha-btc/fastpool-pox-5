@@ -1,4 +1,4 @@
-import {appendJingStack} from './_jing-v6-3.mjs';
+import {appendJingStack,FORK_BLOCK} from './_jing-v6-3.mjs';
 // Shared fork runner; exact production pool/vault sources are deployed unchanged.
 import { createRequire } from 'node:module';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -70,7 +70,7 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
   return {label:p.label,passed,actual};
  });
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:'deployment-and-guards',block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:'deployment-and-guards',block:FORK_BLOCK??tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-deployment-guards.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind}: ${checks.filter(c=>!c.passed).length} fork checks failed`);
  console.log(`${kind}: ${checks.length}/${checks.length} fork checks passed`);
@@ -195,7 +195,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   checks.push({label:'payout replay does not transfer more STX',passed:checks[aliceAfter+3].actual===checks[aliceAfter].actual,actual:'compared Alice balance before/after replay'});
  }
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Fresh exact v6-3 stack deployed; no old market state inherited'],checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:FORK_BLOCK??tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Fresh exact v6-3 stack deployed; no old market state inherited'],checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-${profile}.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind} ${profile}: ${checks.filter(c=>!c.passed).length} lifecycle checks failed`);
  console.log(`${kind} ${profile}: ${checks.length}/${checks.length} lifecycle checks passed`);return report;

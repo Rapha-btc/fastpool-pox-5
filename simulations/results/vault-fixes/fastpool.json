@@ -1,23 +1,24 @@
 {
+  "forkBlock": 9093140,
   "runs": [
     {
       "case": "fastpool/L-1 partial router sale",
-      "sid": "f856210f08c226b04426ac13b95e058f",
-      "url": "https://stxer.xyz/simulations/mainnet/f856210f08c226b04426ac13b95e058f",
-      "checks": 48,
-      "passed": 48
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
+      "url": "https://stxer.xyz/simulations/mainnet/32618be4cd9235d21b8fbc8776c2cc29",
+      "checks": 50,
+      "passed": 50
     },
     {
       "case": "fastpool/L-2 window cap + #6 dust-only batch",
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
-      "url": "https://stxer.xyz/simulations/mainnet/f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
+      "url": "https://stxer.xyz/simulations/mainnet/bf2943b0bbc5d507a5e416ecc2349d8d",
       "checks": 45,
       "passed": 45
     },
     {
       "case": "fastpool/#7 market dust after sell-out",
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
-      "url": "https://stxer.xyz/simulations/mainnet/bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
+      "url": "https://stxer.xyz/simulations/mainnet/95a6bae96050d5aa39f969da320c162f",
       "checks": 79,
       "passed": 79
     }
@@ -28,7 +29,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 1
     },
     {
@@ -36,7 +37,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 2
     },
     {
@@ -44,7 +45,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 3
     },
     {
@@ -52,7 +53,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 4
     },
     {
@@ -60,7 +61,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 5
     },
     {
@@ -68,7 +69,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 6
     },
     {
@@ -76,7 +77,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 7
     },
     {
@@ -84,7 +85,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 8
     },
     {
@@ -92,7 +93,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 9
     },
     {
@@ -100,7 +101,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 11
     },
     {
@@ -108,39 +109,39 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 12
     },
     {
-      "label": "fastpool/L-1 partial router sale: cycle 143 earned 100000 sats + mirrored share fixture",
+      "label": "fastpool/L-1 partial router sale: cycle 143 earned 1000000 sats + mirrored share fixture",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 13
     },
     {
       "label": "fastpool/L-1 partial router sale: pool claims cycle 143",
-      "actual": "(ok u100000)",
-      "expected": "(ok u100000)",
+      "actual": "(ok u1000000)",
+      "expected": "(ok u1000000)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 14
     },
     {
       "label": "fastpool/L-1 partial router sale: pool funds vault from cycle 143",
-      "actual": "(ok u100000)",
-      "expected": "(ok u100000)",
+      "actual": "(ok u1000000)",
+      "expected": "(ok u1000000)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 15
     },
     {
       "label": "fastpool/L-1 partial router sale: vault holds the reward",
-      "actual": "u100000",
-      "expected": "u100000",
+      "actual": "u1000000",
+      "expected": "u1000000",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 16
     },
     {
@@ -148,103 +149,119 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 17
     },
     {
       "label": "fastpool/L-1 partial router sale: real STX maker bid worth ~40000 sats",
-      "actual": "(ok u104638226)",
-      "expected": "(ok u104638226)",
+      "actual": "(ok u104465790)",
+      "expected": "(ok u104465790)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 19
     },
     {
       "label": "fastpool/L-1 partial router sale: STX maker bid is live",
-      "actual": "u104638226",
+      "actual": "u104465790",
       "expected": "v=>uint(v)>0n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 21
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1: router-swap sells only what fits inside the floor",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u100000) (limit-price u26055077954335) (mid u26159716821622) (out u104531615) (unsold u59921)))))",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000000) (limit-price u26008829452331) (mid u26113282582662) (out u1173641460) (unsold u548796)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${FUND})`)&&field(v,'unsold')>0n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 24
     },
     {
       "label": "fastpool/L-1 partial router sale: router print present",
-      "actual": "(tuple (amount u100000) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u40079) (jing-in u40079) (jing-ok true) (jing-out u104531615) (limit-price u26055077954335) (out u104531615) (topic \"smart-swap-sbtc-for-stx\") (unsold u59921) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "actual": "(tuple (amount u1000000) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u40085) (jing-in u40085) (jing-ok true) (jing-out u104359112) (limit-price u26008829452331) (out u1173641460) (topic \"smart-swap-sbtc-for-stx\") (unsold u548796) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u411119) (velar-in u411119) (velar-out u1069282348) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
       "expected": "v=>v!=='missing'",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
+      "step": 24
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 capacity inside the floor (jing+dlmm+xyk+velar caps) is below the amount",
+      "actual": "40085+0+0+411119=451204 < 1000000",
+      "expected": "()=>cap1<FUND",
+      "passed": true,
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
+      "step": 24
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 unsold = amount - sold, sold <= capacity",
+      "actual": "unsold 548796, sold 451204, cap 451204",
+      "expected": "()=>unsold1===FUND-sold1&&sold1<=cap1",
+      "passed": true,
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 24
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1 legs add up to what sold",
-      "actual": "40079+0+0+0=40079, unsold 59921",
+      "actual": "40085+0+0+411119=451204, unsold 548796",
       "expected": "()=>rt1.jingIn+rt1.dlmmIn+rt1.xykIn+rt1.velarIn===sold1&&rt1.unsold===unsold1",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 24
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1 book leg filled",
-      "actual": "40079",
+      "actual": "40085",
       "expected": "v=>rt1.jingIn>0n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 24
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1 sold more than ROUTER_SLACK_SATS",
-      "actual": "40079",
+      "actual": "451204",
       "expected": "v=>sold1>8n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 24
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1 out meets floor-out(sold - 8)",
-      "actual": "104531615 >= 104405302",
+      "actual": "1173641460 >= 1173507981",
       "expected": "()=>out1>=floorOut(sold1-8n,limit)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 24
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1: exact unsold rest stays in the vault",
-      "actual": "u59921",
-      "expected": "u59921",
+      "actual": "u548796",
+      "expected": "u548796",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 25
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1: vault STX up by exactly out",
-      "actual": "u104531615",
-      "expected": "u104531615",
+      "actual": "u1173641460",
+      "expected": "u1173641460",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 26
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1 vault print matches router out/unsold",
-      "actual": "104531615/59921",
-      "expected": "104531615/59921",
+      "actual": "1173641460/548796",
+      "expected": "1173641460/548796",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 26
     },
     {
       "label": "fastpool/L-1 partial router sale: batch still open after partial sale",
-      "actual": "(tuple (batch-start (some u968924)) (burn-height u969212) (ready-to-finish false) (window-elapsed true) (window-ends (some u969212)) (window-open false))",
+      "actual": "(tuple (batch-start (some u968945)) (burn-height u969233) (ready-to-finish false) (window-elapsed true) (window-ends (some u969233)) (window-open false))",
       "expected": "v=>v.includes('(batch-start (some')&&v.includes('(ready-to-finish false)')",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 27
     },
     {
@@ -252,7 +269,7 @@
       "actual": "(err u16032)",
       "expected": "(err u16032)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 28
     },
     {
@@ -260,7 +277,7 @@
       "actual": "(err u16044)",
       "expected": "(err u16044)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 29
     },
     {
@@ -268,87 +285,87 @@
       "actual": "ok",
       "expected": "ok",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 30
     },
     {
       "label": "fastpool/L-1 partial router sale: real STX maker bid worth ~30000 sats",
-      "actual": "(ok u78478670)",
-      "expected": "(ok u78478670)",
+      "actual": "(ok u78339501)",
+      "expected": "(ok u78339501)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 32
     },
     {
       "label": "fastpool/L-1 partial router sale: STX maker bid is live",
-      "actual": "u78478670",
+      "actual": "u78339501",
       "expected": "v=>uint(v)>0n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 34
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2: next call sells more of the rest",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u59921) (limit-price u26053858768330) (mid u26158492739288) (out u78399616) (unsold u29860)))))",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u548796) (limit-price u26003897881646) (mid u26108331206472) (out u78259709) (unsold u518730)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${unsold1})`)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 36
     },
     {
       "label": "fastpool/L-1 partial router sale: router print present",
-      "actual": "(tuple (amount u59921) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u30061) (jing-in u30061) (jing-ok true) (jing-out u78399616) (limit-price u26053858768330) (out u78399616) (topic \"smart-swap-sbtc-for-stx\") (unsold u29860) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "actual": "(tuple (amount u548796) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u30066) (jing-in u30066) (jing-ok true) (jing-out u78259709) (limit-price u26003897881646) (out u78259709) (topic \"smart-swap-sbtc-for-stx\") (unsold u518730) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
       "expected": "v=>v!=='missing'",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 36
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2 sold more than ROUTER_SLACK_SATS",
-      "actual": "30061",
+      "actual": "30066",
       "expected": "()=>sold2>8n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 36
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2 out meets floor-out(sold - 8)",
-      "actual": "78399616 >= 78299661",
+      "actual": "78259709 >= 78162516",
       "expected": "()=>out2>=floorOut(sold2-8n,limit2)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 36
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2 legs add up",
-      "actual": "30061+0+0+0=30061",
+      "actual": "30066+0+0+0=30066",
       "expected": "()=>rt2.jingIn+rt2.dlmmIn+rt2.xykIn+rt2.velarIn===sold2&&rt2.unsold===unsold2",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 36
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2: exact rest in the vault",
-      "actual": "u29860",
-      "expected": "u29860",
+      "actual": "u518730",
+      "expected": "u518730",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 37
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2: vault STX = out1 + out2",
-      "actual": "u182931231",
-      "expected": "u182931231",
+      "actual": "u1251901169",
+      "expected": "u1251901169",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 38
     },
     {
       "label": "fastpool/L-1 partial router sale: a rest is still held for the <= 8 sats case",
-      "actual": "29860",
+      "actual": "518730",
       "expected": "()=>unsold2>8n",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 38
     },
     {
@@ -356,7 +373,7 @@
       "actual": "ok",
       "expected": "ok",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 39
     },
     {
@@ -364,7 +381,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 40
     },
     {
@@ -372,31 +389,31 @@
       "actual": "(err u16047)",
       "expected": "(err u16047)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 43
     },
     {
       "label": "fastpool/L-1 partial router sale: call 3: vault sBTC unchanged",
-      "actual": "u29860",
-      "expected": "u29860",
+      "actual": "u518730",
+      "expected": "u518730",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 44
     },
     {
       "label": "fastpool/L-1 partial router sale: call 3: vault STX unchanged",
-      "actual": "u182931231",
-      "expected": "u182931231",
+      "actual": "u1251901169",
+      "expected": "u1251901169",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 45
     },
     {
       "label": "fastpool/L-1 partial router sale: call 3: cooldown not burned (config unchanged)",
-      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u969213) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
-      "expected": "(tuple (dia-band-bps u1000) (last-router-swap u969213) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u969234) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
+      "expected": "(tuple (dia-band-bps u1000) (last-router-swap u969234) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 46
     },
     {
@@ -404,7 +421,7 @@
       "actual": "(err u16047)",
       "expected": "(err u16047)",
       "passed": true,
-      "sid": "f856210f08c226b04426ac13b95e058f",
+      "sid": "32618be4cd9235d21b8fbc8776c2cc29",
       "step": 47
     },
     {
@@ -412,7 +429,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 1
     },
     {
@@ -420,7 +437,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 2
     },
     {
@@ -428,7 +445,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 3
     },
     {
@@ -436,7 +453,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 4
     },
     {
@@ -444,7 +461,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 5
     },
     {
@@ -452,7 +469,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 6
     },
     {
@@ -460,7 +477,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 7
     },
     {
@@ -468,7 +485,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 8
     },
     {
@@ -476,7 +493,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 9
     },
     {
@@ -484,7 +501,7 @@
       "actual": "(err u16033)",
       "expected": "(err u16033)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 11
     },
     {
@@ -492,7 +509,7 @@
       "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
       "expected": "v=>v.includes('(window-blocks u288)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 12
     },
     {
@@ -500,7 +517,7 @@
       "actual": "(err u16033)",
       "expected": "(err u16033)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 13
     },
     {
@@ -508,7 +525,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 14
     },
     {
@@ -516,7 +533,7 @@
       "actual": "(tuple (notification \"set-window-blocks\") (payload (tuple (value u287))))",
       "expected": "v=>v.includes('(notification \"set-window-blocks\")')&&v.includes('(value u287)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 14
     },
     {
@@ -524,7 +541,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 15
     },
     {
@@ -532,7 +549,7 @@
       "actual": "(tuple (notification \"set-window-blocks\") (payload (tuple (value u288))))",
       "expected": "v=>v.includes('(value u288)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 15
     },
     {
@@ -540,7 +557,7 @@
       "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
       "expected": "v=>v.includes('(window-blocks u288)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 16
     },
     {
@@ -548,7 +565,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 17
     },
     {
@@ -556,7 +573,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 18
     },
     {
@@ -564,7 +581,7 @@
       "actual": "(ok u2)",
       "expected": "(ok u2)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 19
     },
     {
@@ -572,15 +589,15 @@
       "actual": "(ok u2)",
       "expected": "(ok u2)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 20
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault fund print amount u2",
-      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u2) (batch-start u969212))))",
+      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u2) (batch-start u969233))))",
       "expected": "v=>v.includes('(notification \"fund\")')&&v.includes('(amount u2)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 20
     },
     {
@@ -588,7 +605,7 @@
       "actual": "u2",
       "expected": "u2",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 21
     },
     {
@@ -596,7 +613,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 22
     },
     {
@@ -604,7 +621,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 23
     },
     {
@@ -612,31 +629,31 @@
       "actual": "(some u143)",
       "expected": "(some u143)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 24
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: permissionless close-batch closes at once",
-      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969212)))))",
+      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969233)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 25
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: close-batch print",
-      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u969212))))",
+      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u969233))))",
       "expected": "v=>v.includes('(notification \"close-batch\")')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 25
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: ready to finish, clock cleared",
-      "actual": "(tuple (batch-start none) (burn-height u969212) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "actual": "(tuple (batch-start none) (burn-height u969233) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
       "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 26
     },
     {
@@ -644,7 +661,7 @@
       "actual": "(ok u0)",
       "expected": "(ok u0)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 28
     },
     {
@@ -652,7 +669,7 @@
       "actual": "(tuple (notification \"finish\") (payload (tuple (amount u0))))",
       "expected": "v=>v.includes('(notification \"finish\")')&&v.includes('(amount u0)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 28
     },
     {
@@ -660,7 +677,7 @@
       "actual": "[]",
       "expected": "[]",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 28
     },
     {
@@ -668,7 +685,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 29
     },
     {
@@ -676,15 +693,15 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 30
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault not ready-to-finish any more",
-      "actual": "(tuple (batch-start none) (burn-height u969212) (ready-to-finish false) (window-elapsed false) (window-ends none) (window-open false))",
+      "actual": "(tuple (batch-start none) (burn-height u969233) (ready-to-finish false) (window-elapsed false) (window-ends none) (window-open false))",
       "expected": "v=>v.includes('(ready-to-finish false)')&&v.includes('(batch-start none)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 31
     },
     {
@@ -692,7 +709,7 @@
       "actual": "u2",
       "expected": "u2",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 32
     },
     {
@@ -700,7 +717,7 @@
       "actual": "(err u1053)",
       "expected": "(err u1053)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 33
     },
     {
@@ -708,7 +725,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 34
     },
     {
@@ -716,7 +733,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 35
     },
     {
@@ -724,7 +741,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 36
     },
     {
@@ -732,15 +749,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 37
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: next funding print amount u100000",
-      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u100000) (batch-start u969212))))",
+      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u100000) (batch-start u969233))))",
       "expected": "v=>v.includes('(amount u100000)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 37
     },
     {
@@ -748,15 +765,15 @@
       "actual": "u100002",
       "expected": "u100002",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 38
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: new batch clock running",
-      "actual": "(tuple (batch-start (some u969212)) (burn-height u969212) (ready-to-finish false) (window-elapsed false) (window-ends (some u969500)) (window-open true))",
+      "actual": "(tuple (batch-start (some u969233)) (burn-height u969233) (ready-to-finish false) (window-elapsed false) (window-ends (some u969521)) (window-open true))",
       "expected": "v=>v.includes('(batch-start (some')&&v.includes('(window-open true)')",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 39
     },
     {
@@ -764,7 +781,7 @@
       "actual": "(some u142)",
       "expected": "(some u142)",
       "passed": true,
-      "sid": "f63c0bdc826a77b67cbbd2f05c215d87",
+      "sid": "bf2943b0bbc5d507a5e416ecc2349d8d",
       "step": 40
     },
     {
@@ -772,7 +789,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 1
     },
     {
@@ -780,7 +797,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 2
     },
     {
@@ -788,7 +805,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 3
     },
     {
@@ -796,7 +813,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 4
     },
     {
@@ -804,7 +821,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 5
     },
     {
@@ -812,7 +829,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 6
     },
     {
@@ -820,7 +837,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 7
     },
     {
@@ -828,7 +845,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 8
     },
     {
@@ -836,7 +853,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 9
     },
     {
@@ -844,7 +861,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 11
     },
     {
@@ -852,7 +869,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 12
     },
     {
@@ -860,7 +877,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 13
     },
     {
@@ -868,15 +885,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 14
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: vault places its ask",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24828034583825)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24808095462064)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${FUND})`)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 16
     },
     {
@@ -884,7 +901,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 17
     },
     {
@@ -892,15 +909,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 18
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: real STX taker buys the whole ask",
-      "actual": "(ok (tuple (rebate-refunded u523) (token-x-received u149059) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u942)))",
+      "actual": "(ok (tuple (rebate-refunded u4) (token-x-received u149059) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1348)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 20
     },
     {
@@ -908,7 +925,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 21
     },
     {
@@ -916,15 +933,15 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 22
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: window still open",
-      "actual": "(tuple (batch-start (some u969212)) (burn-height u969212) (ready-to-finish false) (window-elapsed false) (window-ends (some u969500)) (window-open true))",
+      "actual": "(tuple (batch-start (some u969233)) (burn-height u969233) (ready-to-finish false) (window-elapsed false) (window-ends (some u969521)) (window-open true))",
       "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 23
     },
     {
@@ -932,7 +949,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 24
     },
     {
@@ -940,7 +957,7 @@
       "actual": "(err u1001)",
       "expected": "(err u1001)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 26
     },
     {
@@ -948,7 +965,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 27
     },
     {
@@ -956,47 +973,47 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 28
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: close-batch closes at once",
-      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969212)))))",
+      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969233)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 29
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: close-batch prints no reclaim",
-      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u969212))))",
+      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u969233))))",
       "expected": "v=>v.includes('(notification \"close-batch\")')&&!v.includes('jing-reclaim')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 29
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: ready to finish",
-      "actual": "(tuple (batch-start none) (burn-height u969212) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "actual": "(tuple (batch-start none) (burn-height u969233) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
       "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 30
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: pool finalizes exactly the sale STX",
-      "actual": "(ok u261612445)",
-      "expected": "(ok u261612445)",
+      "actual": "(ok u261398971)",
+      "expected": "(ok u261398971)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 33
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: pool received exactly the sale STX",
-      "actual": "u261612445",
-      "expected": "u261612445",
+      "actual": "u261398971",
+      "expected": "u261398971",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 34
     },
     {
@@ -1004,7 +1021,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 35
     },
     {
@@ -1012,7 +1029,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 36
     },
     {
@@ -1020,7 +1037,7 @@
       "actual": "u1",
       "expected": "u1",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 37
     },
     {
@@ -1028,7 +1045,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 38
     },
     {
@@ -1036,7 +1053,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 39
     },
     {
@@ -1044,7 +1061,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 40
     },
     {
@@ -1052,7 +1069,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 41
     },
     {
@@ -1060,15 +1077,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 42
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: vault places its ask",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u24832251328577)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u24813662888977)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${expectHeld})`)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 44
     },
     {
@@ -1076,15 +1093,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 45
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: real STX taker buys the whole ask",
-      "actual": "(ok (tuple (rebate-refunded u522) (token-x-received u149057) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u164)))",
+      "actual": "(ok (tuple (rebate-refunded u1) (token-x-received u149060) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u6)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 47
     },
     {
@@ -1092,7 +1109,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 48
     },
     {
@@ -1100,23 +1117,23 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 49
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: window still open",
-      "actual": "(tuple (batch-start (some u969212)) (burn-height u969212) (ready-to-finish false) (window-elapsed false) (window-ends (some u969500)) (window-open true))",
+      "actual": "(tuple (batch-start (some u969233)) (burn-height u969233) (ready-to-finish false) (window-elapsed false) (window-ends (some u969521)) (window-open true))",
       "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 50
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: whale depth cancelled",
-      "actual": "(ok u101587)",
+      "actual": "(ok u101584)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 51
     },
     {
@@ -1124,7 +1141,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 52
     },
     {
@@ -1132,15 +1149,15 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 53
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: public jing-place of 1 sat(s) accepted",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u1) (floor u24831258401909)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u1) (floor u24813645021695)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${sats})`)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 55
     },
     {
@@ -1148,7 +1165,7 @@
       "actual": "u1",
       "expected": "u1",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 56
     },
     {
@@ -1156,7 +1173,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 57
     },
     {
@@ -1164,23 +1181,23 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 58
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: close-batch cancels the 1 sat home and closes at once",
-      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969212)))))",
+      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969233)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 59
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: close-batch prints jing-reclaim amount u1 then close-batch",
-      "actual": "(tuple (notification \"jing-reclaim\") (payload (tuple (amount u1))))|(tuple (notification \"close-batch\") (payload (tuple (burn-height u969212))))",
+      "actual": "(tuple (notification \"jing-reclaim\") (payload (tuple (amount u1))))|(tuple (notification \"close-batch\") (payload (tuple (burn-height u969233))))",
       "expected": "v=>v.includes('(notification \"jing-reclaim\")')&&v.includes('(amount u1)')&&v.includes('(notification \"close-batch\")')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 59
     },
     {
@@ -1188,7 +1205,7 @@
       "actual": "[[\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3\",\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault\",\"1\"]]",
       "expected": "[[\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3\",\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault\",\"1\"]]",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 59
     },
     {
@@ -1196,7 +1213,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 60
     },
     {
@@ -1204,31 +1221,31 @@
       "actual": "u1",
       "expected": "u1",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 61
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: batch closed, ready to finish",
-      "actual": "(tuple (batch-start none) (burn-height u969212) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "actual": "(tuple (batch-start none) (burn-height u969233) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
       "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 62
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: pool finalizes exactly the sale STX",
-      "actual": "(ok u261647238)",
-      "expected": "(ok u261647238)",
+      "actual": "(ok u261462806)",
+      "expected": "(ok u261462806)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 65
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: pool received exactly the sale STX",
-      "actual": "u261647238",
-      "expected": "u261647238",
+      "actual": "u261462806",
+      "expected": "u261462806",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 66
     },
     {
@@ -1236,7 +1253,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 67
     },
     {
@@ -1244,7 +1261,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 68
     },
     {
@@ -1252,7 +1269,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 69
     },
     {
@@ -1260,7 +1277,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 70
     },
     {
@@ -1268,7 +1285,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 71
     },
     {
@@ -1276,15 +1293,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 72
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: vault places its ask",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u24836881380859)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u24811974488341)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${expectHeld})`)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 74
     },
     {
@@ -1292,15 +1309,15 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 75
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: real STX taker buys the whole ask",
-      "actual": "(ok (tuple (rebate-refunded u521) (token-x-received u149059) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u33)))",
+      "actual": "(ok (tuple (rebate-refunded u4) (token-x-received u149059) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1396)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 77
     },
     {
@@ -1308,7 +1325,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 78
     },
     {
@@ -1316,15 +1333,15 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 79
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: window still open",
-      "actual": "(tuple (batch-start (some u969212)) (burn-height u969212) (ready-to-finish false) (window-elapsed false) (window-ends (some u969500)) (window-open true))",
+      "actual": "(tuple (batch-start (some u969233)) (burn-height u969233) (ready-to-finish false) (window-elapsed false) (window-ends (some u969521)) (window-open true))",
       "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 80
     },
     {
@@ -1332,7 +1349,7 @@
       "actual": "(ok u50793)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 81
     },
     {
@@ -1340,15 +1357,15 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 82
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: public jing-place of 3 sat(s) accepted",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u3) (floor u24838216212742)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u3) (floor u24810578386639)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${sats})`)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 84
     },
     {
@@ -1356,7 +1373,7 @@
       "actual": "u3",
       "expected": "u3",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 85
     },
     {
@@ -1364,7 +1381,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 86
     },
     {
@@ -1372,7 +1389,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 87
     },
     {
@@ -1380,7 +1397,7 @@
       "actual": "(err u16043)",
       "expected": "(err u16043)",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 88
     },
     {
@@ -1388,26 +1405,26 @@
       "actual": "u3",
       "expected": "u3",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 89
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: batch still open",
-      "actual": "(tuple (batch-start (some u969212)) (burn-height u969212) (ready-to-finish false) (window-elapsed false) (window-ends (some u969500)) (window-open true))",
+      "actual": "(tuple (batch-start (some u969233)) (burn-height u969233) (ready-to-finish false) (window-elapsed false) (window-ends (some u969521)) (window-open true))",
       "expected": "v=>v.includes('(batch-start (some')&&v.includes('(ready-to-finish false)')",
       "passed": true,
-      "sid": "bf5d1b277b05e263601fcf4e922ae8ba",
+      "sid": "95a6bae96050d5aa39f969da320c162f",
       "step": 90
     }
   ],
-  "passed": 172,
-  "total": 172,
+  "passed": 174,
+  "total": 174,
   "sourceHashes": {
-    "jing-core-v6": "67242f19794e864336bc5adf5a00391281160176339922c17e964b938c289b01",
+    "jing-core-v6": "88a689affb23f13030953e891336af42a3f5cb275f13b3c54c79d8cd4de50697",
     "jing-ladder-v1": "0f1e08b023272ed96a2653f727292626d4b0325dcf4e42963104d977860ec786",
-    "markets-sbtc-stx-jing-v6-3": "d1e3bbad46de1ba752507502b1caaca87b03e0b0abb344028636a57fc350cca9",
-    "swap-router-sbtc-stx-jing-v5-3": "dfc8165bb846c1e6bb2a95f1e3ac87d3a22bce0e5f2a8f6618a499c8a03f8cae",
-    "fastpool-swap-vault": "d99f1ae10ff37fe788092ead3f7862ceb2fe0dc8907bda7d6b0e974a42a2665f",
+    "markets-sbtc-stx-jing-v6-3": "5c08412fc5990a8bf0db3a0cbbec3fa4c859d4185d0caf1cd16ae0c78f851bfb",
+    "swap-router-sbtc-stx-jing-v5-3": "882374f40bfdf8270b3ea18ba2d7e68fce4431ee17c60f70b00bb2670240fe58",
+    "fastpool-swap-vault": "1bf8137aec300ae5f700ea3c252629a0ea1f01b642851ad9df053af437ae0a87",
     "signer-manager-vault-stx-rewards": "91db429775c07f36308699f5678ab044e51e195b4e3b8f59feffb97f0c10d89c"
   },
   "fixtures": [

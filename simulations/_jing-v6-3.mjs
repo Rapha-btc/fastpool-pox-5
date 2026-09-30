@@ -11,7 +11,10 @@ export const DEP='SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22';
 export const MARKET=DEP+'.markets-sbtc-stx-jing-v6-3',CORE=DEP+'.jing-core-v6',LADDER=DEP+'.jing-ladder-v1',ROUTER=DEP+'.swap-router-sbtc-stx-jing-v5-3';
 export const SBTC='SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token',WSTX='SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2';
 export const {fetchLazerUpdateAny,lazerFeedTimes}=await import(resolve(JING_SRC,'../simulations/_lazer.js'));
+// FORK_BLOCK pins a whole rerun set to one height (default: each builder's own tip).
+export const FORK_BLOCK=process.env.FORK_BLOCK?Number(process.env.FORK_BLOCK):undefined;
 export function appendJingStack(builder,plan,sourceHashes={}) {
+ if(FORK_BLOCK!==undefined)builder.useBlockHeight(FORK_BLOCK);
  const {Cl,ClarityVersion}=stacks,cp=id=>Cl.contractPrincipal(...id.split('.'));
  for(const name of ['jing-core-v6','jing-ladder-v1','markets-sbtc-stx-jing-v6-3','swap-router-sbtc-stx-jing-v5-3']) {
   const source=readFileSync(resolve(JING_SRC,name+'.clar'),'utf8');

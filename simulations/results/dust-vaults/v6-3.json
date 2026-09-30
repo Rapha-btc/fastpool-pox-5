@@ -1,6 +1,7 @@
 {
-  "id": "a20fb1c3f33b68ed3593b266dfffdedb",
-  "url": "https://stxer.xyz/simulations/mainnet/a20fb1c3f33b68ed3593b266dfffdedb",
+  "id": "a6d2dee0bac0f51f3db61ec978fc30d8",
+  "url": "https://stxer.xyz/simulations/mainnet/a6d2dee0bac0f51f3db61ec978fc30d8",
+  "forkBlock": 9093140,
   "checks": [
     {
       "label": "deploy exact jing-core-v6",
@@ -408,17 +409,17 @@
     },
     {
       "label": "fast/500: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25760566989392) (mid u26020774736760) (out u1289821) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25845136984773) (mid u26106198974519) (out u1299514) (unsold u0))))); true; u0",
       "passed": true
     },
     {
       "label": "fast/1000: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25760566989392) (mid u26020774736760) (out u2577052) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25845136984773) (mid u26106198974519) (out u2596419) (unsold u0))))); true; u0",
       "passed": true
     },
     {
       "label": "fast/2000: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25760566989392) (mid u26020774736760) (out u5154105) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25845136984773) (mid u26106198974519) (out u5192839) (unsold u0))))); true; u0",
       "passed": true
     },
     {
@@ -428,17 +429,17 @@
     },
     {
       "label": "juice/500: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25760566989392) (mid u26020774736760) (out u1289821) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25845136984773) (mid u26106198974519) (out u1299514) (unsold u0))))); true; u0",
       "passed": true
     },
     {
       "label": "juice/1000: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25760566989392) (mid u26020774736760) (out u2577052) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25845136984773) (mid u26106198974519) (out u2596419) (unsold u0))))); true; u0",
       "passed": true
     },
     {
       "label": "juice/2000: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25760566989392) (mid u26020774736760) (out u5154105) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25845136984773) (mid u26106198974519) (out u5192839) (unsold u0))))); true; u0",
       "passed": true
     },
     {
@@ -448,17 +449,17 @@
     },
     {
       "label": "ccd016/500: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25760566989392) (mid u26020774736760) (out u1289821) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25845136984773) (mid u26106198974519) (out u1299514) (unsold u0))))); true; u0",
       "passed": true
     },
     {
       "label": "ccd016/1000: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25760566989392) (mid u26020774736760) (out u2577052) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25845136984773) (mid u26106198974519) (out u2596419) (unsold u0))))); true; u0",
       "passed": true
     },
     {
       "label": "ccd016/2000: accepted trade drains vault or refusal preserves funds",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25760566989392) (mid u26020774736760) (out u5154105) (unsold u0))))); true; u0",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25845136984773) (mid u26106198974519) (out u5192839) (unsold u0))))); true; u0",
       "passed": true
     }
   ],
@@ -586,7 +587,7 @@
       "vault": "fast",
       "sats": 500,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25760566989392) (mid u26020774736760) (out u1289821) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25845136984773) (mid u26106198974519) (out u1299514) (unsold u0)))))"
     },
     {
       "label": "fast/500: is-empty after",
@@ -632,7 +633,7 @@
       "vault": "fast",
       "sats": 1000,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25760566989392) (mid u26020774736760) (out u2577052) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25845136984773) (mid u26106198974519) (out u2596419) (unsold u0)))))"
     },
     {
       "label": "fast/1000: is-empty after",
@@ -678,7 +679,7 @@
       "vault": "fast",
       "sats": 2000,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25760566989392) (mid u26020774736760) (out u5154105) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25845136984773) (mid u26106198974519) (out u5192839) (unsold u0)))))"
     },
     {
       "label": "fast/2000: is-empty after",
@@ -770,7 +771,7 @@
       "vault": "juice",
       "sats": 500,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25760566989392) (mid u26020774736760) (out u1289821) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25845136984773) (mid u26106198974519) (out u1299514) (unsold u0)))))"
     },
     {
       "label": "juice/500: is-empty after",
@@ -816,7 +817,7 @@
       "vault": "juice",
       "sats": 1000,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25760566989392) (mid u26020774736760) (out u2577052) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25845136984773) (mid u26106198974519) (out u2596419) (unsold u0)))))"
     },
     {
       "label": "juice/1000: is-empty after",
@@ -862,7 +863,7 @@
       "vault": "juice",
       "sats": 2000,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25760566989392) (mid u26020774736760) (out u5154105) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25845136984773) (mid u26106198974519) (out u5192839) (unsold u0)))))"
     },
     {
       "label": "juice/2000: is-empty after",
@@ -954,7 +955,7 @@
       "vault": "ccd016",
       "sats": 500,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25760566989392) (mid u26020774736760) (out u1289821) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u500) (limit-price u25845136984773) (mid u26106198974519) (out u1299514) (unsold u0)))))"
     },
     {
       "label": "ccd016/500: is-empty after",
@@ -1000,7 +1001,7 @@
       "vault": "ccd016",
       "sats": 1000,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25760566989392) (mid u26020774736760) (out u2577052) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000) (limit-price u25845136984773) (mid u26106198974519) (out u2596419) (unsold u0)))))"
     },
     {
       "label": "ccd016/1000: is-empty after",
@@ -1046,7 +1047,7 @@
       "vault": "ccd016",
       "sats": 2000,
       "measure": "swap",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25760566989392) (mid u26020774736760) (out u5154105) (unsold u0)))))"
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u2000) (limit-price u25845136984773) (mid u26106198974519) (out u5192839) (unsold u0)))))"
     },
     {
       "label": "ccd016/2000: is-empty after",

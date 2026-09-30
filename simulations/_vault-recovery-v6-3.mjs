@@ -4,7 +4,7 @@ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,CORE,LADDER,SBTC,WSTX} from './_jing-v6-3.mjs';
+import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,CORE,LADDER,SBTC,WSTX,FORK_BLOCK} from './_jing-v6-3.mjs';
 const {Cl,ClarityVersion,cvToString,deserializeCV,makeUnsignedContractDeploy,PostConditionMode,getAddressFromPrivateKey}=stacks;
 const {SimulationBuilder,getSimulationResult,submitSimulationSteps,callContract,getNonce,setSender}=stxer;
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
@@ -23,7 +23,7 @@ export async function runRecoveryMatrix(kind) {
  const poolPath=city?null:resolve(root,juice?'contracts/pox-5/juice-pool-stx-signer-stx-rewards.clar':'contracts/signer-manager-vault-stx-rewards.clar');
  const reports=[],checks=[];let sid,caseName,step=0,sourceHashes={};
  const resultDir=resolve(root,'simulations/results/v6-3-recovery');mkdirSync(resultDir,{recursive:true});
- function save(){writeFileSync(resolve(resultDir,kind+'.json'),JSON.stringify({kind,reports,checks,passed:checks.filter(c=>c.passed).length,total:checks.length,fixtures:['PoX earned reward/share fixtures backed by real fork token transfers; lock admission not exercised','Vault batch-start and fastpool settlement deadline aged by explicit Eval to keep native and Lazer pricing on real fork data','CityCoins DAO Extensions map grants only the actual vault and a sender-guarded test proposal extension','Public ladder reservation set to 49 to reach parking with one incumbent; public replacement, no market map writes'],sourceHashes},null,2)+'\n');}
+ function save(){writeFileSync(resolve(resultDir,kind+'.json'),JSON.stringify({kind,forkBlock:FORK_BLOCK??null,reports,checks,passed:checks.filter(c=>c.passed).length,total:checks.length,fixtures:['PoX earned reward/share fixtures backed by real fork token transfers; lock admission not exercised','Vault batch-start and fastpool settlement deadline aged by explicit Eval to keep native and Lazer pricing on real fork data','CityCoins DAO Extensions map grants only the actual vault and a sender-guarded test proposal extension','Public ladder reservation set to 49 to reach parking with one incumbent; public replacement, no market map writes'],sourceHashes},null,2)+'\n');}
  function check(label,actual,want){const passed=typeof want==='function'?want(actual):actual===want;checks.push({label:caseName+': '+label,actual:String(actual),expected:typeof want==='function'?String(want):String(want),passed,sid,step});console.log(`${passed?'ok':'FAIL'} ${checks.length}. ${caseName}: ${label}: ${String(actual).slice(0,360)}`);if(!passed){save();console.log(`${checks.filter(c=>c.passed).length}/${checks.length} checks green`);throw Error(`STOP ${label}: ${actual}; expected ${want}; https://stxer.xyz/simulations/mainnet/${sid}`);} }
  async function ev(label,id,code,want){const r=await submitSimulationSteps(sid,{steps:[{Eval:[DEP,'',id,code]}]});step++;const s=decode(r.steps[0]);if(want!==undefined)check(label,s,want);else if(s.startsWith('ENGINE'))check(label,s,()=>false);return s;}
  async function tx(label,id,fn,args=[],want=ok,sender=DEP){const r=await callContract(sid,{sender,contract:id,functionName:fn,functionArgs:args,fee:0});step++;check(label,r.vmError||r.result,want);return r;}
