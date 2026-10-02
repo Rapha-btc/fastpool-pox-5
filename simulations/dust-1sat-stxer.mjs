@@ -12,11 +12,13 @@
 //      balance for exact zero, so yes. The fix tests `<= DUST_SATS`, where
 //      DUST_SATS is deliberately the router's own ROUND_SLACK.
 //
-// All three vaults route through swap-router-sbtc-stx-jing-v5, so the router
+// All three vaults route through swap-router-sbtc-stx-jing-v5-3, so the router
 // half is proven once and applies to Juice, FastPool and ccd016 alike. The
 // vault half deploys the fixed source beside an unfixed copy and compares.
+// The current Jing stack (core-v6, ladder-v1, market v6-3, router v5-3) is
+// deployed first from jing-contracts-v3 (JING_SRC), as in dust-vaults.
 //
-// Run: PYTH_API_KEY=... node simulations/dust-1sat-stxer.mjs
+// Run: node simulations/dust-1sat-stxer.mjs
 import { createRequire } from 'node:module';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -29,9 +31,7 @@ catch { require = createRequire(resolve(workspace, 'stacking-juice/stx-juice/pac
 const { SimulationBuilder, getSimulationResult } = require('stxer');
 const { Cl, ClarityVersion, deserializeCV, cvToString } = require('@stacks/transactions');
 
-const DEP = 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22';
-const ROUTER = `${DEP}.swap-router-sbtc-stx-jing-v5`;
-const SBTC = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token';
+import { appendJingStack, freshProofAfter, ROUTER, SBTC, DEP, FORK_BLOCK } from './_jing-v6-3.mjs';
 const NODE = process.env.STACKS_API_URL || 'http://77.42.3.101/stacks-api';
 const API = process.env.STXER_API_URL || 'https://api.stxer.xyz';
 const PRICE_SCALE = 10_000_000_000n;
@@ -48,9 +48,6 @@ async function nativeMid() {
   return BigInt('0x' + j.result.replace(/^0x07010*/, '').padStart(2, '0'));
 }
 
-const { fetchLazerUpdateAny } = await import(resolve(workspace, 'jing-contracts-v3/simulations/_lazer.js'));
-const proof = await fetchLazerUpdateAny();
-const update = Cl.buffer(Buffer.from(proof.hex.replace(/^0x/, ''), 'hex'));
 
 const mid = await nativeMid();
 // Deliberately generous: accept 10% worse than mid, so nothing fails on price.
@@ -60,6 +57,9 @@ console.log(`ROUND_SLACK arithmetic: 1 sat -> ${(0n * limit) / PRICE_SCALE}, 3 s
 
 const tipRes = await fetch(`${NODE}/extended/v1/block?limit=1`, { signal: AbortSignal.timeout(20000) });
 const tip = (await tipRes.json()).results[0];
+const forkHeight = FORK_BLOCK ?? tip.height;
+const proof = await freshProofAfter(tip.block_time);
+const update = Cl.buffer(Buffer.from(proof.hex.replace(/^0x/, ''), 'hex'));
 
 // The fixed vault, and the same source with the fix backed out.
 const fixed = readFileSync(VAULT_SRC, 'utf8');
@@ -68,8 +68,10 @@ const unfixed = fixed.replace('(<= (sbtc-balance) DUST_SATS)', '(is-eq (sbtc-bal
 if (unfixed === fixed) throw new Error('could not back the fix out');
 
 const builder = SimulationBuilder.new({ stacksNodeAPI: NODE, apiEndpoint: API })
-  .useBlockHeight(tip.height).withSender(DEP);
+  .useBlockHeight(forkHeight).withSender(DEP);
 const plan = [];
+const sourceHashes = {};
+appendJingStack(builder, plan, sourceHashes);
 const deploy = (name, src) => {
   builder.addContractDeploy({ contract_name: name, source_code: src, clarity_version: ClarityVersion.Clarity6 });
   plan.push({ label: `deploy ${name}`, kind: 'deploy' });
@@ -102,7 +104,7 @@ call('donate 1 sat to the fixed vault', SBTC, 'transfer',
 ev('UNFIXED: 1 sat makes it look non-empty, so the batch cannot close', unfixedId, '(is-empty)', 'false');
 ev('FIXED: 1 sat is tolerated, the batch can close', fixedId, '(is-empty)', 'true');
 
-console.log(`submitting ${plan.length} steps at mainnet block ${tip.height}`);
+console.log(`submitting ${plan.length} steps at mainnet block ${forkHeight}`);
 const id = await builder.run();
 console.log(`View: https://stxer.xyz/simulations/mainnet/${id}`);
 const result = await getSimulationResult(id, { stxerApi: API });
