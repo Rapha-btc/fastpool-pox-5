@@ -1,40 +1,40 @@
 {
   "kind": "fastpool",
-  "forkBlock": 9093140,
+  "forkBlock": null,
   "reports": [
     {
       "shape": "pending",
       "route": "pool",
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
-      "url": "https://stxer.xyz/simulations/mainnet/97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
+      "url": "https://stxer.xyz/simulations/mainnet/705946015d636f4a70fd10d2b2c04d00",
       "checks": 113
     },
     {
       "shape": "resting",
       "route": "pool",
-      "sid": "5f313e33220911e3365cef31ee96d210",
-      "url": "https://stxer.xyz/simulations/mainnet/5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
+      "url": "https://stxer.xyz/simulations/mainnet/f718916b0773dd822ac06722bdd62adb",
       "checks": 102
     },
     {
       "shape": "parked",
       "route": "pool",
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
-      "url": "https://stxer.xyz/simulations/mainnet/c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
+      "url": "https://stxer.xyz/simulations/mainnet/2e5caba824eb8a3a4e9102dfb14dd11d",
       "checks": 131
     },
     {
       "shape": "pending+resting",
       "route": "pool",
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
-      "url": "https://stxer.xyz/simulations/mainnet/10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
+      "url": "https://stxer.xyz/simulations/mainnet/20e8570eab3b9c9c02ed4ed3f80257cb",
       "checks": 125
     },
     {
       "shape": "none",
       "route": "pool",
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
-      "url": "https://stxer.xyz/simulations/mainnet/1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
+      "url": "https://stxer.xyz/simulations/mainnet/7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "checks": 98
     }
   ],
@@ -44,7 +44,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 1
     },
     {
@@ -52,7 +52,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 2
     },
     {
@@ -60,7 +60,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 3
     },
     {
@@ -68,7 +68,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 4
     },
     {
@@ -76,7 +76,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 5
     },
     {
@@ -84,7 +84,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 6
     },
     {
@@ -92,7 +92,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 7
     },
     {
@@ -100,7 +100,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 8
     },
     {
@@ -108,7 +108,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 9
     },
     {
@@ -116,7 +116,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 12
     },
     {
@@ -124,7 +124,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 13
     },
     {
@@ -132,7 +132,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 14
     },
     {
@@ -140,7 +140,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 15
     },
     {
@@ -148,7 +148,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 16
     },
     {
@@ -156,15 +156,15 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 17
     },
     {
       "label": "fastpool/pending/pool/normal: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24798684240456)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21587211640713)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 19
     },
     {
@@ -172,7 +172,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 20
     },
     {
@@ -180,7 +180,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 21
     },
     {
@@ -188,7 +188,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 22
     },
     {
@@ -196,7 +196,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 23
     },
     {
@@ -204,7 +204,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 24
     },
     {
@@ -212,7 +212,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 25
     },
     {
@@ -220,7 +220,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 26
     },
     {
@@ -228,7 +228,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 28
     },
     {
@@ -236,7 +236,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 28
     },
     {
@@ -244,7 +244,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 29
     },
     {
@@ -252,7 +252,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 30
     },
     {
@@ -260,7 +260,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 31
     },
     {
@@ -268,7 +268,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 32
     },
     {
@@ -276,7 +276,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 33
     },
     {
@@ -284,7 +284,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 34
     },
     {
@@ -292,7 +292,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 35
     },
     {
@@ -300,7 +300,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 35
     },
     {
@@ -308,7 +308,7 @@
       "actual": "(ok u6000000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 36
     },
     {
@@ -316,7 +316,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 39
     },
     {
@@ -324,7 +324,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 40
     },
     {
@@ -332,7 +332,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 41
     },
     {
@@ -340,7 +340,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 42
     },
     {
@@ -348,7 +348,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 43
     },
     {
@@ -356,15 +356,15 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 44
     },
     {
       "label": "fastpool/pending/pool/no-update: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24794371188254)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21572030663672)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 46
     },
     {
@@ -372,7 +372,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 47
     },
     {
@@ -380,7 +380,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 48
     },
     {
@@ -388,7 +388,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 49
     },
     {
@@ -396,7 +396,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 50
     },
     {
@@ -404,7 +404,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 51
     },
     {
@@ -412,7 +412,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 52
     },
     {
@@ -420,7 +420,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 53
     },
     {
@@ -428,7 +428,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 55
     },
     {
@@ -436,7 +436,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 55
     },
     {
@@ -444,7 +444,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 56
     },
     {
@@ -452,7 +452,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 57
     },
     {
@@ -460,7 +460,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 58
     },
     {
@@ -468,7 +468,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 59
     },
     {
@@ -476,7 +476,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 60
     },
     {
@@ -484,7 +484,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 61
     },
     {
@@ -492,7 +492,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 62
     },
     {
@@ -500,7 +500,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 62
     },
     {
@@ -508,7 +508,7 @@
       "actual": "(ok u6000000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 63
     },
     {
@@ -516,7 +516,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 66
     },
     {
@@ -524,7 +524,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 67
     },
     {
@@ -532,7 +532,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 68
     },
     {
@@ -540,7 +540,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 69
     },
     {
@@ -548,7 +548,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 70
     },
     {
@@ -556,15 +556,15 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 71
     },
     {
       "label": "fastpool/pending/pool/market-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24798791393568)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21578842649394)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 73
     },
     {
@@ -572,7 +572,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 74
     },
     {
@@ -580,7 +580,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 75
     },
     {
@@ -588,7 +588,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 76
     },
     {
@@ -596,7 +596,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 77
     },
     {
@@ -604,7 +604,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 78
     },
     {
@@ -612,7 +612,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 79
     },
     {
@@ -620,7 +620,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 80
     },
     {
@@ -628,7 +628,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 81
     },
     {
@@ -636,7 +636,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 83
     },
     {
@@ -644,7 +644,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 83
     },
     {
@@ -652,7 +652,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 84
     },
     {
@@ -660,7 +660,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 85
     },
     {
@@ -668,7 +668,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 86
     },
     {
@@ -676,7 +676,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 87
     },
     {
@@ -684,7 +684,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 88
     },
     {
@@ -692,7 +692,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 89
     },
     {
@@ -700,7 +700,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 90
     },
     {
@@ -708,7 +708,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 90
     },
     {
@@ -716,7 +716,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 91
     },
     {
@@ -724,7 +724,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 92
     },
     {
@@ -732,7 +732,7 @@
       "actual": "(ok u6000000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 93
     },
     {
@@ -740,7 +740,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 96
     },
     {
@@ -748,7 +748,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 97
     },
     {
@@ -756,7 +756,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 98
     },
     {
@@ -764,7 +764,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 99
     },
     {
@@ -772,7 +772,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 100
     },
     {
@@ -780,15 +780,15 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 101
     },
     {
       "label": "fastpool/pending/pool/core-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24802444687133)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21573654502920)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 103
     },
     {
@@ -796,7 +796,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 104
     },
     {
@@ -804,7 +804,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 105
     },
     {
@@ -812,7 +812,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 106
     },
     {
@@ -820,7 +820,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 107
     },
     {
@@ -828,7 +828,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 108
     },
     {
@@ -836,7 +836,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 109
     },
     {
@@ -844,7 +844,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 110
     },
     {
@@ -852,7 +852,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 111
     },
     {
@@ -860,7 +860,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 113
     },
     {
@@ -868,7 +868,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 113
     },
     {
@@ -876,7 +876,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 114
     },
     {
@@ -884,7 +884,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 115
     },
     {
@@ -892,7 +892,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 116
     },
     {
@@ -900,7 +900,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 117
     },
     {
@@ -908,7 +908,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 118
     },
     {
@@ -916,7 +916,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 119
     },
     {
@@ -924,7 +924,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 120
     },
     {
@@ -932,7 +932,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 120
     },
     {
@@ -940,7 +940,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "97359d02625c0460b4aa49f8d71507f6",
+      "sid": "705946015d636f4a70fd10d2b2c04d00",
       "step": 121
     },
     {
@@ -948,7 +948,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 1
     },
     {
@@ -956,7 +956,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 2
     },
     {
@@ -964,7 +964,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 3
     },
     {
@@ -972,7 +972,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 4
     },
     {
@@ -980,7 +980,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 5
     },
     {
@@ -988,7 +988,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 6
     },
     {
@@ -996,7 +996,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 7
     },
     {
@@ -1004,7 +1004,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 8
     },
     {
@@ -1012,7 +1012,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 9
     },
     {
@@ -1020,7 +1020,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 12
     },
     {
@@ -1028,7 +1028,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 13
     },
     {
@@ -1036,7 +1036,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 14
     },
     {
@@ -1044,7 +1044,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 15
     },
     {
@@ -1052,15 +1052,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 16
     },
     {
       "label": "fastpool/resting/pool/normal: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24798608085016)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21532688236509)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 17
     },
     {
@@ -1068,7 +1068,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 18
     },
     {
@@ -1076,7 +1076,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 19
     },
     {
@@ -1084,7 +1084,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 20
     },
     {
@@ -1092,7 +1092,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 21
     },
     {
@@ -1100,7 +1100,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 22
     },
     {
@@ -1108,7 +1108,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 23
     },
     {
@@ -1116,7 +1116,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 24
     },
     {
@@ -1124,7 +1124,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 26
     },
     {
@@ -1132,7 +1132,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 26
     },
     {
@@ -1140,7 +1140,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 27
     },
     {
@@ -1148,7 +1148,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 28
     },
     {
@@ -1156,7 +1156,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 29
     },
     {
@@ -1164,7 +1164,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 30
     },
     {
@@ -1172,7 +1172,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 31
     },
     {
@@ -1180,7 +1180,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 32
     },
     {
@@ -1188,7 +1188,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 33
     },
     {
@@ -1196,7 +1196,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 36
     },
     {
@@ -1204,7 +1204,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 37
     },
     {
@@ -1212,7 +1212,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 38
     },
     {
@@ -1220,7 +1220,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 39
     },
     {
@@ -1228,15 +1228,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 40
     },
     {
       "label": "fastpool/resting/pool/no-update: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24794590883946)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21518940850171)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 41
     },
     {
@@ -1244,7 +1244,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 42
     },
     {
@@ -1252,7 +1252,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 43
     },
     {
@@ -1260,7 +1260,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 44
     },
     {
@@ -1268,7 +1268,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 45
     },
     {
@@ -1276,7 +1276,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 46
     },
     {
@@ -1284,7 +1284,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 47
     },
     {
@@ -1292,7 +1292,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 48
     },
     {
@@ -1300,7 +1300,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 50
     },
     {
@@ -1308,7 +1308,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 50
     },
     {
@@ -1316,7 +1316,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 51
     },
     {
@@ -1324,7 +1324,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 52
     },
     {
@@ -1332,7 +1332,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 53
     },
     {
@@ -1340,7 +1340,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 54
     },
     {
@@ -1348,7 +1348,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 55
     },
     {
@@ -1356,7 +1356,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 56
     },
     {
@@ -1364,7 +1364,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 57
     },
     {
@@ -1372,7 +1372,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 60
     },
     {
@@ -1380,7 +1380,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 61
     },
     {
@@ -1388,7 +1388,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 62
     },
     {
@@ -1396,7 +1396,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 63
     },
     {
@@ -1404,15 +1404,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 64
     },
     {
       "label": "fastpool/resting/pool/market-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24800583451669)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21515362272955)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 65
     },
     {
@@ -1420,7 +1420,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 66
     },
     {
@@ -1428,7 +1428,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 67
     },
     {
@@ -1436,7 +1436,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 68
     },
     {
@@ -1444,7 +1444,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 69
     },
     {
@@ -1452,7 +1452,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 70
     },
     {
@@ -1460,7 +1460,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 71
     },
     {
@@ -1468,7 +1468,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 72
     },
     {
@@ -1476,7 +1476,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 73
     },
     {
@@ -1484,7 +1484,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 75
     },
     {
@@ -1492,7 +1492,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 75
     },
     {
@@ -1500,7 +1500,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 76
     },
     {
@@ -1508,7 +1508,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 77
     },
     {
@@ -1516,7 +1516,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 78
     },
     {
@@ -1524,7 +1524,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 79
     },
     {
@@ -1532,7 +1532,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 80
     },
     {
@@ -1540,7 +1540,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 81
     },
     {
@@ -1548,7 +1548,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 82
     },
     {
@@ -1556,7 +1556,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 83
     },
     {
@@ -1564,7 +1564,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 84
     },
     {
@@ -1572,7 +1572,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 87
     },
     {
@@ -1580,7 +1580,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 88
     },
     {
@@ -1588,7 +1588,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 89
     },
     {
@@ -1596,7 +1596,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 90
     },
     {
@@ -1604,15 +1604,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 91
     },
     {
       "label": "fastpool/resting/pool/core-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24801894401933)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21528325348740)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 92
     },
     {
@@ -1620,7 +1620,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 93
     },
     {
@@ -1628,7 +1628,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 94
     },
     {
@@ -1636,7 +1636,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 95
     },
     {
@@ -1644,7 +1644,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 96
     },
     {
@@ -1652,7 +1652,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 97
     },
     {
@@ -1660,7 +1660,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 98
     },
     {
@@ -1668,7 +1668,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 99
     },
     {
@@ -1676,7 +1676,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 100
     },
     {
@@ -1684,7 +1684,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 102
     },
     {
@@ -1692,7 +1692,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 102
     },
     {
@@ -1700,7 +1700,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 103
     },
     {
@@ -1708,7 +1708,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 104
     },
     {
@@ -1716,7 +1716,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 105
     },
     {
@@ -1724,7 +1724,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 106
     },
     {
@@ -1732,7 +1732,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 107
     },
     {
@@ -1740,7 +1740,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 108
     },
     {
@@ -1748,7 +1748,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 109
     },
     {
@@ -1756,7 +1756,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "5f313e33220911e3365cef31ee96d210",
+      "sid": "f718916b0773dd822ac06722bdd62adb",
       "step": 110
     },
     {
@@ -1764,7 +1764,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 1
     },
     {
@@ -1772,7 +1772,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 2
     },
     {
@@ -1780,7 +1780,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 3
     },
     {
@@ -1788,7 +1788,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 4
     },
     {
@@ -1796,7 +1796,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 5
     },
     {
@@ -1804,7 +1804,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 6
     },
     {
@@ -1812,7 +1812,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 7
     },
     {
@@ -1820,7 +1820,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 8
     },
     {
@@ -1828,7 +1828,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 9
     },
     {
@@ -1836,7 +1836,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 12
     },
     {
@@ -1844,7 +1844,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 13
     },
     {
@@ -1852,7 +1852,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 14
     },
     {
@@ -1860,7 +1860,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 15
     },
     {
@@ -1868,15 +1868,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 16
     },
     {
       "label": "fastpool/parked/pool/normal: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24796459856693)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21539520142167)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 17
     },
     {
@@ -1884,7 +1884,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 18
     },
     {
@@ -1892,7 +1892,7 @@
       "actual": "(ok u49)",
       "expected": "(ok u49)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 19
     },
     {
@@ -1900,7 +1900,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 20
     },
     {
@@ -1908,7 +1908,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 21
     },
     {
@@ -1916,7 +1916,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 22
     },
     {
@@ -1924,7 +1924,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 23
     },
     {
@@ -1932,7 +1932,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 24
     },
     {
@@ -1940,7 +1940,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 25
     },
     {
@@ -1948,7 +1948,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 26
     },
     {
@@ -1956,7 +1956,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 27
     },
     {
@@ -1964,7 +1964,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 28
     },
     {
@@ -1972,7 +1972,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 29
     },
     {
@@ -1980,7 +1980,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 31
     },
     {
@@ -1988,7 +1988,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 31
     },
     {
@@ -1996,7 +1996,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 32
     },
     {
@@ -2004,7 +2004,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 33
     },
     {
@@ -2012,7 +2012,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 34
     },
     {
@@ -2020,7 +2020,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 35
     },
     {
@@ -2028,7 +2028,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 36
     },
     {
@@ -2036,7 +2036,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 37
     },
     {
@@ -2044,7 +2044,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 38
     },
     {
@@ -2052,7 +2052,7 @@
       "actual": "(ok u200000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 39
     },
     {
@@ -2060,7 +2060,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 40
     },
     {
@@ -2068,7 +2068,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 41
     },
     {
@@ -2076,7 +2076,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 44
     },
     {
@@ -2084,7 +2084,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 45
     },
     {
@@ -2092,7 +2092,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 46
     },
     {
@@ -2100,7 +2100,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 47
     },
     {
@@ -2108,15 +2108,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 48
     },
     {
       "label": "fastpool/parked/pool/no-update: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24798902432030)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21543587815873)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 49
     },
     {
@@ -2124,7 +2124,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 50
     },
     {
@@ -2132,7 +2132,7 @@
       "actual": "(ok u49)",
       "expected": "(ok u49)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 51
     },
     {
@@ -2140,7 +2140,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 52
     },
     {
@@ -2148,7 +2148,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 53
     },
     {
@@ -2156,7 +2156,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 54
     },
     {
@@ -2164,7 +2164,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 55
     },
     {
@@ -2172,7 +2172,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 56
     },
     {
@@ -2180,7 +2180,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 57
     },
     {
@@ -2188,7 +2188,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 58
     },
     {
@@ -2196,7 +2196,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 59
     },
     {
@@ -2204,7 +2204,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 60
     },
     {
@@ -2212,7 +2212,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 61
     },
     {
@@ -2220,7 +2220,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 63
     },
     {
@@ -2228,7 +2228,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 63
     },
     {
@@ -2236,7 +2236,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 64
     },
     {
@@ -2244,7 +2244,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 65
     },
     {
@@ -2252,7 +2252,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 66
     },
     {
@@ -2260,7 +2260,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 67
     },
     {
@@ -2268,7 +2268,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 68
     },
     {
@@ -2276,7 +2276,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 69
     },
     {
@@ -2284,7 +2284,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 70
     },
     {
@@ -2292,7 +2292,7 @@
       "actual": "(ok u200000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 71
     },
     {
@@ -2300,7 +2300,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 72
     },
     {
@@ -2308,7 +2308,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 73
     },
     {
@@ -2316,7 +2316,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 76
     },
     {
@@ -2324,7 +2324,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 77
     },
     {
@@ -2332,7 +2332,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 78
     },
     {
@@ -2340,7 +2340,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 79
     },
     {
@@ -2348,15 +2348,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 80
     },
     {
       "label": "fastpool/parked/pool/market-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24798344134554)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21551502517017)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 81
     },
     {
@@ -2364,7 +2364,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 82
     },
     {
@@ -2372,7 +2372,7 @@
       "actual": "(ok u49)",
       "expected": "(ok u49)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 83
     },
     {
@@ -2380,7 +2380,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 84
     },
     {
@@ -2388,7 +2388,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 85
     },
     {
@@ -2396,7 +2396,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 86
     },
     {
@@ -2404,7 +2404,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 87
     },
     {
@@ -2412,7 +2412,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 88
     },
     {
@@ -2420,7 +2420,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 89
     },
     {
@@ -2428,7 +2428,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 90
     },
     {
@@ -2436,7 +2436,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 91
     },
     {
@@ -2444,7 +2444,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 92
     },
     {
@@ -2452,7 +2452,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 93
     },
     {
@@ -2460,7 +2460,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 94
     },
     {
@@ -2468,7 +2468,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 96
     },
     {
@@ -2476,7 +2476,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 96
     },
     {
@@ -2484,7 +2484,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 97
     },
     {
@@ -2492,7 +2492,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 98
     },
     {
@@ -2500,7 +2500,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 99
     },
     {
@@ -2508,7 +2508,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 100
     },
     {
@@ -2516,7 +2516,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 101
     },
     {
@@ -2524,7 +2524,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 102
     },
     {
@@ -2532,7 +2532,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 103
     },
     {
@@ -2540,7 +2540,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 104
     },
     {
@@ -2548,7 +2548,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 105
     },
     {
@@ -2556,7 +2556,7 @@
       "actual": "(ok u200000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 106
     },
     {
@@ -2564,7 +2564,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 107
     },
     {
@@ -2572,7 +2572,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 108
     },
     {
@@ -2580,7 +2580,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 111
     },
     {
@@ -2588,7 +2588,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 112
     },
     {
@@ -2596,7 +2596,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 113
     },
     {
@@ -2604,7 +2604,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 114
     },
     {
@@ -2612,15 +2612,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 115
     },
     {
       "label": "fastpool/parked/pool/core-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24785592357028)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21581941004841)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 116
     },
     {
@@ -2628,7 +2628,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 117
     },
     {
@@ -2636,7 +2636,7 @@
       "actual": "(ok u49)",
       "expected": "(ok u49)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 118
     },
     {
@@ -2644,7 +2644,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 119
     },
     {
@@ -2652,7 +2652,7 @@
       "actual": "(ok u200000)",
       "expected": "(ok u200000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 120
     },
     {
@@ -2660,7 +2660,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 121
     },
     {
@@ -2668,7 +2668,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 122
     },
     {
@@ -2676,7 +2676,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 123
     },
     {
@@ -2684,7 +2684,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 124
     },
     {
@@ -2692,7 +2692,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 125
     },
     {
@@ -2700,7 +2700,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 126
     },
     {
@@ -2708,7 +2708,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 127
     },
     {
@@ -2716,7 +2716,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 128
     },
     {
@@ -2724,7 +2724,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 129
     },
     {
@@ -2732,7 +2732,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 131
     },
     {
@@ -2740,7 +2740,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 131
     },
     {
@@ -2748,7 +2748,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 132
     },
     {
@@ -2756,7 +2756,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 133
     },
     {
@@ -2764,7 +2764,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 134
     },
     {
@@ -2772,7 +2772,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 135
     },
     {
@@ -2780,7 +2780,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 136
     },
     {
@@ -2788,7 +2788,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 137
     },
     {
@@ -2796,7 +2796,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 138
     },
     {
@@ -2804,7 +2804,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "c5c0dab948bf9b651a9aa0d3086a4581",
+      "sid": "2e5caba824eb8a3a4e9102dfb14dd11d",
       "step": 139
     },
     {
@@ -2812,7 +2812,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 1
     },
     {
@@ -2820,7 +2820,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 2
     },
     {
@@ -2828,7 +2828,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 3
     },
     {
@@ -2836,7 +2836,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 4
     },
     {
@@ -2844,7 +2844,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 5
     },
     {
@@ -2852,7 +2852,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 6
     },
     {
@@ -2860,7 +2860,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 7
     },
     {
@@ -2868,7 +2868,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 8
     },
     {
@@ -2876,7 +2876,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 9
     },
     {
@@ -2884,7 +2884,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 12
     },
     {
@@ -2892,7 +2892,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 13
     },
     {
@@ -2900,7 +2900,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 14
     },
     {
@@ -2908,7 +2908,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 15
     },
     {
@@ -2916,15 +2916,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 16
     },
     {
       "label": "fastpool/pending+resting/pool/normal: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24783250325092)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21582681618523)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 17
     },
     {
@@ -2932,7 +2932,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 18
     },
     {
@@ -2940,7 +2940,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 20
     },
     {
@@ -2948,15 +2948,15 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 21
     },
     {
       "label": "fastpool/pending+resting/pool/normal: jing-place submits top-up",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24783250325092)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21582681618523)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 22
     },
     {
@@ -2964,7 +2964,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 23
     },
     {
@@ -2972,7 +2972,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 24
     },
     {
@@ -2980,7 +2980,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 25
     },
     {
@@ -2988,7 +2988,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 26
     },
     {
@@ -2996,7 +2996,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 27
     },
     {
@@ -3004,7 +3004,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 28
     },
     {
@@ -3012,7 +3012,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 29
     },
     {
@@ -3020,7 +3020,7 @@
       "actual": "(ok (tuple (sbtc u200000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 31
     },
     {
@@ -3028,7 +3028,7 @@
       "actual": "200000",
       "expected": "200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 31
     },
     {
@@ -3036,7 +3036,7 @@
       "actual": "u200000",
       "expected": "u200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 32
     },
     {
@@ -3044,7 +3044,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 33
     },
     {
@@ -3052,7 +3052,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 34
     },
     {
@@ -3060,7 +3060,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 35
     },
     {
@@ -3068,7 +3068,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 36
     },
     {
@@ -3076,7 +3076,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 37
     },
     {
@@ -3084,7 +3084,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 38
     },
     {
@@ -3092,7 +3092,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2)) | (tuple (amount u100000) (cycle u0) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (equity-x u0) (event \"refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 38
     },
     {
@@ -3100,7 +3100,7 @@
       "actual": "(ok u6000000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 39
     },
     {
@@ -3108,7 +3108,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 42
     },
     {
@@ -3116,7 +3116,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 43
     },
     {
@@ -3124,7 +3124,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 44
     },
     {
@@ -3132,7 +3132,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 45
     },
     {
@@ -3140,15 +3140,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 46
     },
     {
       "label": "fastpool/pending+resting/pool/no-update: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24781782746642)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21582446585161)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 47
     },
     {
@@ -3156,7 +3156,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 48
     },
     {
@@ -3164,7 +3164,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 50
     },
     {
@@ -3172,15 +3172,15 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 51
     },
     {
       "label": "fastpool/pending+resting/pool/no-update: jing-place submits top-up",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24781782746642)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21582446585161)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 52
     },
     {
@@ -3188,7 +3188,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 53
     },
     {
@@ -3196,7 +3196,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 54
     },
     {
@@ -3204,7 +3204,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 55
     },
     {
@@ -3212,7 +3212,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 56
     },
     {
@@ -3220,7 +3220,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 57
     },
     {
@@ -3228,7 +3228,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 58
     },
     {
@@ -3236,7 +3236,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 59
     },
     {
@@ -3244,7 +3244,7 @@
       "actual": "(ok (tuple (sbtc u200000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 61
     },
     {
@@ -3252,7 +3252,7 @@
       "actual": "200000",
       "expected": "200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 61
     },
     {
@@ -3260,7 +3260,7 @@
       "actual": "u200000",
       "expected": "u200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 62
     },
     {
@@ -3268,7 +3268,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 63
     },
     {
@@ -3276,7 +3276,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 64
     },
     {
@@ -3284,7 +3284,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 65
     },
     {
@@ -3292,7 +3292,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 66
     },
     {
@@ -3300,7 +3300,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 67
     },
     {
@@ -3308,7 +3308,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 68
     },
     {
@@ -3316,7 +3316,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2)) | (tuple (amount u100000) (cycle u0) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (equity-x u0) (event \"refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 68
     },
     {
@@ -3324,7 +3324,7 @@
       "actual": "(ok u6000000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 69
     },
     {
@@ -3332,7 +3332,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 72
     },
     {
@@ -3340,7 +3340,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 73
     },
     {
@@ -3348,7 +3348,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 74
     },
     {
@@ -3356,7 +3356,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 75
     },
     {
@@ -3364,15 +3364,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 76
     },
     {
       "label": "fastpool/pending+resting/pool/market-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24794431129458)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21588762456639)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 77
     },
     {
@@ -3380,7 +3380,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 78
     },
     {
@@ -3388,7 +3388,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 80
     },
     {
@@ -3396,15 +3396,15 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 81
     },
     {
       "label": "fastpool/pending+resting/pool/market-paused: jing-place submits top-up",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24794431129458)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21588762456639)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 82
     },
     {
@@ -3412,7 +3412,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 83
     },
     {
@@ -3420,7 +3420,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 84
     },
     {
@@ -3428,7 +3428,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 85
     },
     {
@@ -3436,7 +3436,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 86
     },
     {
@@ -3444,7 +3444,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 87
     },
     {
@@ -3452,7 +3452,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 88
     },
     {
@@ -3460,7 +3460,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 89
     },
     {
@@ -3468,7 +3468,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 90
     },
     {
@@ -3476,7 +3476,7 @@
       "actual": "(ok (tuple (sbtc u200000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 92
     },
     {
@@ -3484,7 +3484,7 @@
       "actual": "200000",
       "expected": "200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 92
     },
     {
@@ -3492,7 +3492,7 @@
       "actual": "u200000",
       "expected": "u200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 93
     },
     {
@@ -3500,7 +3500,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 94
     },
     {
@@ -3508,7 +3508,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 95
     },
     {
@@ -3516,7 +3516,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 96
     },
     {
@@ -3524,7 +3524,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 97
     },
     {
@@ -3532,7 +3532,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 98
     },
     {
@@ -3540,7 +3540,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 99
     },
     {
@@ -3548,7 +3548,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2)) | (tuple (amount u100000) (cycle u0) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (equity-x u0) (event \"refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 99
     },
     {
@@ -3556,7 +3556,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 100
     },
     {
@@ -3564,7 +3564,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 101
     },
     {
@@ -3572,7 +3572,7 @@
       "actual": "(ok u6000000)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 102
     },
     {
@@ -3580,7 +3580,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 105
     },
     {
@@ -3588,7 +3588,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 106
     },
     {
@@ -3596,7 +3596,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 107
     },
     {
@@ -3604,7 +3604,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 108
     },
     {
@@ -3612,15 +3612,15 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 109
     },
     {
       "label": "fastpool/pending+resting/pool/core-paused: jing-place creates requested inventory",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24795643140090)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21586125944655)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 110
     },
     {
@@ -3628,7 +3628,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 111
     },
     {
@@ -3636,7 +3636,7 @@
       "actual": "(ok u6000000)",
       "expected": "(ok u6000000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 113
     },
     {
@@ -3644,15 +3644,15 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 114
     },
     {
       "label": "fastpool/pending+resting/pool/core-paused: jing-place submits top-up",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u24795643140090)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21586125944655)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 115
     },
     {
@@ -3660,7 +3660,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 116
     },
     {
@@ -3668,7 +3668,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 117
     },
     {
@@ -3676,7 +3676,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 118
     },
     {
@@ -3684,7 +3684,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 119
     },
     {
@@ -3692,7 +3692,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 120
     },
     {
@@ -3700,7 +3700,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 121
     },
     {
@@ -3708,7 +3708,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 122
     },
     {
@@ -3716,7 +3716,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 123
     },
     {
@@ -3724,7 +3724,7 @@
       "actual": "(ok (tuple (sbtc u200000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 125
     },
     {
@@ -3732,7 +3732,7 @@
       "actual": "200000",
       "expected": "200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 125
     },
     {
@@ -3740,7 +3740,7 @@
       "actual": "u200000",
       "expected": "u200000",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 126
     },
     {
@@ -3748,7 +3748,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 127
     },
     {
@@ -3756,7 +3756,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 128
     },
     {
@@ -3764,7 +3764,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 129
     },
     {
@@ -3772,7 +3772,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 130
     },
     {
@@ -3780,7 +3780,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 131
     },
     {
@@ -3788,7 +3788,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 132
     },
     {
@@ -3796,7 +3796,7 @@
       "actual": "(tuple (amount u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"pending-refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (price u0) (reason \"cancel\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2)) | (tuple (amount u100000) (cycle u0) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (equity-x u0) (event \"refund-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))",
       "expected": "s=>s.includes('(event \"pending-refund-x\")')&&s.includes('(reason \"cancel\")')&&s.includes(`(amount u${pendingAmount})`)",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 132
     },
     {
@@ -3804,7 +3804,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "10434cb1f26073f309c79d2a2300c69c",
+      "sid": "20e8570eab3b9c9c02ed4ed3f80257cb",
       "step": 133
     },
     {
@@ -3812,7 +3812,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 1
     },
     {
@@ -3820,7 +3820,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 2
     },
     {
@@ -3828,7 +3828,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 3
     },
     {
@@ -3836,7 +3836,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 4
     },
     {
@@ -3844,7 +3844,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 5
     },
     {
@@ -3852,7 +3852,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 6
     },
     {
@@ -3860,7 +3860,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 7
     },
     {
@@ -3868,7 +3868,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 8
     },
     {
@@ -3876,7 +3876,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 9
     },
     {
@@ -3884,7 +3884,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 12
     },
     {
@@ -3892,7 +3892,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 13
     },
     {
@@ -3900,7 +3900,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 14
     },
     {
@@ -3908,7 +3908,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 15
     },
     {
@@ -3916,7 +3916,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 16
     },
     {
@@ -3924,7 +3924,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 17
     },
     {
@@ -3932,7 +3932,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 18
     },
     {
@@ -3940,7 +3940,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 19
     },
     {
@@ -3948,7 +3948,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 20
     },
     {
@@ -3956,7 +3956,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 21
     },
     {
@@ -3964,7 +3964,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 22
     },
     {
@@ -3972,7 +3972,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 23
     },
     {
@@ -3980,7 +3980,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 25
     },
     {
@@ -3988,7 +3988,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 25
     },
     {
@@ -3996,7 +3996,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 26
     },
     {
@@ -4004,7 +4004,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 27
     },
     {
@@ -4012,7 +4012,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 28
     },
     {
@@ -4020,7 +4020,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 29
     },
     {
@@ -4028,7 +4028,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 30
     },
     {
@@ -4036,7 +4036,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 31
     },
     {
@@ -4044,7 +4044,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 32
     },
     {
@@ -4052,7 +4052,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 35
     },
     {
@@ -4060,7 +4060,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 36
     },
     {
@@ -4068,7 +4068,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 37
     },
     {
@@ -4076,7 +4076,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 38
     },
     {
@@ -4084,7 +4084,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 39
     },
     {
@@ -4092,7 +4092,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 40
     },
     {
@@ -4100,7 +4100,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 41
     },
     {
@@ -4108,7 +4108,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 42
     },
     {
@@ -4116,7 +4116,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 43
     },
     {
@@ -4124,7 +4124,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 44
     },
     {
@@ -4132,7 +4132,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 45
     },
     {
@@ -4140,7 +4140,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 46
     },
     {
@@ -4148,7 +4148,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 48
     },
     {
@@ -4156,7 +4156,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 48
     },
     {
@@ -4164,7 +4164,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 49
     },
     {
@@ -4172,7 +4172,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 50
     },
     {
@@ -4180,7 +4180,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 51
     },
     {
@@ -4188,7 +4188,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 52
     },
     {
@@ -4196,7 +4196,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 53
     },
     {
@@ -4204,7 +4204,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 54
     },
     {
@@ -4212,7 +4212,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 55
     },
     {
@@ -4220,7 +4220,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 58
     },
     {
@@ -4228,7 +4228,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 59
     },
     {
@@ -4236,7 +4236,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 60
     },
     {
@@ -4244,7 +4244,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 61
     },
     {
@@ -4252,7 +4252,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 62
     },
     {
@@ -4260,7 +4260,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 63
     },
     {
@@ -4268,7 +4268,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 64
     },
     {
@@ -4276,7 +4276,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 65
     },
     {
@@ -4284,7 +4284,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 66
     },
     {
@@ -4292,7 +4292,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 67
     },
     {
@@ -4300,7 +4300,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 68
     },
     {
@@ -4308,7 +4308,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 69
     },
     {
@@ -4316,7 +4316,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 70
     },
     {
@@ -4324,7 +4324,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 72
     },
     {
@@ -4332,7 +4332,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 72
     },
     {
@@ -4340,7 +4340,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 73
     },
     {
@@ -4348,7 +4348,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 74
     },
     {
@@ -4356,7 +4356,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 75
     },
     {
@@ -4364,7 +4364,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 76
     },
     {
@@ -4372,7 +4372,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 77
     },
     {
@@ -4380,7 +4380,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 78
     },
     {
@@ -4388,7 +4388,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 79
     },
     {
@@ -4396,7 +4396,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 80
     },
     {
@@ -4404,7 +4404,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 81
     },
     {
@@ -4412,7 +4412,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 84
     },
     {
@@ -4420,7 +4420,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 85
     },
     {
@@ -4428,7 +4428,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 86
     },
     {
@@ -4436,7 +4436,7 @@
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 87
     },
     {
@@ -4444,7 +4444,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 88
     },
     {
@@ -4452,7 +4452,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 89
     },
     {
@@ -4460,7 +4460,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 90
     },
     {
@@ -4468,7 +4468,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 91
     },
     {
@@ -4476,7 +4476,7 @@
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 92
     },
     {
@@ -4484,7 +4484,7 @@
       "actual": "(err u16000)",
       "expected": "(err u16000)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 93
     },
     {
@@ -4492,7 +4492,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 94
     },
     {
@@ -4500,7 +4500,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 95
     },
     {
@@ -4508,7 +4508,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 96
     },
     {
@@ -4516,7 +4516,7 @@
       "actual": "(ok (tuple (sbtc u100000) (stx u0)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 98
     },
     {
@@ -4524,7 +4524,7 @@
       "actual": "100000",
       "expected": "100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 98
     },
     {
@@ -4532,7 +4532,7 @@
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 99
     },
     {
@@ -4540,7 +4540,7 @@
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 100
     },
     {
@@ -4548,7 +4548,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 101
     },
     {
@@ -4556,7 +4556,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 102
     },
     {
@@ -4564,7 +4564,7 @@
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 103
     },
     {
@@ -4572,7 +4572,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 104
     },
     {
@@ -4580,7 +4580,7 @@
       "actual": "(err u1030)",
       "expected": "(err u1030)",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 105
     },
     {
@@ -4588,7 +4588,7 @@
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1d4731f2acbb1fee11416c5acd485a93",
+      "sid": "7bdc4c6c59d3f1d2ca38baac48d4a42a",
       "step": 106
     }
   ],
@@ -4603,9 +4603,9 @@
   "sourceHashes": {
     "jing-core-v6": "88a689affb23f13030953e891336af42a3f5cb275f13b3c54c79d8cd4de50697",
     "jing-ladder-v1": "0f1e08b023272ed96a2653f727292626d4b0325dcf4e42963104d977860ec786",
-    "markets-sbtc-stx-jing-v6-3": "5c08412fc5990a8bf0db3a0cbbec3fa4c859d4185d0caf1cd16ae0c78f851bfb",
-    "swap-router-sbtc-stx-jing-v5-3": "882374f40bfdf8270b3ea18ba2d7e68fce4431ee17c60f70b00bb2670240fe58",
-    "fastpool-swap-vault": "1bf8137aec300ae5f700ea3c252629a0ea1f01b642851ad9df053af437ae0a87",
+    "markets-sbtc-stx-jing-v6-3": "ed046155b017d6acad569c6769da050747f4c69db7f627e4767fe0cafea41848",
+    "swap-router-sbtc-stx-jing-v5-3": "dc355d4402a42c5583776a38f08ed4feae8365443113079fb42f964bf5faf839",
+    "fastpool-swap-vault": "19c3c6baeb8fdc8a719bab532fd0006313e9e01b2eab9369d2f49b9e37999d5f",
     "signer-manager-vault-stx-rewards": "91db429775c07f36308699f5678ab044e51e195b4e3b8f59feffb97f0c10d89c"
   }
 }
