@@ -33,7 +33,9 @@
 (define-constant DECIMAL_FACTOR u100)
 (define-constant BPS_PRECISION u10000)
 ;; most rebate dust the market (markets-sbtc-stx-jing-v6-3) refunds: under
-;; 1 sat per rounding, 1 for net + 1 for the batch share + 49 walk fills
+;; 1 sat per rounding, 1 for net + 1 for the batch share + 49 walk fills.
+;; Router v5-3 sizes the book leg at the market's gross-cap, so the leg
+;; trades in full and only this rounding comes back.
 (define-constant JING_REBATE_DUST_SATS u51)
 
 (define-constant POOL .signer-manager-vault-stx-rewards)
