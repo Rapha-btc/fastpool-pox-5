@@ -1,4 +1,4 @@
-simulation 4f4dba1269f53de4f75efd1b8fd1298a
+simulation d1cf02c7d8e4ea6d4979acf22ee27b91
 amounts 1, 500, 1000, 2000
 
 deploy exact jing-core-v6
@@ -42,11 +42,11 @@ fast/500: real token funding
 fast/500: fund 500 sats
         (ok u500)
 fast/500: router-swap 500
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u500) (limit-price u18943716936906) (mid u19135067613037) (out u948734) (unsold u0)))))
+        (err u16047)
 fast/500: is-empty after
-        true
+        false
 fast/500: sBTC balance after
-        u0
+        u500
 fast/1000: deploy test copy
         (ok true)
 fast/1000: set-window-blocks u0
@@ -56,11 +56,11 @@ fast/1000: real token funding
 fast/1000: fund 1000 sats
         (ok u1000)
 fast/1000: router-swap 1000
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u1000) (limit-price u18943716936906) (mid u19135067613037) (out u1895563) (unsold u0)))))
+        (err u16047)
 fast/1000: is-empty after
-        true
+        false
 fast/1000: sBTC balance after
-        u0
+        u1000
 fast/2000: deploy test copy
         (ok true)
 fast/2000: set-window-blocks u0
@@ -70,11 +70,11 @@ fast/2000: real token funding
 fast/2000: fund 2000 sats
         (ok u2000)
 fast/2000: router-swap 2000
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u2000) (limit-price u18943716936906) (mid u19135067613037) (out u3791126) (unsold u0)))))
+        (err u16047)
 fast/2000: is-empty after
-        true
+        false
 fast/2000: sBTC balance after
-        u0
+        u2000
 juice/1: deploy test copy
         (ok true)
 juice/1: set-window-blocks u0
@@ -98,11 +98,11 @@ juice/500: real token funding
 juice/500: fund 500 sats
         (ok u500)
 juice/500: router-swap 500
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u500) (limit-price u18943716936906) (mid u19135067613037) (out u948734) (unsold u0)))))
+        (err u16047)
 juice/500: is-empty after
-        true
+        false
 juice/500: sBTC balance after
-        u0
+        u500
 juice/1000: deploy test copy
         (ok true)
 juice/1000: set-window-blocks u0
@@ -112,11 +112,11 @@ juice/1000: real token funding
 juice/1000: fund 1000 sats
         (ok u1000)
 juice/1000: router-swap 1000
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u1000) (limit-price u18943716936906) (mid u19135067613037) (out u1895563) (unsold u0)))))
+        (err u16047)
 juice/1000: is-empty after
-        true
+        false
 juice/1000: sBTC balance after
-        u0
+        u1000
 juice/2000: deploy test copy
         (ok true)
 juice/2000: set-window-blocks u0
@@ -126,11 +126,11 @@ juice/2000: real token funding
 juice/2000: fund 2000 sats
         (ok u2000)
 juice/2000: router-swap 2000
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u2000) (limit-price u18943716936906) (mid u19135067613037) (out u3791126) (unsold u0)))))
+        (err u16047)
 juice/2000: is-empty after
-        true
+        false
 juice/2000: sBTC balance after
-        u0
+        u2000
 ccd016/1: deploy test copy
         (ok true)
 ccd016/1: set-window-blocks u0
@@ -154,11 +154,11 @@ ccd016/500: real token funding
 ccd016/500: fund 500 sats
         (ok true)
 ccd016/500: router-swap 500
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u500) (limit-price u18943716936906) (mid u19135067613037) (out u948734) (unsold u0)))))
+        (err u16047)
 ccd016/500: is-empty after
-        true
+        false
 ccd016/500: sBTC balance after
-        u0
+        u500
 ccd016/1000: deploy test copy
         (ok true)
 ccd016/1000: set-window-blocks u0
@@ -168,11 +168,11 @@ ccd016/1000: real token funding
 ccd016/1000: fund 1000 sats
         (ok true)
 ccd016/1000: router-swap 1000
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u1000) (limit-price u18943716936906) (mid u19135067613037) (out u1895563) (unsold u0)))))
+        (err u16047)
 ccd016/1000: is-empty after
-        true
+        false
 ccd016/1000: sBTC balance after
-        u0
+        u1000
 ccd016/2000: deploy test copy
         (ok true)
 ccd016/2000: set-window-blocks u0
@@ -182,8 +182,8 @@ ccd016/2000: real token funding
 ccd016/2000: fund 2000 sats
         (ok true)
 ccd016/2000: router-swap 2000
-        (ok (tuple (notification "router-swap") (payload (tuple (amount u2000) (limit-price u18943716936906) (mid u19135067613037) (out u3796400) (unsold u0)))))
+        (err u16047)
 ccd016/2000: is-empty after
-        true
+        false
 ccd016/2000: sBTC balance after
-        u0
+        u2000

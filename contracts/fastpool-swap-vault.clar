@@ -37,6 +37,11 @@
 ;; Router v5-3 sizes the book leg at the market's gross-cap, so the leg
 ;; trades in full and only this rounding comes back.
 (define-constant JING_REBATE_DUST_SATS u51)
+;; the market's TAKER_REBATE_MAX_BPS (markets-sbtc-stx-jing-v6-3): the stale-feed
+;; ceiling of the taker rebate. The rebate on a sub-min rest the market
+;; refunds is never spent, so it comes back on top of the rounding dust:
+;; rem * bps / 10000 with rem < min-x and bps <= 70.
+(define-constant MAX_TAKER_REBATE_BPS u70)
 
 (define-constant POOL .signer-manager-vault-stx-rewards)
 (define-constant SBTC_TOKEN 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
@@ -417,10 +422,22 @@
     (try! (check-amount amount))
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
-        ;; the market refunds the unfilled rest (under min-x) and the unused
-        ;; rebate dust, and the router re-sells both: allow that on top of `amount`
+        ;; the market refunds the unfilled rest (rem < min-x) and the unused
+        ;; rebate, and the router re-sells both: allow that on top of `amount`.
+        ;; Unused rebate < rem * b + 51.007 (b = bps / 10000 <= 0.007; under
+        ;; 1.007 sat from the net rounding, under 1 per floor: batch share plus
+        ;; at most 49 walk fills, the bid list holds 50). So rem + unused
+        ;; rebate < min-x * (1 + b) + 51.007, an integer, hence
+        ;; <= min-x + ceil(min-x * 70 / 10000) + 51.
         ((with-ft SBTC_TOKEN ASSET_SBTC
-          (+ amount (get min-token-x mins) JING_REBATE_DUST_SATS))
+          (+ amount (get min-token-x mins) JING_REBATE_DUST_SATS
+            (/
+              (+ (* (get min-token-x mins) MAX_TAKER_REBATE_BPS)
+                (- BPS_PRECISION u1)
+              )
+              BPS_PRECISION
+            )
+          ))
           (with-stx (var-get pyth-fee-budget))
         )
         (try! (contract-call? JING_ROUTER smart-swap-sbtc-for-stx amount limit
