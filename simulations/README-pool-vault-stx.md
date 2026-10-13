@@ -23,7 +23,7 @@ Current FastPool results pass **82/82 checks**:
 - real router liquidation lifecycle: **35/35**
 
 The FastPool runner deploys `signer-manager-vault-stx-rewards` under its production name,
-passes `.fastpool-swap-vault` through the deployed reusable vault trait, and checks the
+passes `.fastpool-swap-vault` through `juice-swap-vault-trait-v2` (fork-deployed before the vault and pool), and checks the
 `close-batch` / `ready-to-finish` transition before maker proceeds are finalized.
 
 Juice's entry point lives in `stacking-juice/stx-juice/simulations`; FastPool's is here.

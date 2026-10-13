@@ -1,10 +1,10 @@
 ;; The signer manager dispatches every vault call through
-;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait.swap-vault-trait
+;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait
 ;; (signer-manager-vault-stx-rewards.clar:26). Declaring it here makes the
 ;; compiler prove conformance at check time instead of leaving a signature drift
 ;; to surface at runtime, after deploy, when the contract can no longer change.
 ;; The Juice vault has always declared its trait; this closes the gap.
-(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait.swap-vault-trait)
+(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait)
 
 (define-constant ERR_RECOVERY_TOO_SOON (err u16046))
 (define-constant ERR_BUSY (err u16045))
@@ -71,6 +71,12 @@
 (define-constant MAX_NO_PYTH_SLIPPAGE_BPS u5000)
 
 (define-data-var no-pyth-slippage-bps uint u1000)
+
+;; Pyth Lazer charges its per-update fee in STX from tx-sender, which is this
+;; vault inside `as-contract?`. The fee is u0 today; this is the STX each
+;; Lazer-verifying swap may spend, so a later set-fee needs no redeploy.
+(define-constant MAX_PYTH_FEE_BUDGET u10000000) ;; 10 STX
+(define-data-var pyth-fee-budget uint u0)
 
 (define-data-var window-blocks uint u288)
 (define-data-var leeway-bps uint u500)
@@ -170,6 +176,19 @@
     (print {
       notification: "set-router-cooldown",
       payload: { value: blocks },
+    })
+    (ok true)
+  )
+)
+
+(define-public (set-pyth-fee-budget (ustx uint))
+  (begin
+    (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
+    (asserts! (<= ustx MAX_PYTH_FEE_BUDGET) ERR_OUT_OF_RANGE)
+    (var-set pyth-fee-budget ustx)
+    (print {
+      notification: "set-pyth-fee-budget",
+      payload: { value: ustx },
     })
     (ok true)
   )
@@ -364,7 +383,9 @@
     (asserts! (window-elapsed) ERR_WINDOW_OPEN)
     (try! (check-amount amount))
     (let ((limit (floor-of (try! (current-mid update)))))
-      (let ((result (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC amount))
+      (let ((result (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC amount)
+            (with-stx (var-get pyth-fee-budget))
+          )
           (try! (contract-call? JING_MARKET swap amount limit update SBTC_TOKEN
             ASSET_SBTC WSTX_TOKEN ASSET_WSTX true
           ))
@@ -399,7 +420,9 @@
         ;; the market refunds the unfilled rest (under min-x) and the unused
         ;; rebate dust, and the router re-sells both: allow that on top of `amount`
         ((with-ft SBTC_TOKEN ASSET_SBTC
-          (+ amount (get min-token-x mins) JING_REBATE_DUST_SATS)))
+          (+ amount (get min-token-x mins) JING_REBATE_DUST_SATS))
+          (with-stx (var-get pyth-fee-budget))
+        )
         (try! (contract-call? JING_ROUTER smart-swap-sbtc-for-stx amount limit
           (some update) mid u0
         ))
@@ -454,7 +477,9 @@
     (try! (check-amount amount))
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
-        ((with-ft SBTC_TOKEN ASSET_SBTC (+ amount (get min-token-x market-mins))))
+        ((with-ft SBTC_TOKEN ASSET_SBTC (+ amount (get min-token-x market-mins)))
+          (with-stx (var-get pyth-fee-budget))
+        )
         (try! (contract-call? JING_ROUTER swap-sbtc-for-stx amount jing limit
           (some update) none {
           dlmm: dlmm,
@@ -810,6 +835,7 @@
     max-chunk-sats: (var-get max-chunk-sats),
     dia-band-bps: (var-get dia-band-bps),
     router-cooldown-blocks: (var-get router-cooldown-blocks),
+    pyth-fee-budget: (var-get pyth-fee-budget),
     last-router-swap: (var-get last-router-swap),
     market: JING_MARKET,
     router: JING_ROUTER,

@@ -1,26 +1,33 @@
 {
-  "forkBlock": 9105882,
+  "forkBlock": null,
   "runs": [
     {
       "case": "fastpool/L-1 partial router sale",
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "url": "https://stxer.xyz/simulations/mainnet/1c783869d0ac9c299170592a851a356d",
-      "checks": 50,
-      "passed": 50
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "url": "https://stxer.xyz/simulations/mainnet/574bb075198c27a3458f0e04e48e60c3",
+      "checks": 51,
+      "passed": 51
     },
     {
       "case": "fastpool/L-2 window cap + #6 dust-only batch",
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "url": "https://stxer.xyz/simulations/mainnet/b1f811ff48ab25f92599d82f2fa98b05",
-      "checks": 45,
-      "passed": 45
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "url": "https://stxer.xyz/simulations/mainnet/ea9b82b0b5adb780c05902c23376aa08",
+      "checks": 46,
+      "passed": 46
     },
     {
       "case": "fastpool/#7 market dust after sell-out",
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "url": "https://stxer.xyz/simulations/mainnet/36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "checks": 79,
-      "passed": 79
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "url": "https://stxer.xyz/simulations/mainnet/328a05d93e9921d0aed51f616655ba6b",
+      "checks": 80,
+      "passed": 80
+    },
+    {
+      "case": "fastpool/Pyth Lazer fee budget",
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "url": "https://stxer.xyz/simulations/mainnet/b161c40be81f7798025aac54ee550f2b",
+      "checks": 58,
+      "passed": 58
     }
   ],
   "checks": [
@@ -29,7 +36,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 1
     },
     {
@@ -37,7 +44,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 2
     },
     {
@@ -45,7 +52,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 3
     },
     {
@@ -53,7 +60,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 4
     },
     {
@@ -61,7 +68,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 5
     },
     {
@@ -69,7 +76,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 6
     },
     {
@@ -77,359 +84,367 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 7
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: deploy juice-swap-vault-trait-v2",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 8
     },
     {
       "label": "fastpool/L-1 partial router sale: deploy fastpool-swap-vault",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 8
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 9
     },
     {
       "label": "fastpool/L-1 partial router sale: deploy signer-manager-vault-stx-rewards",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 9
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 10
     },
     {
       "label": "fastpool/L-1 partial router sale: admin sets 40 bps floor",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 11
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: real sBTC backs cycle 143 rewards",
-      "actual": "(ok true)",
-      "expected": "(ok true)",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 12
     },
     {
-      "label": "fastpool/L-1 partial router sale: cycle 143 earned 1000000 sats + mirrored share fixture",
+      "label": "fastpool/L-1 partial router sale: real sBTC backs cycle 144 rewards",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 13
     },
     {
-      "label": "fastpool/L-1 partial router sale: pool claims cycle 143",
-      "actual": "(ok u1000000)",
-      "expected": "(ok u1000000)",
+      "label": "fastpool/L-1 partial router sale: cycle 144 earned 1000000 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 14
     },
     {
-      "label": "fastpool/L-1 partial router sale: pool funds vault from cycle 143",
+      "label": "fastpool/L-1 partial router sale: pool claims cycle 144",
       "actual": "(ok u1000000)",
       "expected": "(ok u1000000)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 15
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: pool funds vault from cycle 144",
+      "actual": "(ok u1000000)",
+      "expected": "(ok u1000000)",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 16
     },
     {
       "label": "fastpool/L-1 partial router sale: vault holds the reward",
       "actual": "u1000000",
       "expected": "u1000000",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 16
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 17
     },
     {
       "label": "fastpool/L-1 partial router sale: fixture: patience window elapsed",
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 17
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 18
     },
     {
       "label": "fastpool/L-1 partial router sale: real STX maker bid worth ~40000 sats",
-      "actual": "(ok u90963703)",
-      "expected": "(ok u90963703)",
+      "actual": "(ok u76415916)",
+      "expected": "(ok u76415916)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 19
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 20
     },
     {
       "label": "fastpool/L-1 partial router sale: STX maker bid is live",
-      "actual": "u90963703",
+      "actual": "u76415916",
       "expected": "v=>uint(v)>0n",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 21
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 22
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1: router-swap sells only what fits inside the floor",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000000) (limit-price u22650654341588) (mid u22741620824888) (out u1670618911) (unsold u264139)))))",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u1000000) (limit-price u19027134095479) (mid u19103548288634) (out u76337779) (unsold u959919)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${FUND})`)&&field(v,'unsold')>0n",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: router print present",
-      "actual": "(tuple (amount u1000000) (dlmm-cap u675656) (dlmm-in u675656) (dlmm-out u1534157485) (jing-cap u40078) (jing-in u40078) (jing-ok true) (jing-out u90870973) (limit-price u22650654341588) (out u1670618911) (topic \"smart-swap-sbtc-for-stx\") (unsold u264139) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u20127) (xyk-in u20127) (xyk-out u45590453))",
-      "expected": "v=>v!=='missing'",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1 capacity inside the floor (jing+dlmm+xyk+velar caps) is below the amount",
-      "actual": "40078+675656+20127+0=735861 < 1000000",
-      "expected": "()=>cap1<FUND",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1 unsold = amount - sold, sold <= capacity",
-      "actual": "unsold 264139, sold 735861, cap 735861",
-      "expected": "()=>unsold1===FUND-sold1&&sold1<=cap1",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1 legs add up to what sold",
-      "actual": "40078+675656+20127+0=735861, unsold 264139",
-      "expected": "()=>rt1.jingIn+rt1.dlmmIn+rt1.xykIn+rt1.velarIn===sold1&&rt1.unsold===unsold1",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1 book leg filled",
-      "actual": "40078",
-      "expected": "v=>rt1.jingIn>0n",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1 sold more than ROUTER_SLACK_SATS",
-      "actual": "735861",
-      "expected": "v=>sold1>8n",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1 out meets floor-out(sold - 8)",
-      "actual": "1670618911 >= 1666755194",
-      "expected": "()=>out1>=floorOut(sold1-8n,limit)",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 24
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 1: exact unsold rest stays in the vault",
-      "actual": "u264139",
-      "expected": "u264139",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 25
     },
     {
-      "label": "fastpool/L-1 partial router sale: call 1: vault STX up by exactly out",
-      "actual": "u1670618911",
-      "expected": "u1670618911",
+      "label": "fastpool/L-1 partial router sale: router print present",
+      "actual": "(tuple (amount u1000000) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u40081) (jing-in u40081) (jing-ok true) (jing-out u76337779) (limit-price u19027134095479) (out u76337779) (topic \"smart-swap-sbtc-for-stx\") (unsold u959919) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "expected": "v=>v!=='missing'",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 capacity inside the floor (jing+dlmm+xyk+velar caps) is below the amount",
+      "actual": "40081+0+0+0=40081 < 1000000",
+      "expected": "()=>cap1<FUND",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 unsold = amount - sold, sold <= capacity",
+      "actual": "unsold 959919, sold 40081, cap 40081",
+      "expected": "()=>unsold1===FUND-sold1&&sold1<=cap1",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 legs add up to what sold",
+      "actual": "40081+0+0+0=40081, unsold 959919",
+      "expected": "()=>rt1.jingIn+rt1.dlmmIn+rt1.xykIn+rt1.velarIn===sold1&&rt1.unsold===unsold1",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 book leg filled",
+      "actual": "40081",
+      "expected": "v=>rt1.jingIn>0n",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 sold more than ROUTER_SLACK_SATS",
+      "actual": "40081",
+      "expected": "v=>sold1>8n",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1 out meets floor-out(sold - 8)",
+      "actual": "76337779 >= 76247434",
+      "expected": "()=>out1>=floorOut(sold1-8n,limit)",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 25
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1: exact unsold rest stays in the vault",
+      "actual": "u959919",
+      "expected": "u959919",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 26
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 1: vault STX up by exactly out",
+      "actual": "u76337779",
+      "expected": "u76337779",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 27
     },
     {
       "label": "fastpool/L-1 partial router sale: call 1 vault print matches router out/unsold",
-      "actual": "1670618911/264139",
-      "expected": "1670618911/264139",
+      "actual": "76337779/959919",
+      "expected": "76337779/959919",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 26
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 27
     },
     {
       "label": "fastpool/L-1 partial router sale: batch still open after partial sale",
-      "actual": "(tuple (batch-start (some u969250)) (burn-height u969538) (ready-to-finish false) (window-elapsed true) (window-ends (some u969538)) (window-open false))",
+      "actual": "(tuple (batch-start (some u971028)) (burn-height u971316) (ready-to-finish false) (window-elapsed true) (window-ends (some u971316)) (window-open false))",
       "expected": "v=>v.includes('(batch-start (some')&&v.includes('(ready-to-finish false)')",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 27
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 28
     },
     {
       "label": "fastpool/L-1 partial router sale: finalize refused while the rest is held",
       "actual": "(err u16032)",
       "expected": "(err u16032)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 28
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 29
     },
     {
       "label": "fastpool/L-1 partial router sale: same burn block: cooldown",
       "actual": "(err u16044)",
       "expected": "(err u16044)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 29
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: advance 1 burn block(s)",
-      "actual": "ok",
-      "expected": "ok",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 30
     },
     {
-      "label": "fastpool/L-1 partial router sale: real STX maker bid worth ~30000 sats",
-      "actual": "(ok u68225334)",
-      "expected": "(ok u68225334)",
+      "label": "fastpool/L-1 partial router sale: advance 1 burn block(s)",
+      "actual": "ok",
+      "expected": "ok",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 32
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 31
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: real STX maker bid worth ~30000 sats",
+      "actual": "(ok u57310341)",
+      "expected": "(ok u57310341)",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 33
     },
     {
       "label": "fastpool/L-1 partial router sale: STX maker bid is live",
-      "actual": "u68225334",
+      "actual": "u57310341",
       "expected": "v=>uint(v)>0n",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 34
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 35
     },
     {
       "label": "fastpool/L-1 partial router sale: call 2: next call sells more of the rest",
-      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u264139) (limit-price u22652202582044) (mid u22743175283177) (out u68156753) (unsold u234081)))))",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u959919) (limit-price u19027065583442) (mid u19103479501448) (out u57251220) (unsold u929860)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${unsold1})`)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 36
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: router print present",
-      "actual": "(tuple (amount u264139) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u30058) (jing-in u30058) (jing-ok true) (jing-out u68156753) (limit-price u22652202582044) (out u68156753) (topic \"smart-swap-sbtc-for-stx\") (unsold u234081) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
-      "expected": "v=>v!=='missing'",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 36
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 2 sold more than ROUTER_SLACK_SATS",
-      "actual": "30058",
-      "expected": "()=>sold2>8n",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 36
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 2 out meets floor-out(sold - 8)",
-      "actual": "68156753 >= 68069868",
-      "expected": "()=>out2>=floorOut(sold2-8n,limit2)",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 36
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 2 legs add up",
-      "actual": "30058+0+0+0=30058",
-      "expected": "()=>rt2.jingIn+rt2.dlmmIn+rt2.xykIn+rt2.velarIn===sold2&&rt2.unsold===unsold2",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 36
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 2: exact rest in the vault",
-      "actual": "u234081",
-      "expected": "u234081",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 37
     },
     {
-      "label": "fastpool/L-1 partial router sale: call 2: vault STX = out1 + out2",
-      "actual": "u1738775664",
-      "expected": "u1738775664",
+      "label": "fastpool/L-1 partial router sale: router print present",
+      "actual": "(tuple (amount u959919) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u30059) (jing-in u30059) (jing-ok true) (jing-out u57251220) (limit-price u19027065583442) (out u57251220) (topic \"smart-swap-sbtc-for-stx\") (unsold u929860) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "expected": "v=>v!=='missing'",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 37
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 2 sold more than ROUTER_SLACK_SATS",
+      "actual": "30059",
+      "expected": "()=>sold2>8n",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 37
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 2 out meets floor-out(sold - 8)",
+      "actual": "57251220 >= 57178234",
+      "expected": "()=>out2>=floorOut(sold2-8n,limit2)",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 37
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 2 legs add up",
+      "actual": "30059+0+0+0=30059",
+      "expected": "()=>rt2.jingIn+rt2.dlmmIn+rt2.xykIn+rt2.velarIn===sold2&&rt2.unsold===unsold2",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 37
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 2: exact rest in the vault",
+      "actual": "u929860",
+      "expected": "u929860",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 38
     },
     {
+      "label": "fastpool/L-1 partial router sale: call 2: vault STX = out1 + out2",
+      "actual": "u133588999",
+      "expected": "u133588999",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 39
+    },
+    {
       "label": "fastpool/L-1 partial router sale: a rest is still held for the <= 8 sats case",
-      "actual": "234081",
+      "actual": "929860",
       "expected": "()=>unsold2>8n",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 38
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 39
     },
     {
       "label": "fastpool/L-1 partial router sale: advance 1 burn block(s)",
       "actual": "ok",
       "expected": "ok",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 39
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 40
     },
     {
       "label": "fastpool/L-1 partial router sale: admin sets 0 bps floor (limit = mid)",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 40
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 41
     },
     {
       "label": "fastpool/L-1 partial router sale: call 3: nothing inside the floor, sold <= 8 sats: u16047",
       "actual": "(err u16047)",
       "expected": "(err u16047)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 43
-    },
-    {
-      "label": "fastpool/L-1 partial router sale: call 3: vault sBTC unchanged",
-      "actual": "u234081",
-      "expected": "u234081",
-      "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 44
     },
     {
-      "label": "fastpool/L-1 partial router sale: call 3: vault STX unchanged",
-      "actual": "u1738775664",
-      "expected": "u1738775664",
+      "label": "fastpool/L-1 partial router sale: call 3: vault sBTC unchanged",
+      "actual": "u929860",
+      "expected": "u929860",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 45
     },
     {
-      "label": "fastpool/L-1 partial router sale: call 3: cooldown not burned (config unchanged)",
-      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u969539) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
-      "expected": "(tuple (dia-band-bps u1000) (last-router-swap u969539) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
+      "label": "fastpool/L-1 partial router sale: call 3: vault STX unchanged",
+      "actual": "u133588999",
+      "expected": "u133588999",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
       "step": 46
+    },
+    {
+      "label": "fastpool/L-1 partial router sale: call 3: cooldown not burned (config unchanged)",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u971317) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u0) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
+      "expected": "(tuple (dia-band-bps u1000) (last-router-swap u971317) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u0) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u0) (window-blocks u288))",
+      "passed": true,
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 47
     },
     {
       "label": "fastpool/L-1 partial router sale: call 3b: same block still accepted by cooldown gate, still u16047",
       "actual": "(err u16047)",
       "expected": "(err u16047)",
       "passed": true,
-      "sid": "1c783869d0ac9c299170592a851a356d",
-      "step": 47
+      "sid": "574bb075198c27a3458f0e04e48e60c3",
+      "step": 48
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: deploy exact jing-core-v6",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 1
     },
     {
@@ -437,7 +452,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 2
     },
     {
@@ -445,7 +460,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 3
     },
     {
@@ -453,7 +468,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 4
     },
     {
@@ -461,7 +476,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 5
     },
     {
@@ -469,7 +484,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 6
     },
     {
@@ -477,319 +492,327 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 7
+    },
+    {
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: deploy juice-swap-vault-trait-v2",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 8
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: deploy fastpool-swap-vault",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 8
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 9
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: deploy signer-manager-vault-stx-rewards",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 9
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 10
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: 289-block window refused (u16033)",
       "actual": "(err u16033)",
       "expected": "(err u16033)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 11
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 12
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: window unchanged after refusal",
-      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u0) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
       "expected": "v=>v.includes('(window-blocks u288)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 12
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 13
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: 1008-block window refused (u16033)",
       "actual": "(err u16033)",
       "expected": "(err u16033)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 13
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 14
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: 287-block window accepted",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 14
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 15
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: set-window-blocks print u287",
       "actual": "(tuple (notification \"set-window-blocks\") (payload (tuple (value u287))))",
       "expected": "v=>v.includes('(notification \"set-window-blocks\")')&&v.includes('(value u287)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 14
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 15
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: 288-block window accepted",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 15
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 16
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: set-window-blocks print u288",
       "actual": "(tuple (notification \"set-window-blocks\") (payload (tuple (value u288))))",
       "expected": "v=>v.includes('(value u288)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 15
-    },
-    {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: window is 288",
-      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
-      "expected": "v=>v.includes('(window-blocks u288)')",
-      "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 16
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: real sBTC backs cycle 143 rewards",
-      "actual": "(ok true)",
-      "expected": "(ok true)",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: L-2: window is 288",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u0) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
+      "expected": "v=>v.includes('(window-blocks u288)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 17
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: cycle 143 earned 2 sats + mirrored share fixture",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: real sBTC backs cycle 144 rewards",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 18
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool claims cycle 143",
-      "actual": "(ok u2)",
-      "expected": "(ok u2)",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: cycle 144 earned 2 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 19
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool funds vault from cycle 143",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool claims cycle 144",
       "actual": "(ok u2)",
       "expected": "(ok u2)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 20
     },
     {
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool funds vault from cycle 144",
+      "actual": "(ok u2)",
+      "expected": "(ok u2)",
+      "passed": true,
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 21
+    },
+    {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault fund print amount u2",
-      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u2) (batch-start u969538))))",
+      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u2) (batch-start u971316))))",
       "expected": "v=>v.includes('(notification \"fund\")')&&v.includes('(amount u2)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 20
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 21
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault holds exactly 2 sats",
       "actual": "u2",
       "expected": "u2",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 21
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 22
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault holds 0 STX",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 22
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 23
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: 2 sats count as empty",
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 23
-    },
-    {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: pool vault-cycle set",
-      "actual": "(some u143)",
-      "expected": "(some u143)",
-      "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 24
     },
     {
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: pool vault-cycle set",
+      "actual": "(some u144)",
+      "expected": "(some u144)",
+      "passed": true,
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 25
+    },
+    {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: permissionless close-batch closes at once",
-      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969538)))))",
+      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u971316)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 25
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 26
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: close-batch print",
-      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u969538))))",
+      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u971316))))",
       "expected": "v=>v.includes('(notification \"close-batch\")')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 25
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 26
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: ready to finish, clock cleared",
-      "actual": "(tuple (batch-start none) (burn-height u969538) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "actual": "(tuple (batch-start none) (burn-height u971316) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
       "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 26
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 27
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: finalize-swap-vault finishes with 0 STX",
       "actual": "(ok u0)",
       "expected": "(ok u0)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 28
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 29
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: finish print amount u0",
       "actual": "(tuple (notification \"finish\") (payload (tuple (amount u0))))",
       "expected": "v=>v.includes('(notification \"finish\")')&&v.includes('(amount u0)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 28
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 29
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: no STX transfer event in finish",
       "actual": "[]",
       "expected": "[]",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 28
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 29
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: pool STX unchanged",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 29
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 30
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: pool vault-cycle cleared",
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 30
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 31
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault not ready-to-finish any more",
-      "actual": "(tuple (batch-start none) (burn-height u969538) (ready-to-finish false) (window-elapsed false) (window-ends none) (window-open false))",
+      "actual": "(tuple (batch-start none) (burn-height u971316) (ready-to-finish false) (window-elapsed false) (window-ends none) (window-open false))",
       "expected": "v=>v.includes('(ready-to-finish false)')&&v.includes('(batch-start none)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 31
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 32
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: the 2 dust sats stay in the vault",
       "actual": "u2",
       "expected": "u2",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 32
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 33
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: a second finalize is refused (u1053, no active cycle)",
       "actual": "(err u1053)",
       "expected": "(err u1053)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 33
-    },
-    {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: real sBTC backs cycle 142 rewards",
-      "actual": "(ok true)",
-      "expected": "(ok true)",
-      "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 34
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: cycle 142 earned 100000 sats + mirrored share fixture",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: real sBTC backs cycle 143 rewards",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 35
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool claims cycle 142",
-      "actual": "(ok u100000)",
-      "expected": "(ok u100000)",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: cycle 143 earned 100000 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 36
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool funds vault from cycle 142",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool claims cycle 143",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 37
     },
     {
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: pool funds vault from cycle 143",
+      "actual": "(ok u100000)",
+      "expected": "(ok u100000)",
+      "passed": true,
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 38
+    },
+    {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: next funding print amount u100000",
-      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u100000) (batch-start u969538))))",
+      "actual": "(tuple (notification \"fund\") (payload (tuple (amount u100000) (batch-start u971316))))",
       "expected": "v=>v.includes('(amount u100000)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 37
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 38
     },
     {
       "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: vault holds new reward + carried dust",
       "actual": "u100002",
       "expected": "u100002",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
-      "step": 38
-    },
-    {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: new batch clock running",
-      "actual": "(tuple (batch-start (some u969538)) (burn-height u969538) (ready-to-finish false) (window-elapsed false) (window-ends (some u969826)) (window-open true))",
-      "expected": "v=>v.includes('(batch-start (some')&&v.includes('(window-open true)')",
-      "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 39
     },
     {
-      "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: pool vault-cycle now the next cycle",
-      "actual": "(some u142)",
-      "expected": "(some u142)",
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: new batch clock running",
+      "actual": "(tuple (batch-start (some u971316)) (burn-height u971316) (ready-to-finish false) (window-elapsed false) (window-ends (some u971604)) (window-open true))",
+      "expected": "v=>v.includes('(batch-start (some')&&v.includes('(window-open true)')",
       "passed": true,
-      "sid": "b1f811ff48ab25f92599d82f2fa98b05",
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
       "step": 40
+    },
+    {
+      "label": "fastpool/L-2 window cap + #6 dust-only batch: #6: pool vault-cycle now the next cycle",
+      "actual": "(some u143)",
+      "expected": "(some u143)",
+      "passed": true,
+      "sid": "ea9b82b0b5adb780c05902c23376aa08",
+      "step": 41
     },
     {
       "label": "fastpool/#7 market dust after sell-out: deploy exact jing-core-v6",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 1
     },
     {
@@ -797,7 +820,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 2
     },
     {
@@ -805,7 +828,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 3
     },
     {
@@ -813,7 +836,7 @@
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 4
     },
     {
@@ -821,7 +844,7 @@
       "actual": "(ok u10)",
       "expected": "(ok u10)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 5
     },
     {
@@ -829,7 +852,7 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 6
     },
     {
@@ -837,595 +860,1068 @@
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 7
+    },
+    {
+      "label": "fastpool/#7 market dust after sell-out: deploy juice-swap-vault-trait-v2",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 8
     },
     {
       "label": "fastpool/#7 market dust after sell-out: deploy fastpool-swap-vault",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 8
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 9
     },
     {
       "label": "fastpool/#7 market dust after sell-out: deploy signer-manager-vault-stx-rewards",
       "actual": "(ok true)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 9
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 10
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: real sBTC backs cycle 143 rewards",
+      "label": "fastpool/#7 market dust after sell-out: real sBTC backs cycle 144 rewards",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 11
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: cycle 143 earned 100000 sats + mirrored share fixture",
-      "actual": "(ok true)",
-      "expected": "(ok true)",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 12
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: pool claims cycle 143",
-      "actual": "(ok u100000)",
-      "expected": "(ok u100000)",
+      "label": "fastpool/#7 market dust after sell-out: cycle 144 earned 100000 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 13
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: pool funds vault from cycle 143",
+      "label": "fastpool/#7 market dust after sell-out: pool claims cycle 144",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 14
     },
     {
+      "label": "fastpool/#7 market dust after sell-out: pool funds vault from cycle 144",
+      "actual": "(ok u100000)",
+      "expected": "(ok u100000)",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 15
+    },
+    {
       "label": "fastpool/#7 market dust after sell-out: batch 1: vault places its ask",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u21604439034455)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u18146944051547)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${FUND})`)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 16
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 17
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: ask is live",
       "actual": "u100000",
       "expected": "u100000",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 17
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 18
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: real maker depth behind the vault ask",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 18
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 19
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: real STX taker buys the whole ask",
-      "actual": "(ok (tuple (rebate-refunded u2) (token-x-received u149052) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u329)))",
+      "actual": "(ok (tuple (rebate-refunded u4) (token-x-received u149059) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1534)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 20
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 21
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: sold out, live 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 21
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 22
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: sold out, wallet 0 sBTC",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 22
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 23
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: window still open",
-      "actual": "(tuple (batch-start (some u969538)) (burn-height u969538) (ready-to-finish false) (window-elapsed false) (window-ends (some u969826)) (window-open true))",
+      "actual": "(tuple (batch-start (some u971316)) (burn-height u971316) (ready-to-finish false) (window-elapsed false) (window-ends (some u971604)) (window-open true))",
       "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 23
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 24
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: griefer sends 1 sat",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 24
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 25
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: 1-sat jing-place refused by the market minimum (u1001)",
       "actual": "(err u1001)",
       "expected": "(err u1001)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 26
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 27
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: nothing reached the market",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 27
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 28
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: donated sat is wallet dust, is-empty true",
       "actual": "true",
       "expected": "true",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 28
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 29
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: close-batch closes at once",
-      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969538)))))",
+      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u971316)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 29
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: batch 1: close-batch prints no reclaim",
-      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u969538))))",
-      "expected": "v=>v.includes('(notification \"close-batch\")')&&!v.includes('jing-reclaim')",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 29
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: batch 1: ready to finish",
-      "actual": "(tuple (batch-start none) (burn-height u969538) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
-      "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 30
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: batch 1: pool finalizes exactly the sale STX",
-      "actual": "(ok u227608468)",
-      "expected": "(ok u227608468)",
+      "label": "fastpool/#7 market dust after sell-out: batch 1: close-batch prints no reclaim",
+      "actual": "(tuple (notification \"close-batch\") (payload (tuple (burn-height u971316))))",
+      "expected": "v=>v.includes('(notification \"close-batch\")')&&!v.includes('jing-reclaim')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 33
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 30
+    },
+    {
+      "label": "fastpool/#7 market dust after sell-out: batch 1: ready to finish",
+      "actual": "(tuple (batch-start none) (burn-height u971316) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 31
+    },
+    {
+      "label": "fastpool/#7 market dust after sell-out: batch 1: pool finalizes exactly the sale STX",
+      "actual": "(ok u191212578)",
+      "expected": "(ok u191212578)",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 34
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: pool received exactly the sale STX",
-      "actual": "u227608468",
-      "expected": "u227608468",
+      "actual": "u191212578",
+      "expected": "u191212578",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 34
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 35
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: vault STX 0 after finish",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 35
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 36
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: pool vault-cycle cleared",
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 36
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 37
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 1: the donated sat rides on",
       "actual": "u1",
       "expected": "u1",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 37
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 38
     },
     {
       "label": "fastpool/#7 market dust after sell-out: operator lowers min-token-x-deposit to 1 sat",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 38
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: real sBTC backs cycle 142 rewards",
-      "actual": "(ok true)",
-      "expected": "(ok true)",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 39
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: cycle 142 earned 100000 sats + mirrored share fixture",
+      "label": "fastpool/#7 market dust after sell-out: real sBTC backs cycle 143 rewards",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 40
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: pool claims cycle 142",
-      "actual": "(ok u100000)",
-      "expected": "(ok u100000)",
+      "label": "fastpool/#7 market dust after sell-out: cycle 143 earned 100000 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 41
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: pool funds vault from cycle 142",
+      "label": "fastpool/#7 market dust after sell-out: pool claims cycle 143",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 42
     },
     {
+      "label": "fastpool/#7 market dust after sell-out: pool funds vault from cycle 143",
+      "actual": "(ok u100000)",
+      "expected": "(ok u100000)",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 43
+    },
+    {
       "label": "fastpool/#7 market dust after sell-out: batch 2: vault places its ask",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u21603445912050)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u18140407072661)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${expectHeld})`)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 44
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 45
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: real maker depth behind the vault ask",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 45
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 46
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: real STX taker buys the whole ask",
-      "actual": "(ok (tuple (rebate-refunded u5) (token-x-received u149058) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u2163)))",
+      "actual": "(ok (tuple (rebate-refunded u4) (token-x-received u149064) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1560)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 47
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 48
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: sold out, market position 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 48
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 49
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: sold out, wallet 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 49
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: batch 2: window still open",
-      "actual": "(tuple (batch-start (some u969538)) (burn-height u969538) (ready-to-finish false) (window-elapsed false) (window-ends (some u969826)) (window-open true))",
-      "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 50
     },
     {
+      "label": "fastpool/#7 market dust after sell-out: batch 2: window still open",
+      "actual": "(tuple (batch-start (some u971316)) (burn-height u971316) (ready-to-finish false) (window-elapsed false) (window-ends (some u971604)) (window-open true))",
+      "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 51
+    },
+    {
       "label": "fastpool/#7 market dust after sell-out: batch 2: whale depth cancelled",
-      "actual": "(ok u101593)",
+      "actual": "(ok u101580)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 51
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 52
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: carried sat went out with the ask",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 52
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 53
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: griefer sends 1 sat(s)",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 53
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 54
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: public jing-place of 1 sat(s) accepted",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u1) (floor u21603352279764)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u1) (floor u18143173989207)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${sats})`)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 55
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 56
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: 1 sat(s) on the market (live + parked + pending)",
       "actual": "u1",
       "expected": "u1",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 56
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 57
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: wallet 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 57
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 58
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: market position makes is-empty false",
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 58
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 59
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: close-batch cancels the 1 sat home and closes at once",
-      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u969538)))))",
+      "actual": "(ok (tuple (notification \"close-batch\") (payload (tuple (burn-height u971316)))))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 59
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 60
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: close-batch prints jing-reclaim amount u1 then close-batch",
-      "actual": "(tuple (notification \"jing-reclaim\") (payload (tuple (amount u1))))|(tuple (notification \"close-batch\") (payload (tuple (burn-height u969538))))",
+      "actual": "(tuple (notification \"jing-reclaim\") (payload (tuple (amount u1))))|(tuple (notification \"close-batch\") (payload (tuple (burn-height u971316))))",
       "expected": "v=>v.includes('(notification \"jing-reclaim\")')&&v.includes('(amount u1)')&&v.includes('(notification \"close-batch\")')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 59
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 60
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: exactly one 1-sat sBTC transfer market -> vault",
       "actual": "[[\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3\",\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault\",\"1\"]]",
       "expected": "[[\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3\",\"SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault\",\"1\"]]",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 59
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 60
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: market position cleared",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 60
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 61
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: the sat is home as wallet dust",
       "actual": "u1",
       "expected": "u1",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 61
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: batch 2: batch closed, ready to finish",
-      "actual": "(tuple (batch-start none) (burn-height u969538) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
-      "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 62
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: batch 2: pool finalizes exactly the sale STX",
-      "actual": "(ok u227631685)",
-      "expected": "(ok u227631685)",
+      "label": "fastpool/#7 market dust after sell-out: batch 2: batch closed, ready to finish",
+      "actual": "(tuple (batch-start none) (burn-height u971316) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 65
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 63
+    },
+    {
+      "label": "fastpool/#7 market dust after sell-out: batch 2: pool finalizes exactly the sale STX",
+      "actual": "(ok u191165046)",
+      "expected": "(ok u191165046)",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 66
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: pool received exactly the sale STX",
-      "actual": "u227631685",
-      "expected": "u227631685",
+      "actual": "u191165046",
+      "expected": "u191165046",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 66
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 67
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: vault STX 0 after finish",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 67
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 68
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 2: pool vault-cycle cleared",
       "actual": "none",
       "expected": "none",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 68
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: real sBTC backs cycle 141 rewards",
-      "actual": "(ok true)",
-      "expected": "(ok true)",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 69
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: cycle 141 earned 100000 sats + mirrored share fixture",
+      "label": "fastpool/#7 market dust after sell-out: real sBTC backs cycle 142 rewards",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 70
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: pool claims cycle 141",
-      "actual": "(ok u100000)",
-      "expected": "(ok u100000)",
+      "label": "fastpool/#7 market dust after sell-out: cycle 142 earned 100000 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 71
     },
     {
-      "label": "fastpool/#7 market dust after sell-out: pool funds vault from cycle 141",
+      "label": "fastpool/#7 market dust after sell-out: pool claims cycle 142",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 72
     },
     {
+      "label": "fastpool/#7 market dust after sell-out: pool funds vault from cycle 142",
+      "actual": "(ok u100000)",
+      "expected": "(ok u100000)",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 73
+    },
+    {
       "label": "fastpool/#7 market dust after sell-out: batch 3: vault places its ask",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u21604341658281)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100001) (floor u18150485668388)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${expectHeld})`)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 74
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 75
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: real maker depth behind the vault ask",
       "actual": "(ok u100000)",
       "expected": "(ok u100000)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 75
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 76
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: real STX taker buys the whole ask",
-      "actual": "(ok (tuple (rebate-refunded u3) (token-x-received u149059) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1202)))",
+      "actual": "(ok (tuple (rebate-refunded u5) (token-x-received u149066) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1603)))",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 77
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 78
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: sold out, market position 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 78
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 79
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: sold out, wallet 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 79
-    },
-    {
-      "label": "fastpool/#7 market dust after sell-out: batch 3: window still open",
-      "actual": "(tuple (batch-start (some u969538)) (burn-height u969538) (ready-to-finish false) (window-elapsed false) (window-ends (some u969826)) (window-open true))",
-      "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
-      "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
       "step": 80
     },
     {
+      "label": "fastpool/#7 market dust after sell-out: batch 3: window still open",
+      "actual": "(tuple (batch-start (some u971316)) (burn-height u971316) (ready-to-finish false) (window-elapsed false) (window-ends (some u971604)) (window-open true))",
+      "expected": "v=>v.includes('(window-open true)')&&v.includes('(batch-start (some')",
+      "passed": true,
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 81
+    },
+    {
       "label": "fastpool/#7 market dust after sell-out: batch 3: whale depth cancelled",
-      "actual": "(ok u50793)",
+      "actual": "(ok u50786)",
       "expected": "s=>s.startsWith('(ok')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 81
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 82
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: griefer sends 3 sat(s)",
       "actual": "(ok true)",
       "expected": "(ok true)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 82
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 83
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: public jing-place of 3 sat(s) accepted",
-      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u3) (floor u21603224641986)))))",
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u3) (floor u18153098848099)))))",
       "expected": "v=>ok(v)&&v.includes(`(amount u${sats})`)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 84
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 85
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: 3 sat(s) on the market (live + parked + pending)",
       "actual": "u3",
       "expected": "u3",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 85
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 86
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: wallet 0",
       "actual": "u0",
       "expected": "u0",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 86
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 87
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: market position makes is-empty false",
       "actual": "false",
       "expected": "false",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 87
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 88
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: close-batch refuses a real 3-sat position (u16043)",
       "actual": "(err u16043)",
       "expected": "(err u16043)",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 88
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 89
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: 3 sats still on the market",
       "actual": "u3",
       "expected": "u3",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 89
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 90
     },
     {
       "label": "fastpool/#7 market dust after sell-out: batch 3: batch still open",
-      "actual": "(tuple (batch-start (some u969538)) (burn-height u969538) (ready-to-finish false) (window-elapsed false) (window-ends (some u969826)) (window-open true))",
+      "actual": "(tuple (batch-start (some u971316)) (burn-height u971316) (ready-to-finish false) (window-elapsed false) (window-ends (some u971604)) (window-open true))",
       "expected": "v=>v.includes('(batch-start (some')&&v.includes('(ready-to-finish false)')",
       "passed": true,
-      "sid": "36e58a6a8eefec0ebbccbcf0607e7b0b",
-      "step": 90
+      "sid": "328a05d93e9921d0aed51f616655ba6b",
+      "step": 91
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy exact jing-core-v6",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 1
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy exact jing-ladder-v1",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 2
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy exact markets-sbtc-stx-jing-v6-3",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 3
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy exact swap-router-sbtc-stx-jing-v5-3",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 4
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: Jing sync-seat-count",
+      "actual": "(ok u10)",
+      "expected": "(ok u10)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 5
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: Jing set-verified-contract",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 6
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: Jing initialize",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 7
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy juice-swap-vault-trait-v2",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 8
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy fastpool-swap-vault",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 9
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: deploy signer-manager-vault-stx-rewards",
+      "actual": "(ok true)",
+      "expected": "s=>s.startsWith('(ok')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 10
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: pyth fee budget starts at 0",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u0) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))",
+      "expected": "v=>v.includes('(pyth-fee-budget u0)')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 12
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: chunk cap 50k: router, jing-take, router",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 13
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: admin sets 1000 bps floor",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 14
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: real sBTC backs cycle 144 rewards",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 15
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: cycle 144 earned 150000 sats + mirrored share fixture",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 16
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: pool claims cycle 144",
+      "actual": "(ok u150000)",
+      "expected": "(ok u150000)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 17
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: pool funds vault from cycle 144",
+      "actual": "(ok u150000)",
+      "expected": "(ok u150000)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 18
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: fixture: patience window elapsed",
+      "actual": "true",
+      "expected": "true",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 19
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: real STX maker bid worth ~300000 sats",
+      "actual": "(ok u573383313)",
+      "expected": "(ok u573383313)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 21
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: STX maker bid is live",
+      "actual": "u573383313",
+      "expected": "v=>uint(v)>0n",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 23
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: live oracle fee recipient",
+      "actual": "SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8",
+      "expected": "v=>/^S[A-Z0-9]+(\\.[a-z0-9-]+)?$/.test(v)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 24
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: live oracle fee is u0",
+      "actual": "u0",
+      "expected": "u0",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 25
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: fixture: oracle fee set to u10 in the oracle context (fork only)",
+      "actual": "u10",
+      "expected": "u10",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 26
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: vault holds 0 STX before the float",
+      "actual": "u0",
+      "expected": "u0",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 28
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, no float: admin jing-take aborts (u1, fee transfer fails)",
+      "actual": "(err u1)",
+      "expected": "(err u1)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 29
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, no float: router-swap still sells, AMMs only",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u50000) (limit-price u17201249080581) (mid u19112498978424) (out u94660491) (unsold u0)))))",
+      "expected": "v=>ok(v)&&v.includes(`(amount u${CHUNK})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 31
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: router print present",
+      "actual": "(tuple (amount u50000) (dlmm-cap u37556330) (dlmm-in u50000) (dlmm-out u94660491) (jing-cap u50000) (jing-in u0) (jing-ok false) (jing-out u0) (limit-price u17201249080581) (out u94660491) (topic \"smart-swap-sbtc-for-stx\") (unsold u0) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "expected": "v=>v!=='missing'",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 31
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, no float: router drops the Jing book leg (jing-ok false, jing-in 0)",
+      "actual": "(tuple (amount u50000) (dlmm-cap u37556330) (dlmm-in u50000) (dlmm-out u94660491) (jing-cap u50000) (jing-in u0) (jing-ok false) (jing-out u0) (limit-price u17201249080581) (out u94660491) (topic \"smart-swap-sbtc-for-stx\") (unsold u0) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "expected": "v=>v.includes('(jing-ok false)')&&rt0.jingIn===0n&&rt0.jingCap>0n",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 31
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, no float: vault paid no STX",
+      "actual": "[]",
+      "expected": "[]",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 31
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, no float: vault STX = out",
+      "actual": "u94660491",
+      "expected": "u94660491",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 32
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: advance 1 burn block(s)",
+      "actual": "ok",
+      "expected": "ok",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 33
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: fixture: STX whale tops the vault up by 1000 uSTX",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 35
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, STX held: admin jing-take aborts (u1, with-stx allowance)",
+      "actual": "(err u1)",
+      "expected": "(err u1)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 37
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, STX held: router-swap aborts (u1, with-stx allowance)",
+      "actual": "(err u1)",
+      "expected": "(err u1)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 38
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0, STX held: admin router-swap-split (all Jing) aborts (u1, with-stx allowance)",
+      "actual": "(err u1)",
+      "expected": "(err u1)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 39
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0: nothing more sold",
+      "actual": "u100000",
+      "expected": "u100000",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 40
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget 0: vault STX unchanged",
+      "actual": "u94661491",
+      "expected": "u94661491",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 41
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: admin sets pyth fee budget u10",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 42
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: set-pyth-fee-budget print u10",
+      "actual": "(tuple (notification \"set-pyth-fee-budget\") (payload (tuple (value u10))))",
+      "expected": "v=>v.includes('(notification \"set-pyth-fee-budget\")')&&v.includes(`(value u${b})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 42
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: get-config reports budget u10",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u971316) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u50000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u10) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u1000) (window-blocks u288))",
+      "expected": "v=>v.includes(`(pyth-fee-budget u${b})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 43
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget u10 (1 fee): admin jing-take aborts (u1), the swap pays two fees",
+      "actual": "(err u1)",
+      "expected": "(err u1)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 46
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget u10 (1 fee): router-swap aborts (u1), the book leg pays two fees",
+      "actual": "(err u1)",
+      "expected": "(err u1)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 47
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget u10 aborts: sBTC and STX unchanged",
+      "actual": "(tuple (sbtc u100000) (stx u94661491))",
+      "expected": "(tuple (sbtc u100000) (stx u94661491))",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 48
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: admin sets pyth fee budget u20",
+      "actual": "(ok true)",
+      "expected": "(ok true)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 49
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: set-pyth-fee-budget print u20",
+      "actual": "(tuple (notification \"set-pyth-fee-budget\") (payload (tuple (value u20))))",
+      "expected": "v=>v.includes('(notification \"set-pyth-fee-budget\")')&&v.includes(`(value u${b})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 49
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: get-config reports budget u20",
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u971316) (leeway-bps u500) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3) (max-chunk-sats u50000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u20) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3) (router-cooldown-blocks u1) (slippage-bps u1000) (window-blocks u288))",
+      "expected": "v=>v.includes(`(pyth-fee-budget u${b})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 50
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget u20: admin jing-take sells a 50k chunk on the book",
+      "actual": "(ok (tuple (notification \"jing-take\") (payload (tuple (amount u50000) (limit-price u17211348632294) (out u95331939)))))",
+      "expected": "v=>ok(v)&&v.includes(`(amount u${CHUNK})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 51
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: jing-take: vault paid exactly two u10 fees to the oracle recipient",
+      "actual": "[[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"],[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"]]",
+      "expected": "[[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"],[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"]]",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 51
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: jing-take: vault STX = before + out - 2 fees",
+      "actual": "u189993410",
+      "expected": "u189993410",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 52
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: jing-take: 50k sBTC left for the router",
+      "actual": "u50000",
+      "expected": "u50000",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 53
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget u20: router-swap sells the last 50k chunk",
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u50000) (limit-price u17216851633852) (mid u19129835148725) (out u95362400) (unsold u0)))))",
+      "expected": "v=>ok(v)&&v.includes(`(amount u${CHUNK})`)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 56
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: router print present",
+      "actual": "(tuple (amount u50000) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u50000) (jing-in u50000) (jing-ok true) (jing-out u95362420) (limit-price u17216851633852) (out u95362400) (topic \"smart-swap-sbtc-for-stx\") (unsold u0) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "expected": "v=>v!=='missing'",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 56
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: budget u20: router fills the Jing book leg",
+      "actual": "(tuple (amount u50000) (dlmm-cap u0) (dlmm-in u0) (dlmm-out u0) (jing-cap u50000) (jing-in u50000) (jing-ok true) (jing-out u95362420) (limit-price u17216851633852) (out u95362400) (topic \"smart-swap-sbtc-for-stx\") (unsold u0) (user SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (velar-cap u0) (velar-in u0) (velar-out u0) (xyk-cap u0) (xyk-in u0) (xyk-out u0))",
+      "expected": "v=>v.includes('(jing-ok true)')&&rt1.jingIn>0n",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 56
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: router-swap: vault paid exactly two u10 fees to the oracle recipient",
+      "actual": "[[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"],[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"]]",
+      "expected": "[[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"],[\"SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8\",\"10\"]]",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 56
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: router out = Jing leg out - 2 fees",
+      "actual": "95362400",
+      "expected": "95362400",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 56
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: router-swap: vault STX = before + out (net of fees)",
+      "actual": "u285355810",
+      "expected": "u285355810",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 57
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: vault sold out and closed",
+      "actual": "(tuple (batch-start none) (burn-height u971317) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))",
+      "expected": "v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)')",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 58
+    },
+    {
+      "label": "fastpool/Pyth Lazer fee budget: pool finalizes the whole STX balance (float included)",
+      "actual": "(ok u285355810)",
+      "expected": "(ok u285355810)",
+      "passed": true,
+      "sid": "b161c40be81f7798025aac54ee550f2b",
+      "step": 60
     }
   ],
-  "passed": 174,
-  "total": 174,
+  "passed": 235,
+  "total": 235,
   "sourceHashes": {
     "jing-core-v6": "88a689affb23f13030953e891336af42a3f5cb275f13b3c54c79d8cd4de50697",
     "jing-ladder-v1": "0f1e08b023272ed96a2653f727292626d4b0325dcf4e42963104d977860ec786",
     "markets-sbtc-stx-jing-v6-3": "ed046155b017d6acad569c6769da050747f4c69db7f627e4767fe0cafea41848",
-    "swap-router-sbtc-stx-jing-v5-3": "0d2a39eaa8f83910e301bb3b2313cadb9595b551a9f814ad255aadad6cd3a637",
-    "fastpool-swap-vault": "19c3c6baeb8fdc8a719bab532fd0006313e9e01b2eab9369d2f49b9e37999d5f",
-    "signer-manager-vault-stx-rewards": "91db429775c07f36308699f5678ab044e51e195b4e3b8f59feffb97f0c10d89c"
+    "swap-router-sbtc-stx-jing-v5-3": "8eefe65bad4890400e09645d6f6c2c84b58897c00929e100a193c97faf0ffcd4",
+    "juice-swap-vault-trait-v2": "e6ee46a72857916f33b8d0c91a7344d62b51d303279ff9a7ea28954fe52b8093",
+    "fastpool-swap-vault": "d80d4f1ac25d24657691c437f01f234d8db345fda69822e95fa554e2af177d81",
+    "signer-manager-vault-stx-rewards": "4d9e1063c478b34fd33f3ab4f69c54a94e1b0e823149108c3c406d458556fd19"
   },
   "fixtures": [
     "PoX earned reward/share records seeded by Eval, backed by real fork sBTC transfers; lock admission not exercised",

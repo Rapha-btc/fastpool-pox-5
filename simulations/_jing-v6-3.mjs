@@ -1,6 +1,7 @@
 // Current Jing dependencies, fork only. Shared setup for the three vault repos.
-import {readFileSync} from 'node:fs';
-import {resolve} from 'node:path';
+import {readFileSync,existsSync} from 'node:fs';
+import {resolve,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
 import {homedir} from 'node:os';
 import {createRequire} from 'node:module';
 import {createHash} from 'node:crypto';
@@ -30,6 +31,25 @@ export function appendJingStack(builder,plan,sourceHashes={}) {
   builder.addContractCall({contract_id:id,function_name:fn,function_args:args,sender:DEP});
   plan.push({label:'Jing '+fn,kind:'tx',want});
  }
+ appendVaultTraitV2(builder,plan,sourceHashes);
+}
+
+// The vaults implement juice-swap-vault-trait-v2 (v1 + set-pyth-fee-budget), not yet
+// on mainnet: deploy it under DEP before any vault or pool. Source of truth is the
+// Juice repo; this repo's contracts/ mirror is used until that file exists.
+const TRAIT_V2='juice-swap-vault-trait-v2';
+export function vaultTraitV2Source() {
+ const juice=resolve(homedir(),'projects/juicestx/contracts/pox-5/'+TRAIT_V2+'.clar');
+ const mirror=resolve(dirname(fileURLToPath(import.meta.url)),'../contracts/'+TRAIT_V2+'.clar');
+ const local=readFileSync(mirror,'utf8');
+ if(existsSync(juice)&&readFileSync(juice,'utf8')!==local)throw new Error(`${TRAIT_V2}: ${juice} differs from ${mirror}`);
+ return local;
+}
+export function appendVaultTraitV2(builder,plan,sourceHashes={}) {
+ const source=vaultTraitV2Source();
+ sourceHashes[TRAIT_V2]=createHash('sha256').update(source).digest('hex');
+ builder.withSender(DEP).addContractDeploy({contract_name:TRAIT_V2,source_code:source,clarity_version:stacks.ClarityVersion.Clarity6});
+ plan.push({label:'deploy '+TRAIT_V2,kind:'deploy',want:s=>s.startsWith('(ok')});
 }
 
 export async function freshProofAfter(stamp) {

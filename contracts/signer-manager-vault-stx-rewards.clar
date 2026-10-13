@@ -23,7 +23,7 @@
 
 (impl-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
 (use-trait signer-manager-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
-(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait.swap-vault-trait)
+(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait)
 
 ;;; Errors
 
@@ -744,6 +744,17 @@
     (try! (assert-active-vault vault))
     (try! (authorize-admin))
     (contract-call? vault set-router-cooldown blocks)
+  )
+)
+
+(define-public (set-vault-pyth-fee-budget
+    (ustx uint)
+    (vault <swap-vault-interface>)
+  )
+  (begin
+    (try! (assert-active-vault vault))
+    (try! (authorize-admin))
+    (contract-call? vault set-pyth-fee-budget ustx)
   )
 )
 

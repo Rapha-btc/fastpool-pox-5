@@ -50,6 +50,20 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
   call('cannot finalize nonexistent batch',pid,'finalize-swap-vault',[Cl.contractPrincipal(DEP,vault)],'(err u1053)');
   call('cannot fund unclaimed cycle',pid,'fund-swap-vault',[Cl.uint(144),Cl.contractPrincipal(DEP,vault)],'(err u1020)');
   ev('no timed sBTC fallback',pid,'(get-unswapped-for-cycle u144)','u0');
+  // Pyth Lazer fee budget: the vault setter is pool-gated and bounded at 10 STX.
+  const fv=Cl.contractPrincipal(DEP,vault);
+  ev('pyth fee budget starts at 0',vid,'(get-config)',v=>v.includes('(pyth-fee-budget u0)'));
+  call('outsider cannot set vault pyth fee budget directly',vid,'set-pyth-fee-budget',[Cl.uint(10)],'(err u16000)');
+  call('outsider cannot use pool pyth fee budget wrapper',pid,'set-vault-pyth-fee-budget',[Cl.uint(10),fv],'(err u1001)');
+  builder.addContractDeploy({contract_name:'fastpool-swap-vault-alt',source_code:readFileSync(vaultSource,'utf8'),clarity_version:ClarityVersion.Clarity6});
+  plan.push({label:'deploy second copy of the vault (conforms to trait v2, not active)',kind:'deploy'});
+  call('wrapper refuses a vault that is not the active one',pid,'set-vault-pyth-fee-budget',[Cl.uint(10),Cl.contractPrincipal(DEP,'fastpool-swap-vault-alt')],'(err u1055)',DEP);
+  call('wrapper refuses budget above 10 STX',pid,'set-vault-pyth-fee-budget',[Cl.uint(10000001),fv],'(err u16033)',DEP);
+  ev('budget unchanged after refusals',vid,'(get-config)',v=>v.includes('(pyth-fee-budget u0)'));
+  call('admin sets budget at the 10 STX bound',pid,'set-vault-pyth-fee-budget',[Cl.uint(10000000),fv],'(ok true)',DEP);
+  ev('get-config reports 10 STX budget',vid,'(get-config)',v=>v.includes('(pyth-fee-budget u10000000)'));
+  call('admin resets budget to 0',pid,'set-vault-pyth-fee-budget',[Cl.uint(0),fv],'(ok true)',DEP);
+  ev('get-config reports 0 budget',vid,'(get-config)',v=>v.includes('(pyth-fee-budget u0)'));
  }
  call('outsider cannot use pool admin refloor',pid,'refloor-vault',kind==='juice'?[update]:[update,Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u100)':'(err u1001)');
  console.log(`${kind}: submitting ${plan.length} deployment/integration/guard checks at mainnet block ${tip.height}`);
