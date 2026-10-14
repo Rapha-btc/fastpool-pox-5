@@ -8,7 +8,7 @@
 // Exact production vault + pool source, current Jing stack (JING_SRC). PoX earned-reward
 // records and the elapsed patience clock are explicit Eval fixtures, as in the recovery matrix.
 //   pf  Pyth Lazer fee budget: fee u10 on the live oracle; at budget 0 jing-take aborts and
-//       router-swap drops the Jing book leg; both need a budget of 2 fees (abort at u10, pass at u20)
+//       router-swap drops the Jing book leg; both need a budget of 1 fee (abort at u9, pass at u10)
 // Run: node simulations/vault-fixes-stxer.mjs [l1] [l2d6] [d7] [pf]   (no argument runs all)
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
@@ -256,9 +256,9 @@ async function d7(){
 // as-contract?. The live fee is u0; the fixture var-sets it to u10 in the oracle's
 // own context (fork only). At budget 0 with no STX, jing-take aborts and the router
 // catches the market's failure (`match`), dropping the Jing book leg (AMMs only).
-// At budget 0 with STX held, both abort on the with-stx allowance. At budget u10
-// The market's swap verifies the update twice inside as-contract? (deposit pricing +
-// settlement), so both paths need a budget of two fees: they abort at u10, pass at u20.
+// At budget 0 with STX held, both abort on the with-stx allowance. The market's swap
+// verifies the update once inside as-contract? and reuses the feeds, so both paths
+// need a budget of one fee: they abort at u9 (fee - 1), pass at u10.
 async function pf(){
  const done=await session('fastpool/Pyth Lazer fee budget');
  const ORACLE='SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8.pyth-lazer-oracle',FEE=10n;
@@ -302,28 +302,28 @@ async function pf(){
  const setBudget=async(b)=>{const r=await tx(`admin sets pyth fee budget u${b}`,POOL,'set-vault-pyth-fee-budget',[u(b),cp(VAULT)],'(ok true)');
   check(`set-pyth-fee-budget print u${b}`,prints(r,VAULT).join('|'),v=>v.includes('(notification "set-pyth-fee-budget")')&&v.includes(`(value u${b})`));
   await ev(`get-config reports budget u${b}`,VAULT,'(get-config)',v=>v.includes(`(pyth-fee-budget u${b})`));};
- // Inside as-contract? the market's swap verifies the update twice (deposit pricing +
- // settlement), on both jing-take and the router book leg: one fee of budget is not enough
- await setBudget(FEE);
+ // Inside as-contract? the market's swap verifies the update once and reuses the feeds,
+ // on both jing-take and the router book leg: fee - 1 of budget is not enough, one fee is
+ await setBudget(FEE-1n);
  ({update,mid}=await fresh());
  stx0=await stxOf(VAULT);
- await tx('budget u10 (1 fee): admin jing-take aborts (u1), the swap pays two fees',POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u1)');
- await tx('budget u10 (1 fee): router-swap aborts (u1), the book leg pays two fees',VAULT,'router-swap',[update],'(err u1)',STX_WHALE);
- await ev('budget u10 aborts: sBTC and STX unchanged',MARKET,`{ sbtc: ${bal(VAULT)}, stx: (stx-get-balance '${VAULT}) }`,`(tuple (sbtc u${FUND-CHUNK}) (stx u${stx0}))`);
- await setBudget(2n*FEE);
- const twoFees=JSON.stringify([[recipient,String(FEE)],[recipient,String(FEE)]]);
- const r2=await tx('budget u20: admin jing-take sells a 50k chunk on the book',POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],v=>ok(v)&&v.includes(`(amount u${CHUNK})`));
- check('jing-take: vault paid exactly two u10 fees to the oracle recipient',JSON.stringify(vaultStxOut(r2)),twoFees);
- await ev('jing-take: vault STX = before + out - 2 fees',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r2.result,'out')-2n*FEE}`);
+ await tx(`budget u${FEE-1n} (fee - 1): admin jing-take aborts (u1), the swap pays one fee`,POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u1)');
+ await tx(`budget u${FEE-1n} (fee - 1): router-swap aborts (u1), the book leg pays one fee`,VAULT,'router-swap',[update],'(err u1)',STX_WHALE);
+ await ev(`budget u${FEE-1n} aborts: sBTC and STX unchanged`,MARKET,`{ sbtc: ${bal(VAULT)}, stx: (stx-get-balance '${VAULT}) }`,`(tuple (sbtc u${FUND-CHUNK}) (stx u${stx0}))`);
+ await setBudget(FEE);
+ const oneFee=JSON.stringify([[recipient,String(FEE)]]);
+ const r2=await tx(`budget u${FEE} (1 fee): admin jing-take sells a 50k chunk on the book`,POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],v=>ok(v)&&v.includes(`(amount u${CHUNK})`));
+ check(`jing-take: vault paid exactly one u${FEE} fee to the oracle recipient`,JSON.stringify(vaultStxOut(r2)),oneFee);
+ await ev('jing-take: vault STX = before + out - 1 fee',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r2.result,'out')-FEE}`);
  await ev('jing-take: 50k sBTC left for the router',MARKET,bal(VAULT),`u${CHUNK}`);
  ({update,mid}=await fresh());
  stx0=await stxOf(VAULT);
- const r1=await tx('budget u20: router-swap sells the last 50k chunk',VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),STX_WHALE);
+ const r1=await tx(`budget u${FEE} (1 fee): router-swap sells the last 50k chunk`,VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),STX_WHALE);
  const rt1=routing(r1);
- check('budget u20: router fills the Jing book leg',prints(r1,ROUTER).join('|'),v=>v.includes('(jing-ok true)')&&rt1.jingIn>0n);
- check('router-swap: vault paid exactly two u10 fees to the oracle recipient',JSON.stringify(vaultStxOut(r1)),twoFees);
+ check(`budget u${FEE}: router fills the Jing book leg`,prints(r1,ROUTER).join('|'),v=>v.includes('(jing-ok true)')&&rt1.jingIn>0n);
+ check(`router-swap: vault paid exactly one u${FEE} fee to the oracle recipient`,JSON.stringify(vaultStxOut(r1)),oneFee);
  // the router measures out as the vault's STX balance change, so its out is net of the fees
- check('router out = Jing leg out - 2 fees',String(field(r1.result,'out')),String(field(prints(r1,ROUTER).join('|'),'jing-out')-2n*FEE));
+ check('router out = Jing leg out - 1 fee',String(field(r1.result,'out')),String(field(prints(r1,ROUTER).join('|'),'jing-out')-FEE));
  await ev('router-swap: vault STX = before + out (net of fees)',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r1.result,'out')}`);
  await ev('vault sold out and closed',VAULT,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)'));
  const fin=await stxOf(VAULT);

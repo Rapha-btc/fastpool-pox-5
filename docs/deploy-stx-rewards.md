@@ -259,8 +259,9 @@ Publish in this order:
 Pyth Lazer fee: the live oracle fee is u0, and the vault's `pyth-fee-budget`
 starts at u0. If Pyth governance raises the fee, the admin calls
 `set-vault-pyth-fee-budget(ustx, .fastpool-swap-vault)`. It is bounded at 10 STX.
-Set it to at least **2 x fee**: the market's `swap` verifies the update twice
-inside the vault's `as-contract?` (jing-take, router-swap, router-swap-split).
+Set it to at least **1 x fee**: the market's `swap` (markets-sbtc-stx-jing-v6-3)
+verifies the update once and reuses the feeds, so each Jing fill inside the
+vault's `as-contract?` (jing-take, router-swap, router-swap-split) pays one fee.
 `finish` sends the vault's whole STX balance to the pool, so each batch starts
 with 0 STX. While the fee is above 0, send the vault a small STX float before the
 first Lazer-priced sale. The float goes to the pool at `finish`.

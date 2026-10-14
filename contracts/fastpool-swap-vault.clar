@@ -80,6 +80,8 @@
 ;; Pyth Lazer charges its per-update fee in STX from tx-sender, which is this
 ;; vault inside `as-contract?`. The fee is u0 today; this is the STX each
 ;; Lazer-verifying swap may spend, so a later set-fee needs no redeploy.
+;; The market's `swap` verifies the update once per call, so a Jing fill costs
+;; one fee: set the budget to >= 1x the oracle fee.
 (define-constant MAX_PYTH_FEE_BUDGET u10000000) ;; 10 STX
 (define-data-var pyth-fee-budget uint u0)
 
