@@ -1,4 +1,4 @@
-simulation 281a81d000feb084146097a006461f84
+simulation d6ea5d124736a07821e19b3c2057dead
 
 PASS  deploy exact jing-core-v6
         (ok true)
@@ -21,15 +21,15 @@ PASS  1 sat(s): does the router actually sell it?
 PASS  2 sat(s): does the router actually sell it?
         (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u2) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
 PASS  3 sat(s): does the router actually sell it?
-        (ok (tuple (dlmm-in u3) (dlmm-out u5715) (jing-in u0) (jing-ok false) (jing-out u0) (out u5715) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u3) (dlmm-out u5880) (jing-in u0) (jing-ok false) (jing-out u0) (out u5880) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
 PASS  10 sat(s): does the router actually sell it?
-        (ok (tuple (dlmm-in u10) (dlmm-out u19050) (jing-in u0) (jing-ok false) (jing-out u0) (out u19050) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u10) (dlmm-out u19601) (jing-in u0) (jing-ok false) (jing-out u0) (out u19601) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
 PASS  100 sat(s): does the router actually sell it?
-        (ok (tuple (dlmm-in u100) (dlmm-out u190508) (jing-in u0) (jing-ok false) (jing-out u0) (out u190508) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u100) (dlmm-out u196013) (jing-in u0) (jing-ok false) (jing-out u0) (out u196013) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
 PASS  1000 sat(s): does the router actually sell it?
-        (ok (tuple (dlmm-in u1000) (dlmm-out u1895563) (jing-in u0) (jing-ok false) (jing-out u0) (out u1895563) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u1000) (dlmm-out u1950330) (jing-in u0) (jing-ok false) (jing-out u0) (out u1950330) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
 PASS  10000 sat(s): does the router actually sell it?
-        (ok (tuple (dlmm-in u10000) (dlmm-out u18948742) (jing-in u0) (jing-ok false) (jing-out u0) (out u18948742) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u10000) (dlmm-out u19499523) (jing-in u0) (jing-ok false) (jing-out u0) (out u19499523) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
 PASS  deploy dust-vault-unfixed
         (ok true)
 PASS  deploy dust-vault-fixed

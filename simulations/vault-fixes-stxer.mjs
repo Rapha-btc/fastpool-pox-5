@@ -7,8 +7,11 @@
 //   d7  Void Kael #7: a 1-sat jing-place after a sell-out; close-batch still closes at once
 // Exact production vault + pool source, current Jing stack (JING_SRC). PoX earned-reward
 // records and the elapsed patience clock are explicit Eval fixtures, as in the recovery matrix.
-//   pf  Pyth Lazer fee budget: fee u10 on the live oracle; at budget 0 jing-take aborts and
-//       router-swap drops the Jing book leg; both need a budget of 1 fee (abort at u9, pass at u10)
+//   pf  Pyth Lazer fee budget: fee u10 on the live oracle; the vault pays both verifies
+//       (refresh-mid and the market swap, bounty mv7dfb Super Orb): at budget 0 jing-take and
+//       router-swap abort; both need a budget of 2 fees (abort at u19, pass at u20); a 0-STX
+//       caller runs router-swap and pays nothing. Patient Reed F2: finish keeps the
+//       budget, and a second batch with no float sells on that reserve alone
 // Run: node simulations/vault-fixes-stxer.mjs [l1] [l2d6] [d7] [pf]   (no argument runs all)
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
@@ -254,11 +257,12 @@ async function d7(){
 // ---------------------------------------------------------------- Pyth Lazer fee budget
 // Pyth Lazer charges its per-update fee from tx-sender, which is the vault inside
 // as-contract?. The live fee is u0; the fixture var-sets it to u10 in the oracle's
-// own context (fork only). At budget 0 with no STX, jing-take aborts and the router
-// catches the market's failure (`match`), dropping the Jing book leg (AMMs only).
-// At budget 0 with STX held, both abort on the with-stx allowance. The market's swap
-// verifies the update once inside as-contract? and reuses the feeds, so both paths
-// need a budget of one fee: they abort at u9 (fee - 1), pass at u10.
+// own context (fork only). current-mid (market refresh-mid) also runs inside the
+// vault's as-contract?, so at budget 0 with no STX both entries abort on that first
+// fee transfer. At budget 0 with STX held, both abort on the with-stx allowance. The
+// market's swap verifies once more, so both paths need a budget of two fees: they
+// abort at u19 (2 x fee - 1), pass at u20. Patient Reed F2: finish keeps the
+// u20 budget in the vault, and a second batch with no float sells on it alone.
 async function pf(){
  const done=await session('fastpool/Pyth Lazer fee budget');
  const ORACLE='SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8.pyth-lazer-oracle',FEE=10n;
@@ -280,54 +284,86 @@ async function pf(){
  await ev('fixture: oracle fee set to u10 in the oracle context (fork only)',ORACLE,`(begin (var-set fee u${FEE}) (var-get fee))`,`u${FEE}`);
  ({update,mid}=await fresh());
  await ev('vault holds 0 STX before the float',MARKET,`(stx-get-balance '${VAULT})`,'u0');
- // budget 0, no STX float: the market's fee transfer fails for lack of balance
+ // budget 0, no STX float: vault-mid runs refresh-mid in the vault's own as-contract?
+ // scope, so the vault pays that verify too, and its fee transfer fails for lack of balance
  await tx('budget 0, no float: admin jing-take aborts (u1, fee transfer fails)',POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u1)');
- let stx0=await stxOf(VAULT);
- const r0=await tx('budget 0, no float: router-swap still sells, AMMs only',VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),STX_WHALE);
- const rt0=routing(r0);
- check('budget 0, no float: router drops the Jing book leg (jing-ok false, jing-in 0)',prints(r0,ROUTER).join('|'),v=>v.includes('(jing-ok false)')&&rt0.jingIn===0n&&rt0.jingCap>0n);
- check('budget 0, no float: vault paid no STX',JSON.stringify(vaultStxOut(r0)),'[]');
- await ev('budget 0, no float: vault STX = out',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r0.result,'out')}`);
- // budget 0 with STX on hand: the fee transfer succeeds, then the vault's with-stx
- // allowance (index 1) rejects the whole as-contract? body, router included
+ await tx('budget 0, no float: router-swap aborts (u1): the vault cannot pay its refresh-mid verify',VAULT,'router-swap',[update],'(err u1)',STX_WHALE);
+ await ev('budget 0, no float: nothing sold',MARKET,bal(VAULT),`u${FUND}`);
+ // budget 0 with STX on hand: the fee transfer succeeds, then vault-mid's with-stx
+ // allowance (index 0) rejects its as-contract? body: the entry stops before the swap
  await advance(1);
  ({update,mid}=await fresh());
  await evAs('fixture: STX whale tops the vault up by 1000 uSTX',STX_WHALE,MARKET,`(stx-transfer? u1000 tx-sender '${VAULT})`,'(ok true)');
  const held=await stxOf(VAULT);
- await tx('budget 0, STX held: admin jing-take aborts (u1, with-stx allowance)',POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u1)');
- await tx('budget 0, STX held: router-swap aborts (u1, with-stx allowance)',VAULT,'router-swap',[update],'(err u1)',STX_WHALE);
- await tx('budget 0, STX held: admin router-swap-split (all Jing) aborts (u1, with-stx allowance)',POOL,'router-swap-split',[u(CHUNK),u(CHUNK),u(0),u(0),u(0),update,cp(VAULT)],'(err u1)');
- await ev('budget 0: nothing more sold',MARKET,bal(VAULT),`u${FUND-CHUNK}`);
+ await tx('budget 0, STX held: admin jing-take aborts (u0, vault-mid with-stx allowance)',POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u0)');
+ await tx('budget 0, STX held: router-swap aborts (u0, vault-mid with-stx allowance)',VAULT,'router-swap',[update],'(err u0)',STX_WHALE);
+ await tx('budget 0, STX held: admin router-swap-split (all Jing) aborts (u0, vault-mid with-stx allowance)',POOL,'router-swap-split',[u(CHUNK),u(CHUNK),u(0),u(0),u(0),update,cp(VAULT)],'(err u0)');
+ await ev('budget 0: nothing sold',MARKET,bal(VAULT),`u${FUND}`);
  await ev('budget 0: vault STX unchanged',MARKET,`(stx-get-balance '${VAULT})`,`u${held}`);
  const setBudget=async(b)=>{const r=await tx(`admin sets pyth fee budget u${b}`,POOL,'set-vault-pyth-fee-budget',[u(b),cp(VAULT)],'(ok true)');
   check(`set-pyth-fee-budget print u${b}`,prints(r,VAULT).join('|'),v=>v.includes('(notification "set-pyth-fee-budget")')&&v.includes(`(value u${b})`));
   await ev(`get-config reports budget u${b}`,VAULT,'(get-config)',v=>v.includes(`(pyth-fee-budget u${b})`));};
- // Inside as-contract? the market's swap verifies the update once and reuses the feeds,
- // on both jing-take and the router book leg: fee - 1 of budget is not enough, one fee is
- await setBudget(FEE-1n);
+ // Bounty mv7dfb (Super Orb): both verifies run as the vault, each in its own
+ // as-contract? scope (vault-mid's refresh-mid, then the market's swap), so jing-take
+ // and the router book leg each cost the vault 2 fees. Each scope's with-stx caps one
+ // verify: fee - 1 of budget aborts in vault-mid (u0). The budget is set to 2 x fee
+ // because finish keeps it back as the reserve both verifies spend (F2 below).
+ const TWO=2n*FEE,SHORT=FEE-1n;
+ await setBudget(SHORT);
+ ({update,mid}=await fresh());
+ let stx0=await stxOf(VAULT);
+ await tx(`budget u${SHORT} (fee - 1): admin jing-take aborts (u0, vault-mid with-stx allowance)`,POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u0)');
+ await tx(`budget u${SHORT} (fee - 1): router-swap aborts (u0, vault-mid with-stx allowance)`,VAULT,'router-swap',[update],'(err u0)',STX_WHALE);
+ await ev(`budget u${SHORT} aborts: sBTC and STX unchanged`,MARKET,`{ sbtc: ${bal(VAULT)}, stx: (stx-get-balance '${VAULT}) }`,`(tuple (sbtc u${FUND}) (stx u${stx0}))`);
+ await setBudget(TWO);
+ const twoFees=JSON.stringify([[recipient,String(FEE)],[recipient,String(FEE)]]);
+ const sentBy=(r,who)=>(r.receipt?.events??[]).map(e=>typeof e==='string'?JSON.parse(e):e).filter(e=>e.stx_transfer_event&&e.stx_transfer_event.sender===who).length;
+ const r2=await tx(`budget u${TWO} (2 fees): admin jing-take sells a 50k chunk on the book`,POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],v=>ok(v)&&v.includes(`(amount u${CHUNK})`));
+ check(`jing-take: vault paid exactly two u${FEE} fees to the oracle recipient`,JSON.stringify(vaultStxOut(r2)),twoFees);
+ check('jing-take: the admin caller sent no STX',String(sentBy(r2,DEP)),'0');
+ await ev('jing-take: vault STX = before + out - 2 fees',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r2.result,'out')-TWO}`);
+ await ev('jing-take: 100k sBTC left for the router',MARKET,bal(VAULT),`u${FUND-CHUNK}`);
+ // a fresh caller with 0 STX (stxer charges no tx fee here) can run router-swap:
+ // before the fix its own refresh-mid fee transfer failed
+ const EMPTY=getAddressFromPrivateKey('5'.repeat(64)+'01','mainnet');
  ({update,mid}=await fresh());
  stx0=await stxOf(VAULT);
- await tx(`budget u${FEE-1n} (fee - 1): admin jing-take aborts (u1), the swap pays one fee`,POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u1)');
- await tx(`budget u${FEE-1n} (fee - 1): router-swap aborts (u1), the book leg pays one fee`,VAULT,'router-swap',[update],'(err u1)',STX_WHALE);
- await ev(`budget u${FEE-1n} aborts: sBTC and STX unchanged`,MARKET,`{ sbtc: ${bal(VAULT)}, stx: (stx-get-balance '${VAULT}) }`,`(tuple (sbtc u${FUND-CHUNK}) (stx u${stx0}))`);
- await setBudget(FEE);
- const oneFee=JSON.stringify([[recipient,String(FEE)]]);
- const r2=await tx(`budget u${FEE} (1 fee): admin jing-take sells a 50k chunk on the book`,POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],v=>ok(v)&&v.includes(`(amount u${CHUNK})`));
- check(`jing-take: vault paid exactly one u${FEE} fee to the oracle recipient`,JSON.stringify(vaultStxOut(r2)),oneFee);
- await ev('jing-take: vault STX = before + out - 1 fee',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r2.result,'out')-FEE}`);
- await ev('jing-take: 50k sBTC left for the router',MARKET,bal(VAULT),`u${CHUNK}`);
- ({update,mid}=await fresh());
- stx0=await stxOf(VAULT);
- const r1=await tx(`budget u${FEE} (1 fee): router-swap sells the last 50k chunk`,VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),STX_WHALE);
+ await ev('fresh caller holds 0 STX',MARKET,`(stx-get-balance '${EMPTY})`,'u0');
+ const r1=await tx(`budget u${TWO} (2 fees): a 0-STX caller runs router-swap, a 50k chunk sells`,VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),EMPTY);
  const rt1=routing(r1);
- check(`budget u${FEE}: router fills the Jing book leg`,prints(r1,ROUTER).join('|'),v=>v.includes('(jing-ok true)')&&rt1.jingIn>0n);
- check(`router-swap: vault paid exactly one u${FEE} fee to the oracle recipient`,JSON.stringify(vaultStxOut(r1)),oneFee);
- // the router measures out as the vault's STX balance change, so its out is net of the fees
- check('router out = Jing leg out - 1 fee',String(field(r1.result,'out')),String(field(prints(r1,ROUTER).join('|'),'jing-out')-FEE));
- await ev('router-swap: vault STX = before + out (net of fees)',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r1.result,'out')}`);
+ check(`budget u${TWO}: router fills the Jing book leg`,prints(r1,ROUTER).join('|'),v=>v.includes('(jing-ok true)')&&rt1.jingIn>0n);
+ check(`router-swap: vault paid exactly two u${FEE} fees to the oracle recipient`,JSON.stringify(vaultStxOut(r1)),twoFees);
+ check('router-swap: the 0-STX caller sent no STX',String(sentBy(r1,EMPTY)),'0');
+ await ev('router-swap: caller still holds 0 STX',MARKET,`(stx-get-balance '${EMPTY})`,'u0');
+ // the router measures out as the vault's STX balance change over its own call: net of
+ // the market's verify inside it, not of current-mid's refresh-mid before it
+ check('router out = Jing leg out - 1 fee (the market verify inside the router)',String(field(r1.result,'out')),String(field(prints(r1,ROUTER).join('|'),'jing-out')-FEE));
+ await ev('router-swap: vault STX = before + out - 1 fee (refresh-mid)',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+field(r1.result,'out')-FEE}`);
+ await advance(1);
+ ({update,mid}=await fresh());
+ const r3=await tx(`budget u${TWO}: router-swap sells the last 50k chunk`,VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),STX_WHALE);
+ check(`last router-swap: vault paid at most two u${FEE} fees`,JSON.stringify(vaultStxOut(r3)),v=>[JSON.stringify([[recipient,String(FEE)]]),twoFees].includes(v));
  await ev('vault sold out and closed',VAULT,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)'));
- const fin=await stxOf(VAULT);
- await tx('pool finalizes the whole STX balance (float included)',POOL,'finalize-swap-vault',[cp(VAULT)],`(ok u${fin})`,stranger);
+ // Patient Reed F2: finish keeps min(balance, budget) as the next batch's fee
+ // reserve and sends only the rest; the pool's delta check sees that amount
+ const fin=await stxOf(VAULT),poolStx=await stxOf(POOL);
+ await tx(`F2: pool finalizes the STX balance minus the u${TWO} reserve`,POOL,'finalize-swap-vault',[cp(VAULT)],`(ok u${fin-TWO})`,stranger);
+ await ev('F2: pool received exactly balance - budget',MARKET,`(- (stx-get-balance '${POOL}) u${poolStx})`,`u${fin-TWO}`);
+ await ev(`F2: vault keeps the u${TWO} reserve`,MARKET,`(stx-get-balance '${VAULT})`,`u${TWO}`);
+ // batch 2 at fee u10: no float, the reserve alone pays refresh-mid + the market verify
+ await fundCycle(cycle-1,CHUNK);
+ await ev('F2 batch 2: fixture: patience window elapsed',VAULT,'(begin (var-set batch-start (some (- burn-block-height u288))) true)','true');
+ await advance(1);
+ ({update,mid}=await fresh());
+ await ev(`F2 batch 2: vault starts with the u${TWO} reserve only`,MARKET,`(stx-get-balance '${VAULT})`,`u${TWO}`);
+ const r4=await tx('F2 batch 2: a 0-STX caller runs router-swap on the reserve',VAULT,'router-swap',[update],v=>ok(v)&&v.includes(`(amount u${CHUNK})`),EMPTY);
+ check(`F2 batch 2: vault paid exactly two u${FEE} fees from the reserve`,JSON.stringify(vaultStxOut(r4)),twoFees);
+ check('F2 batch 2: the 0-STX caller sent no STX',String(sentBy(r4,EMPTY)),'0');
+ const out4=field(r4.result,'out');
+ await ev('F2 batch 2: vault STX = reserve + out - 1 fee (refresh-mid)',MARKET,`(stx-get-balance '${VAULT})`,`u${TWO+out4-FEE}`);
+ await ev('F2 batch 2: sold out and closed',VAULT,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)'));
+ await tx('F2 batch 2: pool finalizes out - 1 fee, the reserve refills',POOL,'finalize-swap-vault',[cp(VAULT)],`(ok u${out4-FEE})`,stranger);
+ await ev(`F2 batch 2: vault keeps the u${TWO} reserve again`,MARKET,`(stx-get-balance '${VAULT})`,`u${TWO}`);
  done();
 }
 
