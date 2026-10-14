@@ -64,6 +64,7 @@ def write_mock_pox() -> None:
 (define-trait signer-manager-trait ((validate-stake! (principal uint uint uint uint bool (optional (buff 500))) (response bool uint))))
 (define-data-var cycle uint u150)
 (define-data-var dist uint u300)
+(define-data-var reward uint u1000000)
 (define-map shares { staker: principal, cycle: uint, signer: principal } uint)
 (define-map totals { cycle: uint, signer: principal } uint)
 (define-public (seed (staker principal) (c uint) (signer principal) (amount uint))
@@ -75,8 +76,10 @@ def write_mock_pox() -> None:
 (define-public (next-dist) (ok (var-set dist (+ (var-get dist) u1))))
 (define-public (claim-rewards (bonds (list 6 uint)) (c uint))
   (begin (asserts! true (err u0))
-    (try! (contract-call? .mock-ft mint u1000000 contract-caller))
-    (ok { total-rewards: u1000000 })))
+    (if (> (var-get reward) u0)
+      (try! (contract-call? .mock-ft mint (var-get reward) contract-caller))
+      true)
+    (ok { total-rewards: (var-get reward) })))
 (define-read-only (current-distribution-cycle) (var-get dist))
 (define-read-only (current-pox-reward-cycle) (var-get cycle))
 (define-read-only (get-signer-shares-staked-for-cycle (signer principal) (c uint) (bond (optional uint)))
@@ -97,7 +100,22 @@ def write_mock_pox() -> None:
   (begin
     (try! (seed staker c (contract-of pool) amount))
     (contract-call? pool validate-stake! staker c u1 amount u0 false none)))
+(define-public (callback-test (pool <signer-trait>) (staker principal) (c uint)
+    (num-indexes uint) (amount uint) (is-bond bool)
+    (signer-calldata (optional (buff 500))))
+  (contract-call? pool validate-stake! staker c num-indexes amount u0
+    is-bond signer-calldata))
 (define-public (set-cycle (c uint)) (ok (var-set cycle c)))
+(define-public (set-reward (amount uint))
+  (begin (asserts! true (err u0)) (ok (var-set reward amount))))
+(define-public (set-share (staker principal) (c uint) (signer principal) (amount uint))
+  (begin
+    (asserts! true (err u0))
+    (ok (map-set shares { staker: staker, cycle: c, signer: signer } amount))))
+(define-public (set-total (c uint) (signer principal) (amount uint))
+  (begin
+    (asserts! true (err u0))
+    (ok (map-set totals { cycle: c, signer: signer } amount))))
 """
     (OUT / "contracts" / "mock-pox.clar").write_text(text)
 
@@ -118,7 +136,7 @@ def write_market_fixture() -> None:
         ".jing-ladder-v1": ".mock-jing-ladder",
         ".jing-core-v6": ".mock-jing-core",
         "(define-data-var token-x principal SAINT)": "(define-data-var token-x principal .mock-ft)",
-        "(define-data-var token-y principal SAINT)": "(define-data-var token-y principal .mock-ft)",
+        "(define-data-var token-y principal SAINT)": "(define-data-var token-y principal .mock-native)",
         "(define-data-var initialized bool false)": "(define-data-var initialized bool true)",
         "(define-data-var feed-id-x uint u0)": "(define-data-var feed-id-x uint u1)",
         "(define-data-var feed-id-y uint u0)": "(define-data-var feed-id-y uint u45)",
@@ -140,6 +158,34 @@ def write_native_fixture() -> None:
   (begin (asserts! (not (var-get native-failed)) (err u900)) (ok (var-get native-mid))))
 """
     (OUT / "contracts" / "mock-native.clar").write_text(text)
+
+
+def write_lazer_fixture() -> None:
+    source = OUT / "contracts" / "mock-lazer-oracle.clar"
+    text = source.read_text()
+    text = text.replace(
+        "(define-data-var mid uint u32000000000000)",
+        "(define-data-var mid uint u32000000000000)\n(define-data-var fee uint u0)",
+    )
+    text = text.replace(
+        "(define-public (verify-price-feeds (update (buff 8192)) (decoder principal) (max-age (optional uint)))\n  (decode-lazer-payload update)\n)",
+        """(define-public (set-fee (amount uint))
+  (ok (var-set fee amount))
+)
+
+(define-public (verify-price-feeds (update (buff 8192)) (decoder principal) (max-age (optional uint)))
+  (begin
+    (if (> (var-get fee) u0)
+      (try! (stx-transfer? (var-get fee) tx-sender current-contract))
+      true
+    )
+    (decode-lazer-payload update)
+  )
+)""",
+    )
+    if "(define-data-var fee uint u0)" not in text or "(define-public (set-fee" not in text:
+        raise SystemExit("Could not extend the current Jing Lazer fixture with fee charging")
+    source.write_text(text)
 
 
 def write_core_fixture(market_text: str) -> None:
@@ -200,6 +246,7 @@ def main() -> None:
     copy(JING_RV / "sip-010-trait.clar", contracts / "sip-010-trait.clar")
     for name in ["mock-lazer-oracle", "mock-jing-ladder"]:
         copy(JING_RV / f"{name}.clar", contracts / f"{name}.clar")
+    write_lazer_fixture()
     copy(CITYCOINS / "tests" / "vault" / "fixtures" / "mock-ft.clar",
          contracts / "mock-ft.clar")
     write_native_fixture()

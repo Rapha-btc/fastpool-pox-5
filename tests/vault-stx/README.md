@@ -8,7 +8,8 @@ node tests/rv/router-v5-3/build.mjs
 cd ../fastpool-pox-5
 python3 tests/vault-stx/build-fastpool-fixtures.py
 clarinet check --manifest-path tests/vault-stx/.build/fastpool-only/Clarinet.toml
-node tests/vault-stx/run-fastpool.mjs
+./node_modules/.bin/vitest run tests/vault-stx/fastpool-vault.test.ts --silent -- \
+  --manifest-path tests/vault-stx/.build/fastpool-only/Clarinet.toml
 ```
 
 | Contract | Source commit | Pinned source SHA-256 |
@@ -23,9 +24,25 @@ fixtures. The Jing v6-3 market build and logger stubs use the current Jing
 source interfaces; PoX, router, oracle and wrapped-STX dependencies are
 simnet fixtures. The builder and SDK runner do not deploy or publish anything.
 
-The current SDK run passes **85 assertions** covering the FastPool signer and
-vault: swap lifecycle, price and stale-feed guards, chunk cooldown, pro-rata
-STX rewards, fee snapshot behavior across a late claim, recovery after the
-432-block deadline, mixed-asset payouts, fee withdrawal, and vault rotation.
-This is a focused behavioral suite; it does not produce line, branch, or
-function coverage percentages.
+The source-pinned SDK suite is run with Vitest coverage:
+
+```sh
+python3 tests/vault-stx/build-fastpool-fixtures.py
+clarinet check --manifest-path tests/vault-stx/.build/fastpool-only/Clarinet.toml
+./node_modules/.bin/vitest run tests/vault-stx/fastpool-vault.test.ts --silent -- \
+  --manifest-path tests/vault-stx/.build/fastpool-only/Clarinet.toml --coverage \
+  --coverage-filename tests/vault-stx/.build/fastpool-only/lcov.info
+```
+
+The expanded suite passes **317 assertions**. Coverage is measured on the two
+production contracts in the isolated manifest:
+
+| Contract | Tests | Lines | Branches | Functions |
+|---|---:|---:|---:|---:|
+| `fastpool-swap-vault` | Shared suite | 466/502 (92.8%) | 138/150 (92.0%) | 41/41 (100%) |
+| `signer-manager-vault-stx-rewards` | Shared suite | 551/563 (97.9%) | 85/91 (93.4%) | 56/56 (100%) |
+
+Remaining misses are defensive status, balance, payout, and fixture-reachability
+arms; every public function is hit. The repository's full `npm test` run also
+passes **49 tests** with **1 intentional isolated-harness skip**. Coverage files
+are generated under the ignored `.build/fastpool-only` directory.
