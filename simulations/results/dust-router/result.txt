@@ -1,31 +1,31 @@
-pass1 6631b3cdea3db1407d31e4889f30c33c
-pass2 3c004686af1c11ae596120181cf935c7
-fork 9208533
-sources {"jing-core-v6":"88a689affb23f13030953e891336af42a3f5cb275f13b3c54c79d8cd4de50697","jing-ladder-v1":"0f1e08b023272ed96a2653f727292626d4b0325dcf4e42963104d977860ec786","markets-sbtc-stx-jing-v6-3":"943927cc5067d21d50c87e3f7464d379c3d704cb2ed8dcbfb5c88205a68c5a67","swap-router-sbtc-stx-jing-v5-3":"fb64c9a0c642bdf821cfb754900e58edc7d5b7f27aeab7348cc34a4645e43698","juice-swap-vault-trait-v2":"e6ee46a72857916f33b8d0c91a7344d62b51d303279ff9a7ea28954fe52b8093"}
-mid 19580931438174
-limit 17622838294356
+pass1 54f0da53c3e44c7a63c0bd56be7726fb
+pass2 41a52fa17077912357a0ce7fe54b7575
+fork 9208654
+sources {"jing-core-v6":"973482e429cf7d9110847227fdc701443d8d9884b448dce5273579e23ea7fdff","jing-ladder-v1":"6a5e204d47d865047fcb7d80d97e57d13b23fc1bf843958323c8c7d0d10d0dd7","markets-sbtc-stx-jing-v6-3":"7b2f0f44fca1feaf1e8c30f195d0a639a3daf102db4f4c84060c8062132f5f4c","swap-router-sbtc-stx-jing-v5-3":"3e457866be8d4f6216e5e17fd87c9aa6fb2285a23909e7957a354c4af8e3b9b4","juice-swap-vault-trait-v2":"655b22cb792a8204699d8292803eee8364d15e0a32d827ebb85b9687c4a50657"}
+mid 19544501137792
+limit 17590051024012
 
      -  out=-  unsold=-
-        (ok u19580931438174)
+        (ok u19544501137792)
      1  out=u0  unsold=u1
         (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u1) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
      2  out=u0  unsold=u2
         (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u2) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-     3  out=u5845  unsold=u0
-        (ok (tuple (dlmm-in u3) (dlmm-out u5845) (jing-in u0) (jing-ok false) (jing-out u0) (out u5845) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  1000  out=u1938664  unsold=u0
-        (ok (tuple (dlmm-in u1000) (dlmm-out u1938664) (jing-in u0) (jing-ok false) (jing-out u0) (out u1938664) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+     3  out=u5854  unsold=u0
+        (ok (tuple (dlmm-in u3) (dlmm-out u5854) (jing-in u0) (jing-ok false) (jing-out u0) (out u5854) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+  1000  out=u1939624  unsold=u0
+        (ok (tuple (dlmm-in u1000) (dlmm-out u1939624) (jing-in u0) (jing-ok false) (jing-out u0) (out u1939624) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
   2000  out=u3877328  unsold=u0
         (ok (tuple (dlmm-in u2000) (dlmm-out u3877328) (jing-in u0) (jing-ok false) (jing-out u0) (out u3877328) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
   3000  out=u5815992  unsold=u0
         (ok (tuple (dlmm-in u3000) (dlmm-out u5815992) (jing-in u0) (jing-ok false) (jing-out u0) (out u5815992) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
   5000  out=u9693320  unsold=u0
         (ok (tuple (dlmm-in u5000) (dlmm-out u9693320) (jing-in u0) (jing-ok false) (jing-out u0) (out u9693320) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  8000  out=u15488946  unsold=u0
-        (ok (tuple (dlmm-in u8000) (dlmm-out u15488946) (jing-in u0) (jing-ok false) (jing-out u0) (out u15488946) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  9000  out=u17407498  unsold=u0
-        (ok (tuple (dlmm-in u9000) (dlmm-out u17407498) (jing-in u0) (jing-ok false) (jing-out u0) (out u17407498) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  9500  out=u18361894  unsold=u0
-        (ok (tuple (dlmm-in u9500) (dlmm-out u18361894) (jing-in u0) (jing-ok false) (jing-out u0) (out u18361894) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
- 10000  out=u19299402  unsold=u0
-        (ok (tuple (dlmm-in u10000) (dlmm-out u19299402) (jing-in u0) (jing-ok false) (jing-out u0) (out u19299402) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+  8000  out=u15491334  unsold=u0
+        (ok (tuple (dlmm-in u8000) (dlmm-out u15491334) (jing-in u0) (jing-ok false) (jing-out u0) (out u15491334) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+  9000  out=u17408985  unsold=u0
+        (ok (tuple (dlmm-in u9000) (dlmm-out u17408985) (jing-in u0) (jing-ok false) (jing-out u0) (out u17408985) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+  9500  out=u18363184  unsold=u0
+        (ok (tuple (dlmm-in u9500) (dlmm-out u18363184) (jing-in u0) (jing-ok false) (jing-out u0) (out u18363184) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+ 10000  out=u19301554  unsold=u0
+        (ok (tuple (dlmm-in u10000) (dlmm-out u19301554) (jing-in u0) (jing-ok false) (jing-out u0) (out u19301554) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
