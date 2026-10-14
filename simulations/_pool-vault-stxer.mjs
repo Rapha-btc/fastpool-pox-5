@@ -115,7 +115,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  };
  const cycle=Number((await read(POX,'current-pox-reward-cycle')).value)-1;
  const sellers={value:[]},buyers={value:[]}; // Fresh v6-3 books are empty.
- const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API,skipTracing:true}).useBlockHeight(tip.height).withSender(DEP);
+ const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API,skipTracing: !process.env.STXER_TRACE}).useBlockHeight(tip.height).withSender(DEP);
  const plan=[],sourceHashes={};
  appendJingStack(builder,plan,sourceHashes);
  const deploy=(name,path)=>{const source=readFileSync(path,'utf8');sourceHashes[name]=createHash('sha256').update(source).digest('hex');builder.addContractDeploy({contract_name:name,source_code:source,clarity_version:ClarityVersion.Clarity6});plan.push({label:`deploy unchanged ${name}`,kind:'deploy'});};
