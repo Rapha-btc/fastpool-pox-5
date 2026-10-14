@@ -10,7 +10,12 @@
     "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"pnpm run test:report\"",
     "deploy:testnet": "./scripts/deploy-testnet.sh",
     "deployment:from-tx": "node scripts/tx-to-deployment.mjs",
-    "build:claim-plan": "node scripts/build-claim-plan.mjs"
+    "build:claim-plan": "node scripts/build-claim-plan.mjs",
+    "rv:build": "python3 tests/rv/build.py",
+    "rv:vault": "python3 tests/rv/build.py && bash tests/rv/run.sh vault 1500 20261014 && bash tests/rv/run.sh vault 1500 20261015",
+    "rv:signer": "python3 tests/rv/build.py && bash tests/rv/run.sh signer 1500 20261014 && bash tests/rv/run.sh signer 1500 20261015",
+    "rv:props": "python3 tests/rv/build.py && bash tests/rv/run.sh props 2000 20261014 && bash tests/rv/run.sh props 2000 20261015",
+    "rv:mutants": "for m in floor finish fee; do python3 tests/rv/build.py --mutant=$m; done && bash tests/rv/run.sh vault 300 11 tests/rv/.build-mutant-floor -mutant-floor; bash tests/rv/run.sh props 300 11 tests/rv/.build-mutant-floor -mutant-floor; bash tests/rv/run.sh vault 300 11 tests/rv/.build-mutant-finish -mutant-finish; bash tests/rv/run.sh props 300 11 tests/rv/.build-mutant-finish -mutant-finish; bash tests/rv/run.sh signer 300 11 tests/rv/.build-mutant-fee -mutant-fee; bash tests/rv/run.sh props 300 11 tests/rv/.build-mutant-fee -mutant-fee; true"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +30,7 @@
     "vitest-environment-clarinet": "^3.0.0"
   },
   "devDependencies": {
+    "@stacks/rendezvous": "^1.0.3",
     "@stacks/wallet-sdk": "^7.2.0"
   }
 }

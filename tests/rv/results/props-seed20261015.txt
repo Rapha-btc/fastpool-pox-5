@@ -1,0 +1,52 @@
+target=rv-props type=test runs=2000 seed=20261015 exit=0 seconds=474
+rv-violation prints: 0
+runtime errors: 0
+[32mOK, properties passed after 2000 runs.[39m
+EXECUTION STATISTICS
+
+│ PROPERTY TEST CALLS
+│
+├─ + PASSED
+│    ├─ test-dia-floor: x130
+│    ├─ test-distribute: x112
+│    ├─ test-fee-withdraw: x292
+│    ├─ test-finish-reserve: x117
+│    ├─ test-patience: x123
+│    ├─ test-router-floor: x120
+│    └─ test-split-floor: x133
+│
+├─ ! DISCARDED
+│    ├─ test-dia-floor: x157
+│    ├─ test-distribute: x166
+│    ├─ test-fee-withdraw: x0
+│    ├─ test-finish-reserve: x158
+│    ├─ test-patience: x184
+│    ├─ test-router-floor: x155
+│    └─ test-split-floor: x153
+│
+└─ - FAILED
+     ├─ test-dia-floor: x0
+     ├─ test-distribute: x0
+     ├─ test-fee-withdraw: x0
+     ├─ test-finish-reserve: x0
+     ├─ test-patience: x0
+     ├─ test-router-floor: x0
+     └─ test-split-floor: x0
+
+LEGEND:
+property branch prints:
+     32 rv-prop: "dia-floor", rv-z: "accept-dia"
+     21 rv-prop: "dia-floor", rv-z: "accept-native"
+     52 rv-prop: "dia-floor", rv-z: "reject-dia"
+     25 rv-prop: "dia-floor", rv-z: "reject-native"
+    112 rv-prop: "distribute", rv-z: "paid"
+    279 rv-prop: "fee-withdraw", rv-z: "ok"
+     13 rv-prop: "fee-withdraw", rv-z: "over"
+     24 rv-prop: "finish", rv-z: "all-kept"
+     93 rv-prop: "finish", rv-z: "partial"
+    123 rv-prop: "patience", rv-z: "checked"
+     47 rv-prop: "router-floor", rv-z: "accept"
+     22 rv-prop: "router-floor", rv-z: "reject-fee"
+     51 rv-prop: "router-floor", rv-z: "reject-floor"
+     37 rv-prop: "split-floor", rv-z: "accept"
+     96 rv-prop: "split-floor", rv-z: "reject"

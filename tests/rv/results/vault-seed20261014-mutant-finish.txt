@@ -1,0 +1,136 @@
+target=fastpool-swap-vault-solo type=invariant runs=1500 seed=20261014 exit=1 seconds=215
+rv-violation prints: 1
+runtime errors: 0
+[31mError: Property failed after 350 tests.[39m
+  IGNORED    calls failed but did not affect the test
+EXECUTION STATISTICS
+
+│ PUBLIC FUNCTION CALLS
+│
+├─ + SUCCESSFUL
+│    ├─ close-batch: x0
+│    ├─ emergency-recover: x4
+│    ├─ finish: x1
+│    ├─ fund: x2
+│    ├─ jing-place: x0
+│    ├─ jing-reclaim: x1
+│    ├─ jing-refloor: x0
+│    ├─ jing-take: x0
+│    ├─ router-swap: x0
+│    ├─ router-swap-split: x0
+│    ├─ router-swap-split-dia: x0
+│    ├─ rv-bid: x56
+│    ├─ rv-calm: x50
+│    ├─ rv-cancel-bid: x18
+│    ├─ rv-cfg: x15
+│    ├─ rv-dia: x2
+│    ├─ rv-donate: x46
+│    ├─ rv-donate-stx: x52
+│    ├─ rv-drain: x3
+│    ├─ rv-fund: x3
+│    ├─ rv-fund-router: x46
+│    ├─ rv-market-reset: x51
+│    ├─ rv-mid: x48
+│    ├─ rv-mint-pool: x49
+│    ├─ rv-oracle-fee: x44
+│    ├─ rv-place: x1
+│    ├─ rv-refloor: x0
+│    ├─ rv-router-knobs: x56
+│    ├─ rv-sell: x0
+│    ├─ rv-settle: x0
+│    ├─ rv-split: x3
+│    ├─ rv-take: x0
+│    ├─ rv-world: x64
+│    ├─ set-dia-band-bps: x2
+│    ├─ set-leeway-bps: x4
+│    ├─ set-max-chunk-sats: x4
+│    ├─ set-no-pyth-slippage-bps: x6
+│    ├─ set-pyth-fee-budget: x3
+│    ├─ set-router-cooldown: x3
+│    ├─ set-slippage-bps: x4
+│    └─ set-window-blocks: x4
+│
+├─ - IGNORED
+│    ├─ close-batch: x56
+│    ├─ emergency-recover: x49
+│    ├─ finish: x50
+│    ├─ fund: x46
+│    ├─ jing-place: x57
+│    ├─ jing-reclaim: x54
+│    ├─ jing-refloor: x55
+│    ├─ jing-take: x43
+│    ├─ router-swap: x52
+│    ├─ router-swap-split: x57
+│    ├─ router-swap-split-dia: x59
+│    ├─ rv-bid: x1
+│    ├─ rv-calm: x0
+│    ├─ rv-cancel-bid: x23
+│    ├─ rv-cfg: x44
+│    ├─ rv-dia: x51
+│    ├─ rv-donate: x0
+│    ├─ rv-donate-stx: x0
+│    ├─ rv-drain: x53
+│    ├─ rv-fund: x57
+│    ├─ rv-fund-router: x0
+│    ├─ rv-market-reset: x0
+│    ├─ rv-mid: x0
+│    ├─ rv-mint-pool: x0
+│    ├─ rv-oracle-fee: x0
+│    ├─ rv-place: x46
+│    ├─ rv-refloor: x48
+│    ├─ rv-router-knobs: x0
+│    ├─ rv-sell: x44
+│    ├─ rv-settle: x59
+│    ├─ rv-split: x37
+│    ├─ rv-take: x37
+│    ├─ rv-world: x0
+│    ├─ set-dia-band-bps: x44
+│    ├─ set-leeway-bps: x59
+│    ├─ set-max-chunk-sats: x38
+│    ├─ set-no-pyth-slippage-bps: x63
+│    ├─ set-pyth-fee-budget: x50
+│    ├─ set-router-cooldown: x58
+│    ├─ set-slippage-bps: x41
+│    └─ set-window-blocks: x36
+│
+│ INVARIANT CHECKS
+│
+├─ + PASSED
+│    ├─ invariant-v-batch-xor-ready: x23
+│    ├─ invariant-v-clock-not-future: x26
+│    ├─ invariant-v-clock-transitions: x14
+│    ├─ invariant-v-close-is-empty: x22
+│    ├─ invariant-v-config-bounded: x13
+│    ├─ invariant-v-fee-within-budget: x28
+│    ├─ invariant-v-finish-keeps-reserve: x16
+│    ├─ invariant-v-fund-only-from-idle: x22
+│    ├─ invariant-v-no-floor-breach: x18
+│    ├─ invariant-v-no-patience-sale: x19
+│    ├─ invariant-v-place-is-peg: x25
+│    ├─ invariant-v-recover-sends-all: x22
+│    ├─ invariant-v-resting-peg: x19
+│    ├─ invariant-v-sbtc-conservation: x26
+│    ├─ invariant-v-sbtc-destinations: x16
+│    ├─ invariant-v-stx-out-only-to-pool-or-fee: x22
+│    └─ invariant-v-window-exclusive: x21
+│
+└─ - FAILED
+     ├─ invariant-v-batch-xor-ready: x0
+     ├─ invariant-v-clock-not-future: x0
+     ├─ invariant-v-clock-transitions: x0
+     ├─ invariant-v-close-is-empty: x0
+     ├─ invariant-v-config-bounded: x0
+     ├─ invariant-v-fee-within-budget: x0
+     ├─ invariant-v-finish-keeps-reserve: x7
+     ├─ invariant-v-fund-only-from-idle: x0
+     ├─ invariant-v-no-floor-breach: x0
+     ├─ invariant-v-no-patience-sale: x0
+     ├─ invariant-v-place-is-peg: x0
+     ├─ invariant-v-recover-sends-all: x0
+     ├─ invariant-v-resting-peg: x0
+     ├─ invariant-v-sbtc-conservation: x0
+     ├─ invariant-v-sbtc-destinations: x0
+     ├─ invariant-v-stx-out-only-to-pool-or-fee: x0
+     └─ invariant-v-window-exclusive: x0
+
+LEGEND:

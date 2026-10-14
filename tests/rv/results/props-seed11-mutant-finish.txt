@@ -1,0 +1,41 @@
+target=rv-props type=test runs=300 seed=11 exit=1 seconds=19
+rv-violation prints: 0
+runtime errors: 0
+[31mError: Property failed after 2 tests.[39m
+EXECUTION STATISTICS
+
+│ PROPERTY TEST CALLS
+│
+├─ + PASSED
+│    ├─ test-dia-floor: x1
+│    ├─ test-distribute: x0
+│    ├─ test-fee-withdraw: x1
+│    ├─ test-finish-reserve: x4
+│    ├─ test-patience: x0
+│    ├─ test-router-floor: x0
+│    └─ test-split-floor: x0
+│
+├─ ! DISCARDED
+│    ├─ test-dia-floor: x0
+│    ├─ test-distribute: x0
+│    ├─ test-fee-withdraw: x0
+│    ├─ test-finish-reserve: x0
+│    ├─ test-patience: x0
+│    ├─ test-router-floor: x0
+│    └─ test-split-floor: x0
+│
+└─ - FAILED
+     ├─ test-dia-floor: x0
+     ├─ test-distribute: x0
+     ├─ test-fee-withdraw: x0
+     ├─ test-finish-reserve: x38
+     ├─ test-patience: x0
+     ├─ test-router-floor: x0
+     └─ test-split-floor: x0
+
+LEGEND:
+property branch prints:
+      1 rv-prop: "dia-floor", rv-z: "reject-dia"
+      1 rv-prop: "fee-withdraw", rv-z: "over"
+     19 rv-prop: "finish", rv-z: "all-kept"
+     23 rv-prop: "finish", rv-z: "partial"
