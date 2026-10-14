@@ -1,5 +1,5 @@
 // Can the router actually sell a few sats? Two passes, because the mid is only
-// available from a transaction (markets-sbtc-stx-jing-v6 refresh-mid is public,
+// available from a transaction (markets-sbtc-stx-jing-v6-3 refresh-mid is public,
 // not read-only) and simulation arguments are fixed at build time:
 //
 //   pass 1 - call refresh-mid on a fork, read the mid the market itself derives
@@ -24,17 +24,16 @@ const { SimulationBuilder, getSimulationResult } = require('stxer');
 const { Cl, deserializeCV, cvToString } = require('@stacks/transactions');
 
 const DEP = 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22';
-const MARKET = `${DEP}.markets-sbtc-stx-jing-v6`;
-const ROUTER = `${DEP}.swap-router-sbtc-stx-jing-v5`;
+// The vault binds markets-sbtc-stx-jing-v6-3 + swap-router-sbtc-stx-jing-v5-3 (not on mainnet yet):
+// each pass deploys that stack on the fork from the jing-contracts-v3 sources (_jing-v6-3.mjs).
+const { appendJingStack, MARKET, ROUTER, freshProofAfter } = await import('./_jing-v6-3.mjs');
 const NODE = process.env.STACKS_API_URL || 'http://77.42.3.101/stacks-api';
 const API = process.env.STXER_API_URL || 'https://api.stxer.xyz';
 const LEEWAY_BPS = 1000n; // the vaults' default
 
-const { fetchLazerUpdateAny } = await import(resolve(workspace, 'jing-contracts-v3/simulations/_lazer.js'));
-const proof = await fetchLazerUpdateAny();
-const update = Cl.buffer(Buffer.from(proof.hex.replace(/^0x/, ''), 'hex'));
-
 const tip = (await (await fetch(`${NODE}/extended/v1/block?limit=1`, { signal: AbortSignal.timeout(20000) })).json()).results[0];
+const proof = await freshProofAfter(Number(tip.block_time) + 12);
+const update = Cl.buffer(Buffer.from(proof.hex.replace(/^0x/, ''), 'hex'));
 const decode = (step) => {
   const hex = step?.Eval?.Ok ?? step?.Transaction?.Ok?.result ?? null;
   if (!hex) return JSON.stringify(step ?? null);
@@ -43,11 +42,14 @@ const decode = (step) => {
 
 // ---- pass 1: what mid does the market itself produce right now? -------------
 const p1 = SimulationBuilder.new({ stacksNodeAPI: NODE, apiEndpoint: API }).useBlockHeight(tip.height).withSender(DEP);
+const stack1 = [], sourceHashes = {};
+appendJingStack(p1, stack1, sourceHashes);
 p1.addContractCall({ contract_id: MARKET, function_name: 'refresh-mid', function_args: [update], sender: DEP });
 const id1 = await p1.run();
 console.log(`pass 1: https://stxer.xyz/simulations/mainnet/${id1}`);
 const r1 = await getSimulationResult(id1, { stxerApi: API });
-const midStr = decode(r1.steps[0]?.Result);
+for (const [i, st] of stack1.entries()) { const v = decode(r1.steps[i]?.Result); if (!/^\(ok/.test(v)) throw new Error(`pass 1 ${st.label}: ${v}`); }
+const midStr = decode(r1.steps[stack1.length]?.Result);
 console.log(`refresh-mid -> ${midStr}`);
 const m = /u(\d+)/.exec(midStr);
 if (!m) throw new Error(`could not read a mid from: ${midStr}`);
@@ -57,6 +59,8 @@ console.log(`mid ${mid}, limit (floor-of, ${LEEWAY_BPS} bps leeway) ${limit}`);
 
 // ---- pass 2: the ladder, on the market's own mid ----------------------------
 const p2 = SimulationBuilder.new({ stacksNodeAPI: NODE, apiEndpoint: API }).useBlockHeight(tip.height).withSender(DEP);
+const stack2 = [];
+appendJingStack(p2, stack2);
 const plan = [];
 // refresh-mid first, so the router sees the same fresh oracle state the vault
 // would have written a moment earlier.
@@ -76,7 +80,7 @@ console.log(`pass 2: https://stxer.xyz/simulations/mainnet/${id2}`);
 const r2 = await getSimulationResult(id2, { stxerApi: API });
 
 const rows = plan.map((p, i) => {
-  const s = decode(r2.steps[i]?.Result);
+  const s = decode(r2.steps[stack2.length + i]?.Result);
   const out = /\(out (u\d+)\)/.exec(s)?.[1] ?? '-';
   const unsold = /\(unsold (u\d+)\)/.exec(s)?.[1] ?? '-';
   return { ...p, out, unsold, raw: s };
@@ -94,5 +98,5 @@ console.log(smallest
 const dir = resolve(dirname(fileURLToPath(import.meta.url)), 'results/dust-router');
 mkdirSync(dir, { recursive: true });
 writeFileSync(resolve(dir, 'result.txt'),
-  `pass1 ${id1}\npass2 ${id2}\nmid ${mid}\nlimit ${limit}\n\n` +
+  `pass1 ${id1}\npass2 ${id2}\nfork ${tip.height}\nsources ${JSON.stringify(sourceHashes)}\nmid ${mid}\nlimit ${limit}\n\n` +
   rows.map((r) => `${String(r.sats ?? '-').padStart(6)}  out=${r.out}  unsold=${r.unsold}\n        ${r.raw}`).join('\n') + '\n');
