@@ -50,7 +50,7 @@
 (define-constant ASSET_WSTX "wstx")
 
 (define-constant JING_MARKET 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4)
-(define-constant JING_ROUTER 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-4)
+(define-constant JING_ROUTER 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-5)
 
 (define-constant RECOVERY_DELAY_BLOCKS u432)
 (define-constant MAX_DIA_AGE u7200)
