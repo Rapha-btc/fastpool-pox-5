@@ -1,0 +1,350 @@
+{
+  "id": "c0b50c7a70a1d3304ecee08d179535ff",
+  "url": "https://stxer.xyz/simulations/mainnet/c0b50c7a70a1d3304ecee08d179535ff",
+  "forkBlock": 9219931,
+  "mid": "19381176934036",
+  "sourceHashes": {
+    "fastpool-swap-vault": "cf99c70254fd30cf5ae852e92488402a477ae3b3d2674980e2da7228ff5d0c53",
+    "signer-manager-vault-stx-rewards": "fa3d94741b4c9eeeaf7cd2c39513439a51a6247056155a19a584df2b76a7020c"
+  },
+  "passed": 56,
+  "total": 56,
+  "checks": [
+    {
+      "id": "S1",
+      "label": "deploy fastpool-swap-vault (repo bytes; market v6-4 + router v5-5 + trait-v2 are live)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "S2",
+      "label": "deploy signer-manager-vault-stx-rewards (repo bytes, admin = DEP)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "S3",
+      "label": "real sBTC holder funds pox-5 with the reward stand-in (fork only)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "S4",
+      "label": "FIXTURE: crystallized PoX rewards + 1:3 shares in pox-5",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "S5",
+      "label": "real pool claim-rewards stages the pot",
+      "passed": true,
+      "actual": "(ok u100000)"
+    },
+    {
+      "id": "S6",
+      "label": "real pool fund-swap-vault -> vault.fund (opens the batch clock)",
+      "passed": true,
+      "actual": "(ok u100000)"
+    },
+    {
+      "id": "L0",
+      "label": "fork clock is before the signed update",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "id": "C1",
+      "label": "get-config: maker-spread-bps defaults to u1, binds market v6-4 + router v5-5",
+      "passed": true,
+      "actual": "(tuple (dia-band-bps u1000) (last-router-swap u0) (leeway-bps u500) (maker-spread-bps u1) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4) (max-chunk-sats u1000000) (no-pyth-slippage-bps u1000) (pool SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.signer-manager-vault-stx-rewards) (pyth-fee-budget u0) (recovery-delay-blocks u432) (router SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-5) (router-cooldown-blocks u1) (slippage-bps u100) (window-blocks u288))"
+    },
+    {
+      "id": "C2",
+      "label": "stranger calls vault set-maker-spread-bps directly",
+      "passed": true,
+      "actual": "(err u16000)"
+    },
+    {
+      "id": "C3",
+      "label": "pool admin (DEP) calls vault set-maker-spread-bps directly: not the POOL contract",
+      "passed": true,
+      "actual": "(err u16000)"
+    },
+    {
+      "id": "C4",
+      "label": "stranger calls pool wrapper set-vault-maker-spread-bps",
+      "passed": true,
+      "actual": "(err u1001)"
+    },
+    {
+      "id": "C5",
+      "label": "admin wrapper above MAX_MAKER_SPREAD_BPS (u51)",
+      "passed": true,
+      "actual": "(err u16033)"
+    },
+    {
+      "id": "C6",
+      "label": "unchanged after the refusals",
+      "passed": true,
+      "actual": "u1"
+    },
+    {
+      "id": "C7",
+      "label": "admin wrapper at the bound (u50)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "C8",
+      "label": "get-config shows u50",
+      "passed": true,
+      "actual": "u50"
+    },
+    {
+      "id": "C9",
+      "label": "admin wrapper back to u1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "C10",
+      "label": "get-config shows u1",
+      "passed": true,
+      "actual": "u1"
+    },
+    {
+      "id": "L1",
+      "label": "live: jing-buy-stx-0 rests sBTC on X",
+      "passed": true,
+      "actual": "u10344"
+    },
+    {
+      "id": "L2",
+      "label": "live: its X order is pegged at spread (some u0)",
+      "passed": true,
+      "actual": "(tuple (limit u8008687824552) (set-at u1792103319) (spread-bps (some u0)))"
+    },
+    {
+      "id": "L3",
+      "label": "live: its ask at the update mid = the mid",
+      "passed": true,
+      "actual": "u19381176934036"
+    },
+    {
+      "id": "L4",
+      "label": "live: Y list non-empty (an X deposit goes pending)",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "id": "L5",
+      "label": "gate: an ask at mid + 1 bp would not take",
+      "passed": true,
+      "actual": "false"
+    },
+    {
+      "id": "V0",
+      "label": "vault funded: 100,000 sats, window open",
+      "passed": true,
+      "actual": "(tuple (clock (tuple (batch-start (some u971629)) (burn-height u971629) (ready-to-finish false) (window-elapsed false) (window-ends (some u971917)) (window-open true))) (sbtc u100000))"
+    },
+    {
+      "id": "P1",
+      "label": "stranger jing-place(update)",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"jing-place\") (payload (tuple (amount u100000) (floor u18412118087334)))))"
+    },
+    {
+      "id": "P2",
+      "label": "pending escrow carries spread-bps (some u1) (the var)",
+      "passed": true,
+      "actual": "(some (tuple (amount u100000) (limit u18412118087334) (spread-bps (some u1)) (submitted-at u1792105419)))"
+    },
+    {
+      "id": "P3",
+      "label": "keeper settle-token-x-deposit(vault, update)",
+      "passed": true,
+      "actual": "(ok u100000)"
+    },
+    {
+      "id": "P4",
+      "label": "settled as deposit-x, no pending-refund (not \"crossing\")",
+      "passed": true,
+      "actual": "(tuple (amount u100000) (cycle u0) (delta u100000) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (equity-x u100000) (event \"deposit-x\") (limit u18412118087334) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4) (parked none) (parked-amount u0) (parked-equity-x none) (readmitted u0) (spread-bps (some u1)) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))"
+    },
+    {
+      "id": "P5",
+      "label": "vault rests on X at spread (some u1)",
+      "passed": true,
+      "actual": "(tuple (dep u100000) (on true) (order (tuple (limit u18412118087334) (set-at u1792105419) (spread-bps (some u1)))))"
+    },
+    {
+      "id": "P6",
+      "label": "vault ask at the mid = mid * 10001 / 10000 (mid + 1 bp)",
+      "passed": true,
+      "actual": "u19383115051729"
+    },
+    {
+      "id": "P7",
+      "label": "next to it: buy-0 still rests at the mid",
+      "passed": true,
+      "actual": "(tuple (dep u10344) (px u19381176934036))"
+    },
+    {
+      "id": "G0",
+      "label": "buy-0 X depth before the taker",
+      "passed": true,
+      "actual": "u10344"
+    },
+    {
+      "id": "G1",
+      "label": "real STX holder swaps 20547889 uSTX for sBTC at limit = mid (eats buy-0 only)",
+      "passed": true,
+      "actual": "(ok (tuple (rebate-refunded u918) (token-x-received u10334) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u458986)))"
+    },
+    {
+      "id": "G2",
+      "label": "buy-0 X depth gone",
+      "passed": true,
+      "actual": "u0"
+    },
+    {
+      "id": "G3",
+      "label": "the vault was not touched by a limit-at-mid taker",
+      "passed": true,
+      "actual": "u100000"
+    },
+    {
+      "id": "G4",
+      "label": "real STX holder deposit-token-y 50 STX pegged at the mid (some u0), cap mid + 5%",
+      "passed": true,
+      "actual": "(ok u50000000)"
+    },
+    {
+      "id": "G5",
+      "label": "Y deposit is pending (X list non-empty)",
+      "passed": true,
+      "actual": "(some (tuple (amount u50000000) (limit u20350235780737) (spread-bps (some u0)) (submitted-at u1792105419)))"
+    },
+    {
+      "id": "G6",
+      "label": "keeper settle-token-y-deposit(holder, update)",
+      "passed": true,
+      "actual": "(ok u50000000)"
+    },
+    {
+      "id": "G7",
+      "label": "Y bid settled resting, not refunded",
+      "passed": true,
+      "actual": "(tuple (amount u50000000) (cycle u1) (delta u50000000) (depositor SP9BP4PN74CNR5XT7CMAMBPA0GWC9HMB69HVVV51) (equity-y u50000000) (event \"deposit-y\") (limit u20350235780737) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4) (parked none) (parked-amount u0) (parked-equity-y none) (readmitted u0) (spread-bps (some u0)) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))"
+    },
+    {
+      "id": "G8",
+      "label": "Y bid rests at the mid",
+      "passed": true,
+      "actual": "u19381176934036"
+    },
+    {
+      "id": "G9",
+      "label": "gist condition live: an ask AT the mid would take (crossing)",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "id": "G10",
+      "label": "the vault at mid + 1 bp would not take",
+      "passed": true,
+      "actual": "false"
+    },
+    {
+      "id": "R1",
+      "label": "admin pool.refloor-vault (var u1) -> pending",
+      "passed": true,
+      "actual": "(ok u18412118087334)"
+    },
+    {
+      "id": "R2",
+      "label": "keeper settle-token-x-limit(vault, update)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "R3",
+      "label": "no \"crossing\" refusal at the var",
+      "passed": true,
+      "actual": "(tuple (cycle u1) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"limit-x\") (limit u18412118087334) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4) (spread-bps (some u1)) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))"
+    },
+    {
+      "id": "R4",
+      "label": "order still (some u1), still resting all 100,000 sats",
+      "passed": true,
+      "actual": "(tuple (dep u100000) (order (tuple (limit u18412118087334) (set-at u1792105419) (spread-bps (some u1)))))"
+    },
+    {
+      "id": "R5",
+      "label": "admin wrapper sets maker-spread-bps u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "R6",
+      "label": "admin pool.refloor-vault (var u0) -> pending",
+      "passed": true,
+      "actual": "(ok u18412118087334)"
+    },
+    {
+      "id": "R7",
+      "label": "keeper settle-token-x-limit on the spread-0 refloor",
+      "passed": true,
+      "actual": "(ok false)"
+    },
+    {
+      "id": "R8",
+      "label": "spread-0 refloor refused \"crossing\" (the var is what the vault sends)",
+      "passed": true,
+      "actual": "(tuple (action \"limit\") (amount u0) (depositor SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (event \"settle-refused-x\") (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4) (price u19381176934036) (reason \"crossing\") (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2))"
+    },
+    {
+      "id": "R9",
+      "label": "order unchanged at (some u1), resting unchanged",
+      "passed": true,
+      "actual": "(tuple (dep u100000) (order (tuple (limit u18412118087334) (set-at u1792105419) (spread-bps (some u1)))))"
+    },
+    {
+      "id": "R10",
+      "label": "admin wrapper restores u1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "id": "R11",
+      "label": "get-config shows u1",
+      "passed": true,
+      "actual": "u1"
+    },
+    {
+      "id": "T0",
+      "label": "vault STX before",
+      "passed": true,
+      "actual": "u0"
+    },
+    {
+      "id": "T1",
+      "label": "second real STX holder swaps 10 STX for sBTC, limit mid + 1%",
+      "passed": true,
+      "actual": "(ok (tuple (rebate-refunded u5) (token-x-received u5143) (token-x-rolled u0) (token-y-received u0) (token-y-rolled u1612)))"
+    },
+    {
+      "id": "T2",
+      "label": "the walk matched the vault at mid + 1 bp",
+      "passed": true,
+      "actual": "(tuple (cycle u1) (event \"match\") (maker SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.fastpool-swap-vault) (market SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4) (mid u19381176934036) (price u19383115051729) (taker SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM) (token-x SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token) (token-y SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2) (x-traded u5148) (y-is-taker true) (y-traded u9978427))"
+    },
+    {
+      "id": "T3",
+      "label": "vault received STX from the fill",
+      "passed": true,
+      "actual": "u9988405"
+    }
+  ]
+}

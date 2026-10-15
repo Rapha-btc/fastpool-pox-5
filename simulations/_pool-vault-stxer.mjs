@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const workspace=resolve(dirname(fileURLToPath(import.meta.url)),'../..');
 let require=createRequire(resolve(workspace,'fastpool-pox-5/package.json'));
 try { require.resolve('stxer'); }
-catch { require=createRequire(resolve(workspace,'stacking-juice/stx-juice/package.json')); }
+catch { require=createRequire(resolve(workspace,'jing-contracts-v3/package.json')); } // no stxer here: use the sibling Jing checkout's
 const {SimulationBuilder,getSimulationResult}=require('stxer');
 const {Cl,ClarityVersion,deserializeCV,cvToString}=require('@stacks/transactions');
 const DEP='SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22';
@@ -99,7 +99,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  const vault=kind==='juice'?'juice-pool-swap-vault':'fastpool-swap-vault';
  const pid=`${DEP}.${pool}`,vid=`${DEP}.${vault}`;
  const SBTC='SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token';
- const MKT=`${DEP}.markets-sbtc-stx-jing-v6-3`;
+ const MKT=`${DEP}.markets-sbtc-stx-jing-v6-4`; // the market the vault binds (live)
  const WHALE='SM2RRFN4HXTS7EYP8MHHYKSTG118S3HKGDV8AB8M1';
  const ALICE=getAddressFromPrivateKey('7'.repeat(64)+'01','mainnet');
  const BOB=getAddressFromPrivateKey('8'.repeat(64)+'01','mainnet');
@@ -114,7 +114,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   return deserializeCV(body.result);
  };
  const cycle=Number((await read(POX,'current-pox-reward-cycle')).value)-1;
- const sellers={value:[]},buyers={value:[]}; // Fresh v6-3 books are empty.
+ const sellers={value:[]},buyers={value:[]}; // Live v6-4 book: only contract rungs rest, so nothing to cancel (the vault rests at mid + maker-spread-bps beside them).
  const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API,skipTracing: !process.env.STXER_TRACE}).useBlockHeight(tip.height).withSender(DEP);
  const plan=[],sourceHashes={};
  appendJingStack(builder,plan,sourceHashes);
@@ -152,6 +152,9 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   call(`fork cleanup existing ${side} maker ${who.slice(0,8)}`,MKT,`cancel-token-${side}-deposit`,[Cl.contractPrincipal(...(side==='x'?SBTC:'SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2').split('.')),Cl.stringAscii(side==='x'?'sbtc-token':'wstx')],ok,who);
  }
  call('real Jing maker placement',vid,'jing-place',[update],v=>ok(v)&&v.includes(`(amount u${FUND})`),STRANGER);
+ // Live book: the Y list is non-empty, so the placement goes pending; the keeper (DEP) settles it, as on mainnet.
+ call('keeper settles the vault placement (rests, no crossing refund)',MKT,'settle-token-x-deposit',[Cl.contractPrincipal(DEP,vault),update,Cl.contractPrincipal(...SBTC.split('.')),Cl.stringAscii('sbtc-token')],`(ok u${FUND})`,DEP);
+ ev('vault rests on X at mid + 1 bp (maker-spread-bps u1)',MKT,`(get-token-x-order '${vid})`,v=>v.includes('(spread-bps (some u1))'));
  call('router forbidden during patience',vid,'router-swap',[update],'(err u16031)',STRANGER);
  call('cannot finalize while reward is resting',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u16032)':'(err u16032)');
  if(profile==='maker') {
@@ -209,7 +212,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   checks.push({label:'payout replay does not transfer more STX',passed:checks[aliceAfter+3].actual===checks[aliceAfter].actual,actual:'compared Alice balance before/after replay'});
  }
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:FORK_BLOCK??tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Fresh exact v6-3 stack deployed; no old market state inherited'],checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:FORK_BLOCK??tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Live market v6-4 + router v5-5 + trait-v2 (deployed mainnet contracts, live book state inherited)'],checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-${profile}.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind} ${profile}: ${checks.filter(c=>!c.passed).length} lifecycle checks failed`);
  console.log(`${kind} ${profile}: ${checks.length}/${checks.length} lifecycle checks passed`);return report;
