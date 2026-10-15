@@ -764,6 +764,17 @@
   )
 )
 
+(define-public (set-vault-maker-spread-bps
+    (bps uint)
+    (vault <swap-vault-interface>)
+  )
+  (begin
+    (try! (assert-active-vault vault))
+    (try! (authorize-admin))
+    (contract-call? vault set-maker-spread-bps bps)
+  )
+)
+
 (define-public (jing-take
     (amount uint)
     (update (buff 8192))

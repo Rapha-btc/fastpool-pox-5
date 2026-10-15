@@ -90,6 +90,15 @@
 (define-constant MAX_PYTH_FEE_BUDGET u10000000) ;; 10 STX
 (define-data-var pyth-fee-budget uint u0)
 
+;; upper bound on the maker spread over mid for the resting sBTC ask
+(define-constant MAX_MAKER_SPREAD_BPS u50)
+
+;; spread over mid for the pegged sBTC ask (jing-place, jing-refloor). A
+;; spread-0 ask sits at exactly mid, so the market refunds it as crossing
+;; while a spread-0 pegged bid rests, and the tranche never rests. 1 bp
+;; keeps the ask strictly above every spread-0 bid.
+(define-data-var maker-spread-bps uint u1)
+
 (define-data-var window-blocks uint u288)
 (define-data-var leeway-bps uint u500)
 (define-data-var slippage-bps uint u100)
@@ -201,6 +210,19 @@
     (print {
       notification: "set-pyth-fee-budget",
       payload: { value: ustx },
+    })
+    (ok true)
+  )
+)
+
+(define-public (set-maker-spread-bps (bps uint))
+  (begin
+    (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
+    (asserts! (<= bps MAX_MAKER_SPREAD_BPS) ERR_OUT_OF_RANGE)
+    (var-set maker-spread-bps bps)
+    (print {
+      notification: "set-maker-spread-bps",
+      payload: { value: bps },
     })
     (ok true)
   )
@@ -378,7 +400,8 @@
     (asserts! (window-open) ERR_WINDOW_CLOSED)
     (try! (check-amount amount))
     (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC amount))
-      (try! (contract-call? JING_MARKET deposit-token-x amount floor (some u0)
+      (try! (contract-call? JING_MARKET deposit-token-x amount floor
+        (some (var-get maker-spread-bps))
         SBTC_TOKEN ASSET_SBTC
       ))
     ))
@@ -865,7 +888,9 @@
     )
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
     (try! (as-contract? ()
-      (try! (contract-call? JING_MARKET set-token-x-limit floor (some u0)))
+      (try! (contract-call? JING_MARKET set-token-x-limit floor
+        (some (var-get maker-spread-bps))
+      ))
     ))
     (print {
       notification: "jing-refloor",
@@ -887,6 +912,7 @@
     dia-band-bps: (var-get dia-band-bps),
     router-cooldown-blocks: (var-get router-cooldown-blocks),
     pyth-fee-budget: (var-get pyth-fee-budget),
+    maker-spread-bps: (var-get maker-spread-bps),
     last-router-swap: (var-get last-router-swap),
     market: JING_MARKET,
     router: JING_ROUTER,

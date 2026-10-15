@@ -68,6 +68,10 @@
     (uint)
     (response bool uint)
   )
+  (set-maker-spread-bps
+    (uint)
+    (response bool uint)
+  )
   (jing-take
     (uint (buff 8192))
     (

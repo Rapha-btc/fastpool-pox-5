@@ -31,7 +31,7 @@ const vaultFunctions = new Set([
   'fund-swap-vault', 'finalize-swap-vault', 'recover-swap-vault', 'refloor-vault',
   'set-vault-window-blocks', 'set-vault-leeway-bps', 'set-vault-slippage-bps',
   'set-vault-max-chunk-sats', 'set-vault-dia-band-bps', 'set-vault-router-cooldown',
-  'set-vault-pyth-fee-budget', 'set-vault-no-pyth-slippage-bps', 'jing-take', 'router-swap-split',
+  'set-vault-pyth-fee-budget', 'set-vault-no-pyth-slippage-bps', 'set-vault-maker-spread-bps', 'jing-take', 'router-swap-split',
   'router-swap-split-dia',
 ]);
 
@@ -105,6 +105,7 @@ for (const [fn, value, max] of [
   ['set-vault-router-cooldown', 2, 144],
   ['set-vault-pyth-fee-budget', 1000000, 10000000],
   ['set-vault-no-pyth-slippage-bps', 1200, 5000],
+  ['set-vault-maker-spread-bps', 7, 50],
 ]) {
   err(call(F, fn, [u(value)]), 1001);
   err(call(F, fn, [u(max + 1)], admin), 16033);
@@ -116,6 +117,8 @@ err(call(F, 'set-vault-max-chunk-sats', [u(0)], admin), 16033);
 ok(call(F, 'set-vault-pyth-fee-budget', [u(0)], admin));
 truthy(cvToString(read(FV, 'get-config')).includes('(leeway-bps u100)'));
 truthy(cvToString(read(FV, 'get-config')).includes('(no-pyth-slippage-bps u1200)'));
+truthy(cvToString(read(FV, 'get-config')).includes('(maker-spread-bps u7)'));
+ok(call(F, 'set-vault-maker-spread-bps', [u(1)], admin));
 ok(call(F, 'set-vault-leeway-bps', [u(500)], admin));
 ok(call(F, 'set-vault-slippage-bps', [u(100)], admin));
 ok(call(F, 'set-vault-dia-band-bps', [u(1000)], admin));
@@ -167,9 +170,17 @@ err(call(F, 'fund-swap-vault', [u(cycle)]), 1050);
 err(call(F, 'set-vault-window-blocks', [u(288)], admin), 16045);
 err(call(FV, 'finish', [], admin), 16000);
 ok(call(FV, 'jing-place', [update]));
+// The ask rests at mid + maker-spread-bps (default 1 bp, never spread 0); refloor applies the current value.
+const xSpread = () => read('v6-market', 'get-token-x-order', [cp(FV)]).value['spread-bps'].value.value;
+equal(xSpread(), 1n);
 err(call(F, 'refloor-vault', [update]), 1001);
 err(call(FV, 'jing-refloor', [update], admin), 16000);
+ok(call(F, 'set-vault-maker-spread-bps', [u(7)], admin));
 ok(call(F, 'refloor-vault', [update], admin));
+equal(xSpread(), 7n);
+ok(call(F, 'set-vault-maker-spread-bps', [u(1)], admin));
+ok(call(F, 'refloor-vault', [update], admin));
+equal(xSpread(), 1n);
 ok(call(F, 'set-vault-dia-band-bps', [u(0)], admin));
 ok(call(F, 'refloor-vault', [update], admin));
 ok(call(F, 'set-vault-dia-band-bps', [u(1000)], admin));
