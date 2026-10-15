@@ -15,8 +15,8 @@ JUICE = REPOS / "juicestx"
 FASTPOOL = REPOS / "fastpool-pox-5"
 
 EXPECTED = {
-    "fastpool-swap-vault.clar": "aaebf34b4f14044459db4857f9d7849355a4113f51f24afc3e00f3b98101fdac",
-    "signer-manager-vault-stx-rewards.clar": "4858dbc67c466cd8e7cd0a13bcff32cf0f8e2bc72830f5ee914f270a07d4a731",
+    "fastpool-swap-vault.clar": "cf99c70254fd30cf5ae852e92488402a477ae3b3d2674980e2da7228ff5d0c53",
+    "signer-manager-vault-stx-rewards.clar": "fa3d94741b4c9eeeaf7cd2c39513439a51a6247056155a19a584df2b76a7020c",
 }
 
 
@@ -40,8 +40,8 @@ def source_bytes(name: str) -> str:
 def transformed_contract(name: str, deployment_name: str) -> None:
     text = source_bytes(name)
     replacements = {
-        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-3": ".v6-market",
-        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-3": ".mock-router",
+        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4": ".v6-market",
+        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-5": ".mock-router",
         "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait": ".juice-swap-vault-trait.swap-vault-trait",
         ".signer-manager-vault-stx-rewards": ".fastpool-stx-vault-signer",
         "'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token": ".mock-ft",
@@ -122,17 +122,18 @@ def write_mock_pox() -> None:
 
 def write_market_fixture() -> None:
     # The CityCoins test market predates get-token-x-pending-deposit, which
-    # the deployed FastPool vault calls from its read-only status checks. Use
-    # the Jing router-v5-3 market build, generated from the final v6-3 source.
-    source = REPOS / "jing-contracts-v3" / "tests" / "rv" / ".build" / "router-v5-3" / "market.clar"
+    # the deployed FastPool vault calls from its read-only status checks.
+    # Generate the market straight from the Jing markets-sbtc-stx-jing-v6-4
+    # source the vault binds, with the same three dependency substitutions
+    # Jing's own RV build uses (trait + Lazer oracle/decoder).
+    source = REPOS / "jing-contracts-v3" / "contracts" / "markets-sbtc-stx-jing-v6-4.clar"
     if not source.is_file():
-        raise SystemExit(
-            "Missing current Jing market test fixture; run "
-            "`bash tests/rv/build.sh router-v5-3` in jing-contracts-v3 first"
-        )
+        raise SystemExit(f"Missing Jing market source: {source}")
     text = source.read_text()
     replacements = {
-        ".oracle": ".mock-lazer-oracle",
+        "'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.sip-010-trait-ft-standard.sip-010-trait": ".sip-010-trait.sip-010-trait",
+        "'SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8.pyth-lazer-oracle": ".mock-lazer-oracle",
+        "'SPMV5HDZ4EMB8XY7HAYT3XW0DF7DZ4E8XEG2J1T8.pyth-lazer-decoder-v1": ".mock-lazer-oracle",
         ".jing-ladder-v1": ".mock-jing-ladder",
         ".jing-core-v6": ".mock-jing-core",
         "(define-data-var token-x principal SAINT)": "(define-data-var token-x principal .mock-ft)",
@@ -142,7 +143,11 @@ def write_market_fixture() -> None:
         "(define-data-var feed-id-y uint u0)": "(define-data-var feed-id-y uint u45)",
     }
     for old, new in replacements.items():
+        if old not in text:
+            raise SystemExit(f"Jing market v6-4 source lacks {old!r}")
         text = text.replace(old, new)
+    if re.search(r"'S[PM][0-9A-Z]{20,}\.", text):
+        raise SystemExit("Jing market fixture has an unsubstituted mainnet principal")
     (OUT / "contracts" / "v6-market.clar").write_text(text)
 
 
