@@ -11,7 +11,7 @@ clarinet check --manifest-path tests/vault-stx/.build/fastpool-only/Clarinet.tom
 
 | Contract | Source commit | Pinned source SHA-256 |
 |---|---|---|
-| `fastpool-swap-vault` | `aa07e9c` | `cf99c70254fd30cf5ae852e92488402a477ae3b3d2674980e2da7228ff5d0c53` |
+| `fastpool-swap-vault` | uncommitted (v6-5 market, v5-6 router) | `405ac1cc71f4ca3d76cd6b6e69fc383ded4de45d3b97b614c76e6bf959587e0b` |
 | `signer-manager-vault-stx-rewards` | `aa07e9c` | `fa3d94741b4c9eeeaf7cd2c39513439a51a6247056155a19a584df2b76a7020c` |
 
 The fixture builder refuses to run if either FastPool production source has

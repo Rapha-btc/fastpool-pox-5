@@ -15,7 +15,7 @@ JUICE = REPOS / "juicestx"
 FASTPOOL = REPOS / "fastpool-pox-5"
 
 EXPECTED = {
-    "fastpool-swap-vault.clar": "cf99c70254fd30cf5ae852e92488402a477ae3b3d2674980e2da7228ff5d0c53",
+    "fastpool-swap-vault.clar": "405ac1cc71f4ca3d76cd6b6e69fc383ded4de45d3b97b614c76e6bf959587e0b",
     "signer-manager-vault-stx-rewards.clar": "fa3d94741b4c9eeeaf7cd2c39513439a51a6247056155a19a584df2b76a7020c",
 }
 
@@ -40,8 +40,8 @@ def source_bytes(name: str) -> str:
 def transformed_contract(name: str, deployment_name: str) -> None:
     text = source_bytes(name)
     replacements = {
-        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-4": ".v6-market",
-        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-5": ".mock-router",
+        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-5": ".v6-market",
+        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-6": ".mock-router",
         "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait": ".juice-swap-vault-trait.swap-vault-trait",
         ".signer-manager-vault-stx-rewards": ".fastpool-stx-vault-signer",
         "'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token": ".mock-ft",
@@ -123,10 +123,10 @@ def write_mock_pox() -> None:
 def write_market_fixture() -> None:
     # The CityCoins test market predates get-token-x-pending-deposit, which
     # the deployed FastPool vault calls from its read-only status checks.
-    # Generate the market straight from the Jing markets-sbtc-stx-jing-v6-4
+    # Generate the market straight from the Jing markets-sbtc-stx-jing-v6-5
     # source the vault binds, with the same three dependency substitutions
     # Jing's own RV build uses (trait + Lazer oracle/decoder).
-    source = REPOS / "jing-contracts-v3" / "contracts" / "markets-sbtc-stx-jing-v6-4.clar"
+    source = REPOS / "jing-contracts-v3" / "contracts" / "markets-sbtc-stx-jing-v6-5.clar"
     if not source.is_file():
         raise SystemExit(f"Missing Jing market source: {source}")
     text = source.read_text()
