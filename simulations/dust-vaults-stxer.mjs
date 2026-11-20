@@ -25,7 +25,7 @@ import { fileURLToPath } from 'node:url';
 const workspace = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 let require = createRequire(resolve(workspace, 'fastpool-pox-5/package.json'));
 try { require.resolve('stxer'); }
-catch { require = createRequire(resolve(workspace, 'stacking-juice/stx-juice/package.json')); }
+catch { require = createRequire(resolve(workspace, 'jing-contracts-v3/package.json')); } // no stxer here: use the sibling Jing checkout's
 const { SimulationBuilder, getSimulationResult } = require('stxer');
 const { Cl, ClarityVersion, deserializeCV, cvToString } = require('@stacks/transactions');
 
@@ -139,7 +139,9 @@ for(const v of VAULTS)for(const sats of LADDER){
  const row=m=>rows.find(r=>r.vault===v.key&&r.sats===sats&&r.measure===m);
  const swap=row('swap'),empty=row('empty'),balance=row('balance');
  const filled=swap.actual.startsWith('(ok');
- checks.push({label:`${v.key}/${sats}: accepted trade drains vault or refusal preserves funds`,actual:swap.actual+'; '+empty.actual+'; '+balance.actual,passed:(filled||swap.actual.startsWith('(err'))&&empty.actual===(filled||sats<=2?'true':'false')&&balance.actual===`u${filled?0:sats}`});
+ // An accepted trade may leave the router's rounding rest (reported as unsold); <= DUST_SATS of it reads empty.
+ const unsold=filled?BigInt(swap.actual.match(/\(unsold u(\d+)\)/)?.[1]??'-1'):BigInt(sats);
+ checks.push({label:`${v.key}/${sats}: accepted trade drains vault (to its unsold rest) or refusal preserves funds`,actual:swap.actual+'; '+empty.actual+'; '+balance.actual,passed:(filled||swap.actual.startsWith('(err'))&&unsold>=0n&&empty.actual===(unsold<=2n?'true':'false')&&balance.actual===`u${unsold}`});
 }
 writeFileSync(resolve(dir,'v6-3.json'),JSON.stringify({id,url:`https://stxer.xyz/simulations/mainnet/${id}`,forkBlock:FORK_BLOCK??tip.height,checks,fixtures:['Pool authority rebound in test copies; CityCoins DAO gate restricted to test sender','CityCoins receives a real token donation and an aged batch clock; treasury funding covered in main recovery matrix'],rows},null,2)+'\n');
 console.log(`${checks.filter(c=>c.passed).length}/${checks.length} checks green`);

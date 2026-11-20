@@ -4,14 +4,14 @@ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,CORE,LADDER,SBTC,WSTX,FORK_BLOCK} from './_jing-v6-3.mjs';
+import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,CORE,LADDER,SBTC,WSTX,FORK_BLOCK,SBTC_WHALE,STX_WHALE,JING_OWNER} from './_jing-v6-3.mjs';
 const {Cl,ClarityVersion,cvToString,deserializeCV,makeUnsignedContractDeploy,PostConditionMode,getAddressFromPrivateKey}=stacks;
 const {SimulationBuilder,getSimulationResult,submitSimulationSteps,callContract,getNonce,setSender}=stxer;
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const NODE=process.env.STACKS_API_URL||'http://77.42.3.101/stacks-api';
 const POX='SP000000000000000000002Q6VF78.pox-5',DAO='SP8A9HZ3PKST0S42VM9523Z9NV42SZ026V4K39WH';
 const TREASURY=DAO+'.ccd002-treasury-mia-rewards-v3',PROXY=DEP+'.sim-recovery-proposal';
-const WHALE='SP2C7BCAP2NH3EYWCCVHJ6K0DMZBXDFKQ56KR7QN2',STX_WHALE='SP9BP4PN74CNR5XT7CMAMBPA0GWC9HMB69HVVV51';
+const WHALE=SBTC_WHALE; // funded real holders from _jing-v6-3.mjs (SP9BP4PN... STX is empty at the tip)
 const stranger=getAddressFromPrivateKey('6'.repeat(64)+'01','mainnet'),cp=id=>Cl.principal(id),u=Cl.uint;
 const ok=s=>s.startsWith('(ok'),uint=s=>BigInt(s.slice(1)),FUND=100000n;
 const decode=r=>r.Eval?.Ok?cvToString(deserializeCV(r.Eval.Ok)):r.Transaction?.Ok&&!r.Transaction.Ok.vm_error&&!r.Transaction.Ok.post_condition_aborted?cvToString(deserializeCV(r.Transaction.Ok.result)):`ENGINE ${JSON.stringify(r)}`;
@@ -79,8 +79,10 @@ export async function runRecoveryMatrix(kind) {
    }
    if(shape==='pending')await oppositeBook();
    if(shape!=='none')await tx('jing-place creates requested inventory',vault,'jing-place',[update],ok,stranger);
+   // Live v6-5 Y book is non-empty, so a placement goes pending; for the resting shapes the keeper settles it (rests at mid + spread, no cross).
+   if(shape!=='none'&&shape!=='pending'&&(await ev('',MARKET,pending))!=='none')await tx('keeper settles the placement (rests)',MARKET,'settle-token-x-deposit',[cp(vault),update,cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${amount})`,stranger);
    if(shape==='parked'){
-    await tx('reserve 49 seats using public ladder setter',LADDER,'set-max-band-per-side',[u(49)],'(ok true)');await tx('sync reservation',MARKET,'sync-seat-count',[],'(ok u49)');
+    await tx('owner (multisig) reserves 49 seats on the ladder',LADDER,'set-max-band-per-side',[u(49)],'(ok true)',JING_OWNER);await tx('sync reservation',MARKET,'sync-seat-count',[],'(ok u49)');
     await tx('larger entrant submits for occupied seat',MARKET,'deposit-token-x',[u(amount*2n),u(mid/2n),Cl.none(),cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${amount*2n})`,WHALE);
     await tx('settle entrant and park incumbent',MARKET,'settle-token-x-deposit',[cp(WHALE),update,cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${amount*2n})`,stranger);
     await ev('vault is really parked',MARKET,parked,`u${amount}`);
@@ -98,8 +100,8 @@ export async function runRecoveryMatrix(kind) {
    else await tx('outsider cannot call emergency-recover directly',vault,'emergency-recover',[],'(err u16000)',stranger);
    await ev('fixture ages vault recovery clock',vault,`(begin (var-set batch-start (some (- burn-block-height u${city?288:433}))) true)`,'true');
    if(!city&&!juice)await ev('fixture ages pool recovery deadline',pool,`(map-set cycle-settlement u${cycle} (merge (get-settlement u${cycle}) {deadline:(- burn-block-height u1)}))`,'true');
-   if(mode==='market-paused')await tx('pause market',MARKET,'set-paused',[Cl.bool(true)],'(ok true)');
-   if(mode==='core-paused')await tx('pause core-v6',CORE,'pause',[],'(ok true)');
+   if(mode==='market-paused')await tx('operator (multisig) pauses market',MARKET,'set-paused',[Cl.bool(true)],'(ok true)',JING_OWNER);
+   if(mode==='core-paused')await tx('owner (multisig) pauses core-v6',CORE,'pause',[],'(ok true)',JING_OWNER);
    // No oracle update is fetched or supplied during recovery.
    const before=uint(await ev('',MARKET,balance(pool)));
    const out=city?await tx('reclaim with none',route==='dao'?PROXY:vault,route==='dao'?'reclaim':'jing-reclaim',route==='dao'?[]:[Cl.none()],ok,route==='dao'?DEP:stranger):await tx('pool invokes zero-argument vault emergency-recover',pool,juice?'emergency-recover':'recover-swap-vault',[cp(vault)],ok);
@@ -112,9 +114,9 @@ export async function runRecoveryMatrix(kind) {
     check('cancel reason and exact pending refund event',prints.join(' | '),s=>s.includes('(event "pending-refund-x")')&&s.includes('(reason "cancel")')&&s.includes(`(amount u${pendingAmount})`));}
    if(mode==='core-paused')await ev('recovery leaves core paused',CORE,'(var-get paused)','true');
    else {
-    if(mode==='market-paused'){await ev('recovery leaves market paused',MARKET,'(var-get paused)','true');await tx('unpause for next setup',MARKET,'set-paused',[Cl.bool(false)],'(ok true)');}
+    if(mode==='market-paused'){await ev('recovery leaves market paused',MARKET,'(var-get paused)','true');await tx('unpause for next setup',MARKET,'set-paused',[Cl.bool(false)],'(ok true)',JING_OWNER);}
     if(shape==='pending'||shape==='pending+resting')await tx('remove opposite seed',MARKET,'cancel-token-y-deposit',[cp(WSTX),Cl.stringAscii('wstx')],ok,STX_WHALE);
-    if(shape==='parked'){await tx('remove larger entrant',MARKET,'cancel-token-x-deposit',[cp(SBTC),Cl.stringAscii('sbtc-token')],ok,WHALE);await tx('restore reservation',LADDER,'set-max-band-per-side',[u(10)],'(ok true)');await tx('sync restored reservation',MARKET,'sync-seat-count',[],'(ok u10)');}
+    if(shape==='parked'){await tx('remove larger entrant',MARKET,'cancel-token-x-deposit',[cp(SBTC),Cl.stringAscii('sbtc-token')],ok,WHALE);await tx('restore reservation',LADDER,'set-max-band-per-side',[u(10)],'(ok true)',JING_OWNER);await tx('sync restored reservation',MARKET,'sync-seat-count',[],'(ok u10)');}
    }
   }
   reports.push({shape,route,sid,url:'https://stxer.xyz/simulations/mainnet/'+sid,checks:checks.length-beforeChecks});save();

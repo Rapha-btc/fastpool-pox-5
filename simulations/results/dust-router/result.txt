@@ -1,31 +1,31 @@
-pass1 54f0da53c3e44c7a63c0bd56be7726fb
-pass2 41a52fa17077912357a0ce7fe54b7575
-fork 9208654
-sources {"jing-core-v6":"973482e429cf7d9110847227fdc701443d8d9884b448dce5273579e23ea7fdff","jing-ladder-v1":"6a5e204d47d865047fcb7d80d97e57d13b23fc1bf843958323c8c7d0d10d0dd7","markets-sbtc-stx-jing-v6-3":"7b2f0f44fca1feaf1e8c30f195d0a639a3daf102db4f4c84060c8062132f5f4c","swap-router-sbtc-stx-jing-v5-3":"3e457866be8d4f6216e5e17fd87c9aa6fb2285a23909e7957a354c4af8e3b9b4","juice-swap-vault-trait-v2":"655b22cb792a8204699d8292803eee8364d15e0a32d827ebb85b9687c4a50657"}
-mid 19544501137792
-limit 17590051024012
+pass1 16988a4c6021414120e4bd3f15b39204
+pass2 6233fd59ca0aaccd2502e2958753f690
+fork 9525576
+sources {"juice-swap-vault-trait-v2":"65e6e81a3a29233606809786590834bf82f7f3dd66238150d514fd657af207de","juice-swap-vault-trait-v3":"ef997f7c8f014cc9074e918f448f70cf274d336e62e7caaddd908b9eb81bef9a","juice-swap-vault-trait-v3 (live, code-equal)":"69d079556c5fa7f0b6ea285a4b0c521b2525a4667bcedcb1614d67d41937c964","swap-router-sbtc-stx-jing-v6":"8325e0c5300b3c9b65dc6d89ba70c1f4067add9515640efd2ca325c32b4e7a84","swap-router-sbtc-stx-jing-v6 (live, code-equal)":"c213a264af2ab195ceb4733429ba56329ec404e6cdcbcbb2e68c8014441d4a96"}
+mid 23805000725036
+limit 21424500652532
 
      -  out=-  unsold=-
-        (ok u19544501137792)
+        (ok u23805000725036)
      1  out=u0  unsold=u1
-        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u1) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u1) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
      2  out=u0  unsold=u2
-        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u2) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-     3  out=u5854  unsold=u0
-        (ok (tuple (dlmm-in u3) (dlmm-out u5854) (jing-in u0) (jing-ok false) (jing-out u0) (out u5854) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  1000  out=u1939624  unsold=u0
-        (ok (tuple (dlmm-in u1000) (dlmm-out u1939624) (jing-in u0) (jing-ok false) (jing-out u0) (out u1939624) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  2000  out=u3877328  unsold=u0
-        (ok (tuple (dlmm-in u2000) (dlmm-out u3877328) (jing-in u0) (jing-ok false) (jing-out u0) (out u3877328) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  3000  out=u5815992  unsold=u0
-        (ok (tuple (dlmm-in u3000) (dlmm-out u5815992) (jing-in u0) (jing-ok false) (jing-out u0) (out u5815992) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  5000  out=u9693320  unsold=u0
-        (ok (tuple (dlmm-in u5000) (dlmm-out u9693320) (jing-in u0) (jing-ok false) (jing-out u0) (out u9693320) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  8000  out=u15491334  unsold=u0
-        (ok (tuple (dlmm-in u8000) (dlmm-out u15491334) (jing-in u0) (jing-ok false) (jing-out u0) (out u15491334) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  9000  out=u17408985  unsold=u0
-        (ok (tuple (dlmm-in u9000) (dlmm-out u17408985) (jing-in u0) (jing-ok false) (jing-out u0) (out u17408985) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
-  9500  out=u18363184  unsold=u0
-        (ok (tuple (dlmm-in u9500) (dlmm-out u18363184) (jing-in u0) (jing-ok false) (jing-out u0) (out u18363184) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
- 10000  out=u19301554  unsold=u0
-        (ok (tuple (dlmm-in u10000) (dlmm-out u19301554) (jing-in u0) (jing-ok false) (jing-out u0) (out u19301554) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0)))
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u0) (jing-ok false) (jing-out u0) (out u0) (unsold u2) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+     3  out=u7134  unsold=u0
+        (ok (tuple (dlmm-in u3) (dlmm-out u7134) (jing-in u0) (jing-ok false) (jing-out u0) (out u7134) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  1000  out=u2366343  unsold=u0
+        (ok (tuple (dlmm-in u1000) (dlmm-out u2366343) (jing-in u0) (jing-ok false) (jing-out u0) (out u2366343) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  2000  out=u4741975  unsold=u1
+        (ok (tuple (dlmm-in u0) (dlmm-out u0) (jing-in u1999) (jing-ok true) (jing-out u4737234) (out u4741975) (unsold u1) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  3000  out=u7109019  unsold=u0
+        (ok (tuple (dlmm-in u1282) (dlmm-out u3034627) (jing-in u1718) (jing-ok true) (jing-out u4070318) (out u7109019) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  5000  out=u11831716  unsold=u0
+        (ok (tuple (dlmm-in u5000) (dlmm-out u11831716) (jing-in u0) (jing-ok false) (jing-out u0) (out u11831716) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  8000  out=u18930745  unsold=u0
+        (ok (tuple (dlmm-in u8000) (dlmm-out u18930745) (jing-in u0) (jing-ok false) (jing-out u0) (out u18930745) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  9000  out=u21297089  unsold=u0
+        (ok (tuple (dlmm-in u9000) (dlmm-out u21297089) (jing-in u0) (jing-ok false) (jing-out u0) (out u21297089) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+  9500  out=u22481449  unsold=u0
+        (ok (tuple (dlmm-in u9500) (dlmm-out u22481449) (jing-in u0) (jing-ok false) (jing-out u0) (out u22481449) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))
+ 10000  out=u23663432  unsold=u0
+        (ok (tuple (dlmm-in u10000) (dlmm-out u23663432) (jing-in u0) (jing-ok false) (jing-out u0) (out u23663432) (unsold u0) (velar-in u0) (velar-out u0) (xyk-in u0) (xyk-out u0) (zest-in u0) (zest-out u0)))

@@ -30,7 +30,7 @@ DEPLOYER = "'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
 
 # mainnet dependencies -> local mocks (-v6-3 / -v5-3 ids before their prefixes)
 REPL = [
-    ("'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait", '.juice-swap-vault-trait-v2.swap-vault-trait'),
+    ("'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait", '.juice-swap-vault-trait-v3.swap-vault-trait'),
     ("'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-5", '.v6-market'),
     ("'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-6", '.mock-router'),
     ("'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v6", '.mock-router'),
@@ -90,7 +90,8 @@ o = sub1(o, '(define-data-var fee uint u0)', '(define-data-var fee uint u0)\n(de
 o = sub1(o, '(and (> (var-get fee) u0)', '(and (> (var-get fee) u0) (not (var-get free))')
 files['mock-lazer-oracle'] = o
 
-files['juice-swap-vault-trait-v2'] = (root / 'contracts/juice-swap-vault-trait-v2.clar').read_text()
+# the production trait for both contracts (zest leg in the split sales), real bytes
+files['juice-swap-vault-trait-v3'] = (root / 'contracts/juice-swap-vault-trait-v3.clar').read_text()
 
 # ---- production sources ------------------------------------------------------
 src = {
@@ -114,15 +115,6 @@ solo = sub1(vault, '(define-constant POOL .signer-manager-vault-stx-rewards)', f
 integ = vault
 
 signer = rewrite(text['signer'])
-# --trait-v3-shim: TEST-ONLY, same rewrite as tests/vault-stx/build-fastpool-fixtures.py
-# (router-v6 vault vs deployed juice-swap-vault-trait-v2): trait copy + signer's two
-# split wrappers take zest + zest-ticks. Production bytes untouched.
-TRAIT_V3_SHIM = '--trait-v3-shim' in sys.argv
-if TRAIT_V3_SHIM:
-    import importlib.util
-    spec = importlib.util.spec_from_file_location('fpfix', root / 'tests/vault-stx/build-fastpool-fixtures.py')
-    fpfix = importlib.util.module_from_spec(spec); spec.loader.exec_module(fpfix)
-    signer = fpfix.shim_signer(signer)
 # property suite: the test contract `.rv-props` is seeded as a second admin
 # next to the deployer (it drives admin entries from inside as-contract?,
 # where contract-caller == tx-sender == rv-props, as authorize-admin wants).
@@ -170,8 +162,6 @@ files['rv-props'] = (here / 'props.rv.clar').read_text()
 
 for n, s in files.items():
     (out / 'contracts' / f'{n}.clar').write_text(s)
-if TRAIT_V3_SHIM:
-    fpfix.shim_trait(out / 'contracts' / 'juice-swap-vault-trait-v2.clar')
 
 manifest = '[project]\nname = "fastpool-rv"\ntelemetry = false\ncache_dir = "./.cache"\n[repl.analysis]\npasses = []\n'
 for n in files:

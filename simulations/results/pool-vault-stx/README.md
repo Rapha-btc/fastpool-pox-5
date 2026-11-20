@@ -6,12 +6,13 @@ Signed BTC/STX Lazer updates came from the public Jing backend; no private Pyth 
 
 | Case | Passed | Simulation | Raw results |
 | --- | --- | --- | --- |
-| deployment-guards | 34/34 | [stxer](https://stxer.xyz/simulations/mainnet/4cd9e4be9cc725ab1c20ca159d50f0e0) | [fastpool-deployment-guards.json](fastpool-deployment-guards.json) |
-| maker | 36/36 | [stxer](https://stxer.xyz/simulations/mainnet/427ba446a62bf6bb018c04b67afafb02) | [fastpool-maker.json](fastpool-maker.json) |
-| liquidation | 42/42 | [stxer](https://stxer.xyz/simulations/mainnet/b2f4c5632f77a55153e194209d7bad09) | [fastpool-liquidation.json](fastpool-liquidation.json) |
+| deployment-guards | 33/33 | [stxer](https://stxer.xyz/simulations/mainnet/1fad3855b91485cd761acae804699dd7) | [fastpool-deployment-guards.json](fastpool-deployment-guards.json) |
+| maker | 30/30 | [stxer](https://stxer.xyz/simulations/mainnet/f4cc786919c8bc61122bcaba6a646ca8) | [fastpool-maker.json](fastpool-maker.json) |
+| liquidation | 45/45 | [stxer](https://stxer.xyz/simulations/mainnet/2ee5a37c2bca56223cc01b7f899ce95e) | [fastpool-liquidation.json](fastpool-liquidation.json) |
 
-The current trait-based FastPool contracts pass **112/112 checks** across these three forks (2026-10-13 rerun on trait v2 with the Pyth fee budget).
-The guard fork verifies exact-source Clarity 6 deployment, the shared vault trait v2 (fork-deployed first),
+The current FastPool contracts pass **108/108 checks** across these three forks (2026-11-19 rerun on live market v6-5 + router v6 + trait-v3;
+see `../../README-pool-vault-stx.md` for the full table, incl. a 35/35 guards run that fork-deploys router v6 + trait-v3 from exact repo bytes).
+The guard fork verifies exact-source Clarity 6 deployment, the shared vault trait v3, the trait-v3 split shapes (direct and wrapper refusals),
 active-vault arguments, authorization, and empty-state guards, and the Pyth fee budget setter
 (direct-call refusal, pool admin wrapper, active-vault check, 10 STX bound, `get-config`). The maker lifecycle explicitly
 closes the externally filled batch before finalization and verifies `ready-to-finish`.
@@ -19,7 +20,9 @@ closes the externally filled batch before finalization and verifies `ready-to-fi
 The lifecycle cases seed crystallized PoX rewards and 1:3 shares with fork-only `Eval` writes,
 then exercise pool claiming, vault conversion, return, pro-rata native STX payouts and replay protection.
 They do not exercise signer registration, STX lock admission, or reward calculation from new stakes.
-The router case uses one-second synthetic Bitcoin blocks to advance the full 288-block
+The router case sells one 50k chunk by `router-swap`, then 25k by `router-swap-split` and 25k by
+`router-swap-split-dia` (zest u0 + empty ticks; a Zest slice > 0 fails `u3002` since Zest pool u3 is absent), after the
+admin widens `slippage-bps` to 300 (live DLMM depth inside 1% was ~55k sats). It uses one-second synthetic Bitcoin blocks to advance the full 288-block
 patience window and the one-block cooldown while retaining a real signed update.
 The production 80-second freshness checks remain enabled. The maker case needs no block advance.
 Existing Jing makers were canceled only inside each fork; the maker case adds real-token depth

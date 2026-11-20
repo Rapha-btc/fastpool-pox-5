@@ -5,7 +5,7 @@
 //   l2  Nested Quinn L-2: MAX_WINDOW_BLOCKS 288 (289 refused)
 //   d6  Void Kael #6: a dust-only batch closes and finishes with 0 STX, next funding resumes
 //   d7  Void Kael #7: a 1-sat jing-place after a sell-out; close-batch still closes at once
-// Exact production vault + pool source, current Jing stack (JING_SRC). PoX earned-reward
+// Exact production vault + pool source on live market v6-5 + router v6 + trait-v3 (_jing-v6-3.mjs). PoX earned-reward
 // records and the elapsed patience clock are explicit Eval fixtures, as in the recovery matrix.
 //   pf  Pyth Lazer fee budget: fee u10 on the live oracle; the vault pays both verifies
 //       (refresh-mid and the market swap, bounty mv7dfb Super Orb): at budget 0 jing-take and
@@ -17,13 +17,13 @@ import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 import {resolve,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
-import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,SBTC,WSTX,FORK_BLOCK} from './_jing-v6-3.mjs';
+import {stacks,stxer,appendJingStack,fetchLazerUpdateAny,lazerFeedTimes,DEP,MARKET,SBTC,WSTX,FORK_BLOCK,SBTC_WHALE,STX_WHALE,JING_OWNER,ROUTER} from './_jing-v6-3.mjs';
 const {Cl,ClarityVersion,cvToString,deserializeCV,makeUnsignedContractDeploy,PostConditionMode,getAddressFromPrivateKey}=stacks;
 const {SimulationBuilder,getSimulationResult,submitSimulationSteps,callContract,getNonce,setSender}=stxer;
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const NODE=process.env.STACKS_API_URL||'http://77.42.3.101/stacks-api';
-const POX='SP000000000000000000002Q6VF78.pox-5',ROUTER=DEP+'.swap-router-sbtc-stx-jing-v5-3';
-const WHALE='SP2C7BCAP2NH3EYWCCVHJ6K0DMZBXDFKQ56KR7QN2',STX_WHALE='SP9BP4PN74CNR5XT7CMAMBPA0GWC9HMB69HVVV51';
+const POX='SP000000000000000000002Q6VF78.pox-5'; // ROUTER = swap-router-sbtc-stx-jing-v6 (the vault's router)
+const WHALE=SBTC_WHALE; // funded real holders from _jing-v6-3.mjs (SP9BP4PN... STX is empty at the tip)
 const VAULT=DEP+'.fastpool-swap-vault',POOL=DEP+'.signer-manager-vault-stx-rewards';
 const stranger=getAddressFromPrivateKey('6'.repeat(64)+'01','mainnet'),cp=id=>Cl.principal(id),u=Cl.uint;
 const ok=s=>s.startsWith('(ok'),uint=s=>BigInt(String(s).match(/u(\d+)/)?.[1]??'-1');
@@ -74,7 +74,8 @@ async function stxMaker(sats,mid,update){
  check('STX maker bid is live',await ev('',MARKET,`(get-token-y-deposit (get-current-cycle) '${STX_WHALE})`),v=>uint(v)>0n);
 }
 function routing(r){const s=prints(r,ROUTER).find(p=>p.includes('smart-swap-sbtc-for-stx'));check('router print present',s??'missing',v=>v!=='missing');
- const g=n=>field(s,n);return {jingCap:g('jing-cap'),dlmmCap:g('dlmm-cap'),xykCap:g('xyk-cap'),velarCap:g('velar-cap'),jingIn:g('jing-in'),dlmmIn:g('dlmm-in'),xykIn:g('xyk-in'),velarIn:g('velar-in'),unsold:g('unsold'),out:g('out'),min:uint(s.match(/\(min-stx-out u\d+\)/)?.[0]??'u0')};}
+ check('router v6 skips Zest (pool u3 absent): zest-in u0',s,v=>v.includes('(zest-in u0)'));
+ const g=n=>field(s,n);return {jingCap:g('jing-cap'),dlmmCap:g('dlmm-cap'),xykCap:g('xyk-cap'),velarCap:g('velar-cap'),jingIn:g('jing-in'),zestIn:g('zest-in'),dlmmIn:g('dlmm-in'),xykIn:g('xyk-in'),velarIn:g('velar-in'),unsold:g('unsold'),out:g('out'),min:uint(s.match(/\(min-stx-out u\d+\)/)?.[0]??'u0')};}
 const floorOut=(n,limit)=>n*limit/10000000000n;
 
 // ---------------------------------------------------------------- L-1
@@ -99,7 +100,7 @@ async function l1(){
  const cap1=rt1.jingCap+rt1.dlmmCap+rt1.xykCap+rt1.velarCap;
  check('call 1 capacity inside the floor (jing+dlmm+xyk+velar caps) is below the amount',`${rt1.jingCap}+${rt1.dlmmCap}+${rt1.xykCap}+${rt1.velarCap}=${cap1} < ${FUND}`,()=>cap1<FUND);
  check('call 1 unsold = amount - sold, sold <= capacity',`unsold ${unsold1}, sold ${sold1}, cap ${cap1}`,()=>unsold1===FUND-sold1&&sold1<=cap1);
- check('call 1 legs add up to what sold',`${rt1.jingIn}+${rt1.dlmmIn}+${rt1.xykIn}+${rt1.velarIn}=${sold1}, unsold ${rt1.unsold}`,()=>rt1.jingIn+rt1.dlmmIn+rt1.xykIn+rt1.velarIn===sold1&&rt1.unsold===unsold1);
+ check('call 1 legs add up to what sold',`${rt1.jingIn}+${rt1.zestIn}+${rt1.dlmmIn}+${rt1.xykIn}+${rt1.velarIn}=${sold1}, unsold ${rt1.unsold}`,()=>rt1.jingIn+rt1.zestIn+rt1.dlmmIn+rt1.xykIn+rt1.velarIn===sold1&&rt1.unsold===unsold1);
  check('call 1 book leg filled',String(rt1.jingIn),v=>rt1.jingIn>0n);
  check('call 1 sold more than ROUTER_SLACK_SATS',String(sold1),v=>sold1>8n);
  check('call 1 out meets floor-out(sold - 8)',`${out1} >= ${floorOut(sold1-8n,limit)}`,()=>out1>=floorOut(sold1-8n,limit));
@@ -117,7 +118,7 @@ async function l1(){
  const unsold2=field(r2.result,'unsold'),out2=field(r2.result,'out'),sold2=unsold1-unsold2,limit2=field(r2.result,'limit-price');const rt2=routing(r2);
  check('call 2 sold more than ROUTER_SLACK_SATS',String(sold2),()=>sold2>8n);
  check('call 2 out meets floor-out(sold - 8)',`${out2} >= ${floorOut(sold2-8n,limit2)}`,()=>out2>=floorOut(sold2-8n,limit2));
- check('call 2 legs add up',`${rt2.jingIn}+${rt2.dlmmIn}+${rt2.xykIn}+${rt2.velarIn}=${sold2}`,()=>rt2.jingIn+rt2.dlmmIn+rt2.xykIn+rt2.velarIn===sold2&&rt2.unsold===unsold2);
+ check('call 2 legs add up',`${rt2.jingIn}+${rt2.zestIn}+${rt2.dlmmIn}+${rt2.xykIn}+${rt2.velarIn}=${sold2}`,()=>rt2.jingIn+rt2.zestIn+rt2.dlmmIn+rt2.xykIn+rt2.velarIn===sold2&&rt2.unsold===unsold2);
  await ev('call 2: exact rest in the vault',MARKET,bal(VAULT),`u${unsold2}`);
  await ev('call 2: vault STX = out1 + out2',MARKET,`(stx-get-balance '${VAULT})`,`u${stx0+out1+out2}`);
  check('a rest is still held for the <= 8 sats case',String(unsold2),()=>unsold2>8n);
@@ -180,6 +181,9 @@ async function d7(){
  const done=await session('fastpool/#7 market dust after sell-out');
  const c=Number(uint(await ev('',POX,'(current-pox-reward-cycle)'))),FUND=100000n;
  const swapArgs=(A,mid,update)=>[u(A),u(mid*105n/100n),update,cp(SBTC),Cl.stringAscii('sbtc-token'),cp(WSTX),Cl.stringAscii('wstx'),Cl.bool(false)];
+ // Live v6-5 Y book is non-empty, so a vault placement goes pending: the keeper settles it (rests, no cross).
+ async function settleIfPending(label,update,sats){if((await ev('',MARKET,pending))!=='u0')await tx(label+': keeper settles the pending ask',MARKET,'settle-token-x-deposit',[cp(VAULT),update,cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${sats})`,DEP);}
+ async function settleWhale(label,update){if((await ev('',MARKET,`(get-token-x-pending-deposit '${WHALE})`))!=='none')await tx(label+': keeper settles the whale depth (rests behind the vault)',MARKET,'settle-token-x-deposit',[cp(WHALE),update,cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${FUND})`,DEP);}
  async function finalize(label){const stx=uint(await ev('',MARKET,`(stx-get-balance '${VAULT})`));const poolStx=uint(await ev('',MARKET,`(stx-get-balance '${POOL})`));
   await tx(label+': pool finalizes exactly the sale STX',POOL,'finalize-swap-vault',[cp(VAULT)],`(ok u${stx})`,stranger);
   await ev(label+': pool received exactly the sale STX',MARKET,`(- (stx-get-balance '${POOL}) u${poolStx})`,`u${stx}`);
@@ -189,8 +193,10 @@ async function d7(){
  await fundCycle(c-1,FUND);
  let {update,mid}=await fresh();
  await tx('batch 1: vault places its ask',VAULT,'jing-place',[update],v=>ok(v)&&v.includes(`(amount u${FUND})`),stranger);
+ await settleIfPending('batch 1',update,FUND);
  await ev('batch 1: ask is live',MARKET,live,`u${FUND}`);
  await tx('batch 1: real maker depth behind the vault ask',MARKET,'deposit-token-x',[u(FUND),u(mid*101n/100n),Cl.none(),cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${FUND})`,WHALE);
+ await settleWhale('batch 1',update);
  ({update,mid}=await fresh());
  await tx('batch 1: real STX taker buys the whole ask',MARKET,'swap',swapArgs(FUND*mid/10000000000n*150n/100n,mid,update),ok,STX_WHALE);
  await ev('batch 1: sold out, live 0',MARKET,live,'u0');
@@ -210,13 +216,15 @@ async function d7(){
  // At the production minimum (1,000 sats) the market refuses the 1-sat top-up, and a
  // settlement rolls any maker remainder under the minimum, so market dust of <= 2 sats
  // cannot form. The fix is defensive; to reach its branch the operator lowers the
- // market minimum to 1 sat with the market's public setter (fork only).
- await tx('operator lowers min-token-x-deposit to 1 sat',MARKET,'set-min-token-x-deposit',[u(1)],'(ok true)');
+ // market minimum to 1 sat with the market's operator setter (multisig, fork only).
+ await tx('operator (multisig) lowers min-token-x-deposit to 1 sat',MARKET,'set-min-token-x-deposit',[u(1)],'(ok true)',JING_OWNER);
  async function sellOut(label,cycle,expectHeld){
   await fundCycle(cycle,FUND);
   let {update,mid}=await fresh();
   await tx(label+': vault places its ask',VAULT,'jing-place',[update],v=>ok(v)&&v.includes(`(amount u${expectHeld})`),stranger);
+  await settleIfPending(label,update,expectHeld);
   await tx(label+': real maker depth behind the vault ask',MARKET,'deposit-token-x',[u(FUND),u(mid*101n/100n),Cl.none(),cp(SBTC),Cl.stringAscii('sbtc-token')],`(ok u${FUND})`,WHALE);
+  await settleWhale(label,update);
   ({update,mid}=await fresh());
   await tx(label+': real STX taker buys the whole ask',MARKET,'swap',swapArgs(FUND*mid/10000000000n*150n/100n,mid,update),ok,STX_WHALE);
   await ev(label+': sold out, market position 0',MARKET,`(+ ${live} ${parked} ${pending})`,'u0');
@@ -297,7 +305,7 @@ async function pf(){
  const held=await stxOf(VAULT);
  await tx('budget 0, STX held: admin jing-take aborts (u0, vault-mid with-stx allowance)',POOL,'jing-take',[u(CHUNK),update,cp(VAULT)],'(err u0)');
  await tx('budget 0, STX held: router-swap aborts (u0, vault-mid with-stx allowance)',VAULT,'router-swap',[update],'(err u0)',STX_WHALE);
- await tx('budget 0, STX held: admin router-swap-split (all Jing) aborts (u0, vault-mid with-stx allowance)',POOL,'router-swap-split',[u(CHUNK),u(CHUNK),u(0),u(0),u(0),update,cp(VAULT)],'(err u0)');
+ await tx('budget 0, STX held: admin router-swap-split (all Jing) aborts (u0, vault-mid with-stx allowance)',POOL,'router-swap-split',[u(CHUNK),u(CHUNK),u(0),Cl.list([]),u(0),u(0),u(0),update,cp(VAULT)],'(err u0)');
  await ev('budget 0: nothing sold',MARKET,bal(VAULT),`u${FUND}`);
  await ev('budget 0: vault STX unchanged',MARKET,`(stx-get-balance '${VAULT})`,`u${held}`);
  const setBudget=async(b)=>{const r=await tx(`admin sets pyth fee budget u${b}`,POOL,'set-vault-pyth-fee-budget',[u(b),cp(VAULT)],'(ok true)');

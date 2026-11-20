@@ -12,11 +12,11 @@
 //      balance for exact zero, so yes. The fix tests `<= DUST_SATS`, where
 //      DUST_SATS is deliberately the router's own ROUND_SLACK.
 //
-// All three vaults route through swap-router-sbtc-stx-jing-v5-3, so the router
-// half is proven once and applies to Juice, FastPool and ccd016 alike. The
+// Originally run on swap-router-sbtc-stx-jing-v5-3. Rerun 2026-11-19 on the
+// router the FastPool vault now binds, swap-router-sbtc-stx-jing-v6 (live since
+// block 9525511, or fork-deployed from repo bytes below it; _jing-v6-3.mjs), on
+// live market v6-5; Zest pool u3 is absent, so the router skips Zest. The
 // vault half deploys the fixed source beside an unfixed copy and compares.
-// The current Jing stack (core-v6, ladder-v1, market v6-3, router v5-3) is
-// deployed first from jing-contracts-v3 (JING_SRC), as in dust-vaults.
 //
 // Run: node simulations/dust-1sat-stxer.mjs
 import { createRequire } from 'node:module';
@@ -27,7 +27,7 @@ import { fileURLToPath } from 'node:url';
 const workspace = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 let require = createRequire(resolve(workspace, 'fastpool-pox-5/package.json'));
 try { require.resolve('stxer'); }
-catch { require = createRequire(resolve(workspace, 'stacking-juice/stx-juice/package.json')); }
+catch { require = createRequire(resolve(workspace, 'jing-contracts-v3/package.json')); } // no stxer here: use the sibling Jing checkout's
 const { SimulationBuilder, getSimulationResult } = require('stxer');
 const { Cl, ClarityVersion, deserializeCV, cvToString } = require('@stacks/transactions');
 

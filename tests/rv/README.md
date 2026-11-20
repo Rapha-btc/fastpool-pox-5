@@ -42,7 +42,7 @@ property suite runs as the deployer. Summaries land in `results/`.
 | `mock-router` | ADVERSARIAL router |
 | `mock-dia`, `mock-native` | DIA push oracle / RFQ native price |
 | `mock-pox`, `mock-signer-trait` | pox-5 surface, honest |
-| `juice-swap-vault-trait-v2` | copied from `contracts/` |
+| `juice-swap-vault-trait-v3` | copied from `contracts/` (real bytes; the `--trait-v3-shim` path is gone) |
 
 ### Test-only rewrites (generated copies only)
 
@@ -169,6 +169,26 @@ which `rv-props` does not call.
 The signer target runs few complete batches (finalize 1-2 per seed: most
 batches end in recovery past the 432-block deadline). The property suite
 covers the finalize path through the signer more than 100 times per seed.
+
+## Rerun on trait-v3 (2026-11-19)
+
+Vault `d1998f6b…` and signer `23d98cb6…` (`1b47851`), built on the real
+`contracts/juice-swap-vault-trait-v3.clar` with no shim, 300 runs, seed 20261119
+(`results/*-seed20261119.txt`):
+
+| suite | result |
+|---|---|
+| `signer` (invariant) | pass, 300 runs, 0 `rv-violation`, 0 runtime errors |
+| `vault` (solo, invariant) | **FAIL** `invariant-v-place-is-peg` after 59 tests (1 `rv-violation` print, counterexample `close-batch` by the deployer) |
+| `props` | **FAIL** `test-patience` `(err u57)` after 3 tests |
+
+Both failures are the same pre-existing harness expectation, not a contract
+bug: `common.rv.clar` (placement rule 10) and `props.rv.clar` (`test-patience`
+u57) still expect the placed order's `spread-bps` to be `(some u0)`, while the
+vault has placed at `(some maker-spread-bps)` (default `u1`) since the
+maker-spread change (bounty mv8wal). The stxer forks check the `(some u1)` peg on
+the live book. The expectations are left unchanged here; they reproduce the
+same failures the previous shimmed build showed.
 
 ## Harness sanity (mutants)
 

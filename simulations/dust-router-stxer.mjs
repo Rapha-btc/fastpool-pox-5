@@ -19,13 +19,13 @@ import { fileURLToPath } from 'node:url';
 const workspace = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 let require = createRequire(resolve(workspace, 'fastpool-pox-5/package.json'));
 try { require.resolve('stxer'); }
-catch { require = createRequire(resolve(workspace, 'stacking-juice/stx-juice/package.json')); }
+catch { require = createRequire(resolve(workspace, 'jing-contracts-v3/package.json')); } // no stxer here: use the sibling Jing checkout's
 const { SimulationBuilder, getSimulationResult } = require('stxer');
 const { Cl, deserializeCV, cvToString } = require('@stacks/transactions');
 
 const DEP = 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22';
-// The vault binds markets-sbtc-stx-jing-v6-3 + swap-router-sbtc-stx-jing-v5-3 (not on mainnet yet):
-// each pass deploys that stack on the fork from the jing-contracts-v3 sources (_jing-v6-3.mjs).
+// The vault binds markets-sbtc-stx-jing-v6-5 + swap-router-sbtc-stx-jing-v6 (both live since
+// 2026-11-19; below the router's publish height each pass fork-deploys it from repo bytes, _jing-v6-3.mjs).
 const { appendJingStack, MARKET, ROUTER, freshProofAfter } = await import('./_jing-v6-3.mjs');
 const NODE = process.env.STACKS_API_URL || 'http://77.42.3.101/stacks-api';
 const API = process.env.STXER_API_URL || 'https://api.stxer.xyz';

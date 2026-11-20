@@ -1,4 +1,4 @@
-import {appendJingStack,FORK_BLOCK} from './_jing-v6-3.mjs';
+import {appendJingStack,FORK_BLOCK,MARKET,ROUTER,SBTC_WHALE,STX_WHALE} from './_jing-v6-3.mjs';
 // Shared fork runner; exact production pool/vault sources are deployed unchanged.
 import { createRequire } from 'node:module';
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
@@ -34,6 +34,16 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
  const ev=(label,id,code,want)=>{builder.addEvalCode(id,code);plan.push({label,kind:'eval',want});};
  deploy(vault,vaultSource);deploy(pool,poolSource);
  ev('real PoX-5 cycle',POX,'(current-pox-reward-cycle)',v=>/^u\d+$/.test(v));
+ if(kind!=='juice') {
+  ev('vault binds market v6-5 + router v6',vid,'(get-config)',v=>v.includes(`(market ${MARKET})`)&&v.includes(`(router ${ROUTER})`));
+  ev('router v6 ZEST_POOL_ID = u3 (pool absent on mainnet)',ROUTER,'ZEST_POOL_ID','u3');
+  // trait-v3 split shapes: (amount jing zest zest-ticks dlmm xyk velar update) / (amount zest zest-ticks dlmm xyk velar)
+  call('outsider cannot router-swap-split (trait-v3 shape) on the vault',vid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update],'(err u16000)');
+  call('outsider cannot router-swap-split-dia (trait-v3 shape) on the vault',vid,'router-swap-split-dia',[Cl.uint(1),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0)],'(err u16000)');
+  call('outsider cannot use pool router-swap-split wrapper',pid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.contractPrincipal(DEP,vault)],'(err u1001)');
+  call('outsider cannot use pool router-swap-split-dia wrapper',pid,'router-swap-split-dia',[Cl.uint(1),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.contractPrincipal(DEP,vault)],'(err u1001)');
+  call('admin split before a batch is blocked (window not elapsed)',pid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.contractPrincipal(DEP,vault)],'(err u16031)',DEP);
+ }
  ev('vault clock initially clear',vid,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(window-open false)'));
  call('outsider cannot fund',vid,'fund',[Cl.uint(1)],'(err u16000)');
  call('outsider cannot finish or redirect STX',vid,'finish',[],'(err u16000)');
@@ -56,7 +66,7 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
   call('outsider cannot set vault pyth fee budget directly',vid,'set-pyth-fee-budget',[Cl.uint(10)],'(err u16000)');
   call('outsider cannot use pool pyth fee budget wrapper',pid,'set-vault-pyth-fee-budget',[Cl.uint(10),fv],'(err u1001)');
   builder.addContractDeploy({contract_name:'fastpool-swap-vault-alt',source_code:readFileSync(vaultSource,'utf8'),clarity_version:ClarityVersion.Clarity6});
-  plan.push({label:'deploy second copy of the vault (conforms to trait v2, not active)',kind:'deploy'});
+  plan.push({label:'deploy second copy of the vault (conforms to trait v3, not active)',kind:'deploy'});
   call('wrapper refuses a vault that is not the active one',pid,'set-vault-pyth-fee-budget',[Cl.uint(10),Cl.contractPrincipal(DEP,'fastpool-swap-vault-alt')],'(err u1055)',DEP);
   call('wrapper refuses budget above 10 STX',pid,'set-vault-pyth-fee-budget',[Cl.uint(10000001),fv],'(err u16033)',DEP);
   ev('budget unchanged after refusals',vid,'(get-config)',v=>v.includes('(pyth-fee-budget u0)'));
@@ -99,8 +109,8 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  const vault=kind==='juice'?'juice-pool-swap-vault':'fastpool-swap-vault';
  const pid=`${DEP}.${pool}`,vid=`${DEP}.${vault}`;
  const SBTC='SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token';
- const MKT=`${DEP}.markets-sbtc-stx-jing-v6-4`; // the market the vault binds (live)
- const WHALE='SM2RRFN4HXTS7EYP8MHHYKSTG118S3HKGDV8AB8M1';
+ const MKT=MARKET; // markets-sbtc-stx-jing-v6-5, the market the vault binds (live)
+ const WHALE=SBTC_WHALE; // funded real sBTC holder (SM2RRFN4... is empty at the tip)
  const ALICE=getAddressFromPrivateKey('7'.repeat(64)+'01','mainnet');
  const BOB=getAddressFromPrivateKey('8'.repeat(64)+'01','mainnet');
  const {fetchLazerUpdateAny}=await import(resolve(workspace,'jing-contracts-v3/simulations/_lazer.js'));
@@ -114,7 +124,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   return deserializeCV(body.result);
  };
  const cycle=Number((await read(POX,'current-pox-reward-cycle')).value)-1;
- const sellers={value:[]},buyers={value:[]}; // Live v6-4 book: only contract rungs rest, so nothing to cancel (the vault rests at mid + maker-spread-bps beside them).
+ const sellers={value:[]},buyers={value:[]}; // Live v6-5 book: only contract rungs rest, so nothing to cancel (the vault rests at mid + maker-spread-bps beside them).
  const builder=SimulationBuilder.new({stacksNodeAPI:NODE,apiEndpoint:API,skipTracing: !process.env.STXER_TRACE}).useBlockHeight(tip.height).withSender(DEP);
  const plan=[],sourceHashes={};
  appendJingStack(builder,plan,sourceHashes);
@@ -163,12 +173,18 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   const wstx=Cl.contractPrincipal('SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR','token-stx-v-1-2');
   call('additional real maker depth behind vault',MKT,'deposit-token-x',[Cl.uint(FUND),Cl.uint(mid*101n/100n),Cl.none(),update,Cl.contractPrincipal(sbtcAddress,sbtcName),Cl.stringAscii('sbtc-token')],`(ok u${FUND})`,WHALE);
   const take=BigInt(FUND)*mid/10000000000n*150n/100n;
-  call('real STX taker fills vault at verified oracle mid',MKT,'swap',[Cl.uint(take),Cl.uint(mid*105n/100n),update,Cl.contractPrincipal(sbtcAddress,sbtcName),Cl.stringAscii('sbtc-token'),wstx,Cl.stringAscii('wstx'),Cl.bool(false)],ok,'SP9BP4PN74CNR5XT7CMAMBPA0GWC9HMB69HVVV51');
+  call('real STX taker fills vault at verified oracle mid',MKT,'swap',[Cl.uint(take),Cl.uint(mid*105n/100n),update,Cl.contractPrincipal(sbtcAddress,sbtcName),Cl.stringAscii('sbtc-token'),wstx,Cl.stringAscii('wstx'),Cl.bool(false)],ok,STX_WHALE);
   ev('vault completely sold in patience phase',vid,'(is-empty)','true');
   call('close externally filled batch',vid,'close-batch',[],ok,STRANGER);
   ev('maker-filled batch ready to finish',vid,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(ready-to-finish true)'));
  } else {
  call('set chunk cap to preserve the two-chunk scenario',pid,'set-vault-max-chunk-sats',[Cl.uint(50000),Cl.contractPrincipal(DEP,vault)],'(ok true)');
+ // Live DLMM depth within 1% of the signed mid is ~55k sats at the 2026-11-19 tip, so the
+ // admin widens the Pyth floor to 3% (bound 10%) through the real pool wrapper.
+ if(kind!=='juice'){
+  call('admin widens vault slippage-bps to 300 (pool wrapper)',pid,'set-vault-slippage-bps',[Cl.uint(300),Cl.contractPrincipal(DEP,vault)],'(ok true)');
+  ev('vault reports slippage-bps u300',vid,'(get-config)',v=>v.includes('(slippage-bps u300)'));
+ }
  ev('fixture: patience clock elapsed without altering signed-feed freshness',vid,'(begin (var-set batch-start (some (- burn-block-height u288))) true)','true');
  ev('patience window elapsed',vid,'(get-clock)',v=>v.includes('(window-elapsed true)'));
  call('reclaim from real Jing market',vid,'jing-reclaim',[],v=>ok(v)&&v.includes(`(amount u${FUND})`),STRANGER);
@@ -178,8 +194,25 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  call('same-burn-block second sale rejected (u16044 cooldown)',vid,'router-swap',[update],'(err u16044)',STRANGER);
  call('cannot finalize a half-sold batch',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],kind==='juice'?'(err u16032)':'(err u16032)');
  advance(1);
+ if(kind==='juice'){
  call('real router: second reward chunk sells the remaining 50k',vid,'router-swap',[update],v=>ok(v)&&v.includes('(amount u50000)')&&v.includes('(unsold u0)'),STRANGER);
  ev('vault drained after two chunks',vid,'(is-empty)','true');
+ } else {
+ // Remaining 50k leaves through the admin trait-v3 splits on router v6. Zest pool u3
+ // is absent on mainnet: a Zest slice > 0 goes unsold and the total min-out fails u3002.
+ const fv=Cl.contractPrincipal(DEP,vault),H=25000,ticks=Cl.list([Cl.int(-1),Cl.int(-2),Cl.int(-3)]),none=Cl.list([]);
+ const split=(amt,zest,tk,dlmm)=>[Cl.uint(amt),Cl.uint(0),Cl.uint(zest),tk,Cl.uint(dlmm),Cl.uint(0),Cl.uint(0),update,fv];
+ const dia=(amt,zest,tk,dlmm)=>[Cl.uint(amt),Cl.uint(zest),tk,Cl.uint(dlmm),Cl.uint(0),Cl.uint(0),fv];
+ call('admin split: amount != jing+zest+dlmm+xyk+velar (zest counted) -> u16040',pid,'router-swap-split',split(H,1,none,H),'(err u16040)');
+ call('admin split with a Zest slice > 0 (pool u3 missing) -> router u3002',pid,'router-swap-split',split(H,H/2,ticks,H-H/2),'(err u3002)');
+ call('admin split 25k: zest u0 + empty ticks, dlmm leg (router v6)',pid,'router-swap-split',split(H,0,none,H),v=>ok(v)&&v.includes('(zest u0)')&&v.includes(`(amount u${H})`)&&v.includes('(unsold u0)'));
+ ev('25k remain after the split',vid,`(contract-call? '${SBTC} get-balance current-contract)`,`(ok u${H})`);
+ call('split shares the router cooldown (same-block router-swap u16044)',vid,'router-swap',[update],'(err u16044)',STRANGER);
+ advance(1);
+ call('admin split-dia with a Zest slice > 0 -> router u3002',pid,'router-swap-split-dia',dia(H,H/2,ticks,H-H/2),'(err u3002)');
+ call('admin split-dia 25k: zest u0 + empty ticks, dlmm leg',pid,'router-swap-split-dia',dia(H,0,none,H),v=>ok(v)&&v.includes('(zest u0)')&&v.includes(`(amount u${H})`)&&v.includes('(unsold u0)'));
+ ev('vault drained after chunk + two splits',vid,'(is-empty)','true');
+ }
  }
  const finalSlot=plan.length;
  call('attribute real native STX back to pool',pid,kind==='juice'?'finalize-swap':'finalize-swap-vault',kind==='juice'?[]:[Cl.contractPrincipal(DEP,vault)],v=>/^\(ok u[1-9]\d*\)$/.test(v));
@@ -212,7 +245,7 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
   checks.push({label:'payout replay does not transfer more STX',passed:checks[aliceAfter+3].actual===checks[aliceAfter].actual,actual:'compared Alice balance before/after replay'});
  }
  mkdirSync(resultDirectory,{recursive:true});
- const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:FORK_BLOCK??tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Live market v6-4 + router v5-5 + trait-v2 (deployed mainnet contracts, live book state inherited)'],checks,result};
+ const report={id,url:`https://stxer.xyz/simulations/mainnet/${id}`,kind,mode:`real-token-venue-${profile}`,block:FORK_BLOCK??tip.height,burn:tip.burn_block_height,proofTimestamp:proof.ts,productionSourcesUnmodified:true,sourceHashes,fixtures:['PoX earned rewards and 1:3 shares seeded with Eval; no STX lock admission tested',profile==='maker'?'maker fill completes without advancing burn blocks':'Vault funding clock aged by 288 blocks; one burn block advances for router cooldown; production freshness unchanged','Live market v6-5 (live book state inherited); router swap-router-sbtc-stx-jing-v6 + juice-swap-vault-trait-v3 fork-deployed from exact repo bytes (not on mainnet); Zest pool u3 absent so router skips Zest'],checks,result};
  writeFileSync(resolve(resultDirectory,`${kind}-${profile}.json`),JSON.stringify(report,null,2));
  if(checks.some(c=>!c.passed))throw new Error(`${kind} ${profile}: ${checks.filter(c=>!c.passed).length} lifecycle checks failed`);
  console.log(`${kind} ${profile}: ${checks.length}/${checks.length} lifecycle checks passed`);return report;

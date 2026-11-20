@@ -1,5 +1,7 @@
 # Fastpool: cancel-only recovery against Jing v6-3
 
+> 2026-11-19: the recovery matrix and vault-fixes were rerun on live market v6-5 + router v6 + trait-v3 (recovery **550/550**, vault-fixes **235/235**); see the last section of [README-pool-vault-stx.md](README-pool-vault-stx.md). The notes below are the v6-3 history.
+
 Verified 2026-09-23: **665/665 checks green** — recovery matrix **569/569**, existing regression suites **96/96**. No production contract edits; fork transactions only.
 
 ## Recovery matrix
