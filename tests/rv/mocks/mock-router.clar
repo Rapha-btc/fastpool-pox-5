@@ -1,4 +1,5 @@
-;; ADVERSARIAL mock of swap-router-sbtc-stx-jing-v5-3 for RV fuzzing of the
+;; ADVERSARIAL mock of swap-router-sbtc-stx-jing-v6 (was v5-3; v6 adds zest in
+;; amm-amounts / amm-mins and a trailing zest-route, ignored here) for RV fuzzing of the
 ;; fastpool swap vault. None of the real venues run in simnet. This mock
 ;; buys up to `fill-bps` of the offered sats at `quality-bps` of the mock
 ;; Lazer mid, paying from the STX it holds (wrappers fund it). It ignores the
@@ -39,7 +40,8 @@
 
 (define-public (swap-sbtc-for-stx (amount uint) (jing-amount uint) (limit-price uint)
     (update (optional (buff 8192))) (fallback (optional uint))
-    (amm-amounts { dlmm: uint, xyk: uint, velar: uint })
-    (amm-mins { dlmm: uint, xyk: uint, velar: uint })
-    (min-stx-out uint))
+    (amm-amounts { zest: uint, dlmm: uint, xyk: uint, velar: uint })
+    (amm-mins { zest: uint, dlmm: uint, xyk: uint, velar: uint })
+    (min-stx-out uint)
+    (zest-route { ticks: (list 32 int), price: uint }))
   (sell amount min-stx-out))

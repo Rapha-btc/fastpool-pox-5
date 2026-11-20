@@ -5,6 +5,7 @@ from hashlib import sha256
 from pathlib import Path
 import re
 import shutil
+import sys
 
 
 HERE = Path(__file__).resolve().parent
@@ -13,10 +14,17 @@ OUT = HERE / ".build" / "fastpool-only"
 CITYCOINS = REPOS / "citycoins-protocol"
 JUICE = REPOS / "juicestx"
 FASTPOOL = REPOS / "fastpool-pox-5"
+# --trait-v3-shim: TEST-ONLY. The router-v6 vault no longer matches the deployed
+# juice-swap-vault-trait-v2 (router-swap-split / -dia gained zest + zest-ticks and
+# a payload zest), so the trait copy and the signer's two wrappers are rewritten
+# in .build to the zest shape a trait-v3 + signer update would need. Production
+# trait / signer bytes are NOT changed; without the flag the build stays honest
+# and `clarinet check` fails on impl-trait.
+TRAIT_V3_SHIM = "--trait-v3-shim" in sys.argv
 
 EXPECTED = {
-    "fastpool-swap-vault.clar": "405ac1cc71f4ca3d76cd6b6e69fc383ded4de45d3b97b614c76e6bf959587e0b",
-    "signer-manager-vault-stx-rewards.clar": "fa3d94741b4c9eeeaf7cd2c39513439a51a6247056155a19a584df2b76a7020c",
+    "fastpool-swap-vault.clar": "d1998f6bf3ac3c8081dccd0d39b200c79970fcee546eebdd42d588b91139c492",
+    "signer-manager-vault-stx-rewards.clar": "23d98cb6964475cf2deded383ed005fd9cb8fe5be6f53f32f4f61f00f782b38e",
 }
 
 
@@ -42,7 +50,9 @@ def transformed_contract(name: str, deployment_name: str) -> None:
     replacements = {
         "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-5": ".v6-market",
         "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-6": ".mock-router",
+        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v6": ".mock-router",
         "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait": ".juice-swap-vault-trait.swap-vault-trait",
+        "'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait": ".juice-swap-vault-trait.swap-vault-trait",
         ".signer-manager-vault-stx-rewards": ".fastpool-stx-vault-signer",
         "'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token": ".mock-ft",
         "'SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2": ".mock-native",
@@ -54,7 +64,66 @@ def transformed_contract(name: str, deployment_name: str) -> None:
     }
     for old, new in replacements.items():
         text = text.replace(old, new)
+    if TRAIT_V3_SHIM and deployment_name == "fastpool-stx-vault-signer":
+        text = shim_signer(text)
     (OUT / "contracts" / f"{deployment_name}.clar").write_text(text)
+
+
+def sub_once(text: str, old: str, new: str, what: str) -> str:
+    if text.count(old) != 1:
+        raise SystemExit(f"trait-v3 shim: {what}: expected one match, got {text.count(old)}")
+    return text.replace(old, new)
+
+
+def shim_signer(text: str) -> str:
+    text = sub_once(text, """(define-public (router-swap-split
+    (amount uint)
+    (jing uint)
+    (dlmm uint)""", """(define-public (router-swap-split
+    (amount uint)
+    (jing uint)
+    (zest uint)
+    (zest-ticks (list 32 int))
+    (dlmm uint)""", "signer split params")
+    text = sub_once(text, "(contract-call? vault router-swap-split amount jing dlmm xyk velar",
+                    "(contract-call? vault router-swap-split amount jing zest zest-ticks dlmm xyk velar", "signer split call")
+    text = sub_once(text, """(define-public (router-swap-split-dia
+    (amount uint)
+    (dlmm uint)""", """(define-public (router-swap-split-dia
+    (amount uint)
+    (zest uint)
+    (zest-ticks (list 32 int))
+    (dlmm uint)""", "signer dia params")
+    return sub_once(text, "(contract-call? vault router-swap-split-dia amount dlmm xyk velar)",
+                    "(contract-call? vault router-swap-split-dia amount zest zest-ticks dlmm xyk velar)", "signer dia call")
+
+
+def shim_trait(path: Path) -> None:
+    text = path.read_text()
+    text = sub_once(text, """  (router-swap-split
+    (uint uint uint uint uint (buff 8192))""", """  (router-swap-split
+    (uint uint uint (list 32 int) uint uint uint (buff 8192))""", "trait split args")
+    text = sub_once(text, """        jing: uint,
+        dlmm: uint,""", """        jing: uint,
+        zest: uint,
+        dlmm: uint,""", "trait split payload")
+    text = sub_once(text, """  (router-swap-split-dia
+    (uint uint uint uint)
+    (
+      response       {
+      notification: (string-ascii 32),
+      payload: {
+        amount: uint,
+        dlmm: uint,""", """  (router-swap-split-dia
+    (uint uint (list 32 int) uint uint uint)
+    (
+      response       {
+      notification: (string-ascii 32),
+      payload: {
+        amount: uint,
+        zest: uint,
+        dlmm: uint,""", "trait dia")
+    path.write_text(text)
 
 
 def write_mock_pox() -> None:
@@ -257,10 +326,14 @@ def main() -> None:
     write_native_fixture()
     write_market_fixture()
     write_core_fixture((contracts / "v6-market.clar").read_text())
-    for name in ["mock-router", "mock-dia"]:
-        copy(CITYCOINS / "tests" / "rv" / f"{name}.clar", contracts / f"{name}.clar")
-    copy(JUICE / "contracts" / "pox-5" / "juice-swap-vault-trait-v2.clar",
+    copy(CITYCOINS / "tests" / "rv" / "mock-dia.clar", contracts / "mock-dia.clar")
+    # router v6 shape (zest leg) + last-call recorder; local, not the CityCoins v5 mock
+    copy(HERE / "fixtures" / "mock-router.clar", contracts / "mock-router.clar")
+    # trait-v3 (zest leg in the splits) is the production trait for this vault now
+    copy(FASTPOOL / "contracts" / "juice-swap-vault-trait-v3.clar",
          contracts / "juice-swap-vault-trait.clar")
+    if TRAIT_V3_SHIM:
+        shim_trait(contracts / "juice-swap-vault-trait.clar")
 
     (contracts / "mock-signer-trait.clar").write_text(
         "(define-trait signer-manager-trait ((validate-stake! "

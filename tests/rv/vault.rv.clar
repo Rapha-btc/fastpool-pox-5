@@ -45,16 +45,18 @@
 (define-public (rv-refloor) (jing-refloor 0x))
 (define-public (rv-take (raw uint)) (jing-take raw 0x))
 ;; one leg gets the whole chunk
+(define-private (rv-ticks (zest uint)) (if (> zest u0) (list -1 -2) (list)))
 (define-private (rv-legs (amount uint) (pick uint))
   { jing: (if (is-eq pick u0) amount u0), dlmm: (if (is-eq pick u1) amount u0),
-    xyk: (if (is-eq pick u2) amount u0), velar: (if (is-eq pick u3) amount u0) })
+    xyk: (if (is-eq pick u2) amount u0), velar: (if (is-eq pick u3) amount u0),
+    zest: (if (is-eq pick u4) amount u0) })
 (define-private (rv-chunk) (rv-min (sbtc-balance) (var-get max-chunk-sats)))
 (define-public (rv-split (pick uint))
-  (let ((a (rv-chunk)) (l (rv-legs a (mod pick u4))))
-    (router-swap-split a (get jing l) (get dlmm l) (get xyk l) (get velar l) 0x)))
+  (let ((a (rv-chunk)) (l (rv-legs a (mod pick u5))))
+    (router-swap-split a (get jing l) (get zest l) (rv-ticks (get zest l)) (get dlmm l) (get xyk l) (get velar l) 0x)))
 (define-public (rv-dia (pick uint))
-  (let ((a (rv-chunk)) (l (rv-legs a (+ u1 (mod pick u3)))))
-    (router-swap-split-dia a (get dlmm l) (get xyk l) (get velar l))))
+  (let ((a (rv-chunk)) (l (rv-legs a (+ u1 (mod pick u4)))))
+    (router-swap-split-dia a (get zest l) (rv-ticks (get zest l)) (get dlmm l) (get xyk l) (get velar l))))
 ;; pool configuration inside the caps (window only while idle)
 (define-public (rv-cfg (action uint) (raw uint))
   (let ((a (mod action u8)))

@@ -27,6 +27,9 @@ const FVN = 'fastpool-swap-vault-next';
 const cp = name => Cl.contractPrincipal(admin, name);
 const u = value => Cl.uint(value);
 const update = Cl.buffer(new Uint8Array());
+const zl = Cl.list([]);
+const TICKS = [-12, -13, -14];
+const ticks = Cl.list(TICKS.map(t => Cl.int(t)));
 const vaultFunctions = new Set([
   'fund-swap-vault', 'finalize-swap-vault', 'recover-swap-vault', 'refloor-vault',
   'set-vault-window-blocks', 'set-vault-leeway-bps', 'set-vault-slippage-bps',
@@ -83,8 +86,10 @@ err(call(FV, 'close-batch', [], admin), 16032);
 err(call(FV, 'set-max-chunk-sats', [u(1)], admin), 16000);
 err(call(FV, 'emergency-recover', [], admin), 16000);
 err(call(FV, 'jing-take', [u(1), update], admin), 16000);
-err(call(FV, 'router-swap-split', [u(1), u(1), u(0), u(0), u(0), update], admin), 16000);
-err(call(FV, 'router-swap-split-dia', [u(1), u(1), u(0), u(0)], admin), 16000);
+err(call(FV, 'router-swap-split', [u(1), u(1), u(0), zl, u(0), u(0), u(0), update], admin), 16000);
+err(call(FV, 'router-swap-split', [u(1), u(0), u(1), ticks, u(0), u(0), u(0), update], admin), 16000);
+err(call(FV, 'router-swap-split-dia', [u(1), u(0), zl, u(1), u(0), u(0)], admin), 16000);
+err(call(FV, 'router-swap-split-dia', [u(1), u(1), ticks, u(0), u(0), u(0)], admin), 16000);
 truthy(cvToString(read(F, 'get-pending-swap-vault')).includes('(vault none)'));
 equal(cvToString(read(F, 'get-vault-cycle')), 'none');
 equal(read(F, 'get-fees-bips').value, 0n);
@@ -344,35 +349,85 @@ err(call(F, 'register-self', [cp(F), signerKey, u(0), signerSig]), 1001);
 ok(call(F, 'register-self', [cp(F), signerKey, u(0), signerSig], admin));
 
 // Both split routers exercise the dedicated vault paths with matching totals.
-for (const [nextCycle, split] of [
-  [152, [0, 400000, 300000, 250000]],
-  [153, [0, 400000, 300000, 250000]],
-]) {
+// Router v6: each cycle sells twice, first with zest u0 + empty ticks (leg
+// skipped), then with a zest slice + ticks; the mock router records what the
+// vault forwarded (amounts, per-leg mins, min-out, zest-route).
+const MID = 32_000_000_000_000n;
+const SPLIT_LIMIT = MID * 9_900n / 10_000n; // floor-of: slippage-bps u100
+const VELAR_LIMIT = MID * (10_000n - 60n) / 10_000n;
+const floorOut = (amount, limit) => BigInt(amount) * limit / 10_000_000_000n;
+function lastSplit() {
+  const v = read('mock-router', 'get-last-split');
+  equal(v.type, 'some');
+  return v.value.value;
+}
+function forwarded(legs, mins, minOut, routeTicks) {
+  const last = lastSplit();
+  for (const k of ['zest', 'dlmm', 'xyk', 'velar']) {
+    equal(last.amounts.value[k].value, BigInt(legs[k]), `amounts.${k}`);
+    equal(last.mins.value[k].value, mins[k], `mins.${k}`);
+  }
+  equal(last['min-out'].value, minOut, 'min-out');
+  equal(cvToString(last.route.value.ticks), cvToString(Cl.list(routeTicks.map(t => Cl.int(t)))), 'route ticks');
+  equal(last.route.value.price.value, 0n, 'route price');
+}
+for (const nextCycle of [152, 153]) {
   ok(call('mock-pox', 'stake-test', [cp(F), Cl.principal(alice), u(nextCycle), u(1)]));
   ok(call('mock-pox', 'stake-test', [cp(F), Cl.principal(bob), u(nextCycle), u(3)]));
   ok(call(F, 'claim-rewards', [u(nextCycle)]));
   ok(call(F, 'fund-swap-vault', [u(nextCycle)]));
   if (nextCycle === 152) {
-    err(call(F, 'router-swap-split', [u(950000), u(0), u(400000), u(300000), u(250000), update], admin), 16031);
+    err(call(F, 'router-swap-split', [u(950000), u(0), u(0), zl, u(400000), u(300000), u(250000), update], admin), 16031);
   } else {
-    err(call(F, 'router-swap-split-dia', [u(950000), u(400000), u(300000), u(250000)], admin), 16031);
+    err(call(F, 'router-swap-split-dia', [u(950000), u(0), zl, u(400000), u(300000), u(250000)], admin), 16031);
   }
   sim.mineEmptyBurnBlocks(288);
   if (nextCycle === 152) {
-    err(call(F, 'router-swap-split', [u(950000), u(0), u(400000), u(300000), u(249999), update], admin), 16040);
-    err(call(F, 'router-swap-split', [u(0), u(0), u(0), u(0), u(0), update], admin), 16006);
-    err(call(F, 'router-swap-split', [u(960000), u(0), u(400000), u(300000), u(260000), update], admin), 16006);
-    err(call(F, 'router-swap-split', [u(1000001), u(0), u(400000), u(300000), u(300001), update], admin), 16039);
-    err(call(F, 'router-swap-split', [u(950000), u(split[0]), u(split[1]), u(split[2]), u(split[3]), update]), 1001);
-    ok(call(F, 'router-swap-split', [u(950000), u(split[0]), u(split[1]), u(split[2]), u(split[3]), update], admin));
+    err(call(F, 'router-swap-split', [u(950000), u(0), u(0), zl, u(400000), u(300000), u(249999), update], admin), 16040);
+    err(call(F, 'router-swap-split', [u(950000), u(0), u(1), ticks, u(400000), u(300000), u(250000), update], admin), 16040);
+    err(call(F, 'router-swap-split', [u(950000), u(0), u(950001), ticks, u(0), u(0), u(0), update], admin), 16040);
+    err(call(F, 'router-swap-split', [u(0), u(0), u(0), zl, u(0), u(0), u(0), update], admin), 16006);
+    err(call(F, 'router-swap-split', [u(960000), u(0), u(0), zl, u(400000), u(300000), u(260000), update], admin), 16006);
+    err(call(F, 'router-swap-split', [u(1000001), u(0), u(0), zl, u(400000), u(300000), u(300001), update], admin), 16039);
+    err(call(F, 'router-swap-split', [u(1000001), u(0), u(1000001), ticks, u(0), u(0), u(0), update], admin), 16039);
+    err(call(F, 'router-swap-split', [u(450000), u(0), u(0), zl, u(250000), u(200000), u(0), update]), 1001);
+    // zest u0 + empty ticks: the leg is skipped
+    let v = ok(call(F, 'router-swap-split', [u(450000), u(0), u(0), zl, u(250000), u(200000), u(0), update], admin));
+    equal(v.value.payload.value.zest.value, 0n);
+    forwarded({ zest: 0, dlmm: 250000, xyk: 200000, velar: 0 },
+      { zest: 0n, dlmm: floorOut(250000, SPLIT_LIMIT), xyk: floorOut(200000, SPLIT_LIMIT), velar: 0n },
+      floorOut(450000, SPLIT_LIMIT), []);
+    sim.mineEmptyBurnBlocks(1);
+    // zest slice + ticks: forwarded with its floor, inside min-out
+    v = ok(call(F, 'router-swap-split', [u(500000), u(0), u(200000), ticks, u(150000), u(100000), u(50000), update], admin));
+    equal(v.value.payload.value.zest.value, 200000n);
+    forwarded({ zest: 200000, dlmm: 150000, xyk: 100000, velar: 50000 },
+      { zest: floorOut(200000, SPLIT_LIMIT), dlmm: floorOut(150000, SPLIT_LIMIT), xyk: floorOut(100000, SPLIT_LIMIT), velar: floorOut(50000, VELAR_LIMIT) },
+      floorOut(450000, SPLIT_LIMIT) + floorOut(50000, VELAR_LIMIT), TICKS);
   } else {
     ok(call('mock-dia', 'set-stale', [Cl.bool(true)]));
     truthy(cvToString(read(FV, 'get-no-pyth-price')).includes('(source "native")'));
-    err(call(F, 'router-swap-split-dia', [u(950000), u(400000), u(300000), u(249999)], admin), 16040);
-    err(call(F, 'router-swap-split-dia', [u(0), u(0), u(0), u(0)], admin), 16006);
-    err(call(F, 'router-swap-split-dia', [u(1000001), u(400000), u(300000), u(300001)], admin), 16039);
-    err(call(F, 'router-swap-split-dia', [u(950000), u(400000), u(300000), u(250000)]), 1001);
-    ok(call(F, 'router-swap-split-dia', [u(950000), u(split[1]), u(split[2]), u(split[3])], admin));
+    err(call(F, 'router-swap-split-dia', [u(950000), u(0), zl, u(400000), u(300000), u(249999)], admin), 16040);
+    err(call(F, 'router-swap-split-dia', [u(950000), u(1), ticks, u(400000), u(300000), u(250000)], admin), 16040);
+    err(call(F, 'router-swap-split-dia', [u(950000), u(950001), ticks, u(0), u(0), u(0)], admin), 16040);
+    err(call(F, 'router-swap-split-dia', [u(0), u(0), zl, u(0), u(0), u(0)], admin), 16006);
+    err(call(F, 'router-swap-split-dia', [u(1000001), u(0), zl, u(400000), u(300000), u(300001)], admin), 16039);
+    err(call(F, 'router-swap-split-dia', [u(450000), u(0), zl, u(250000), u(200000), u(0)]), 1001);
+    let v = ok(call(F, 'router-swap-split-dia', [u(450000), u(0), zl, u(250000), u(200000), u(0)], admin));
+    equal(v.value.payload.value.zest.value, 0n);
+    // native-fallback limit (no-pyth slippage as configured above), from the payload
+    const NATIVE_LIMIT = v.value.payload.value['limit-price'].value;
+    truthy(NATIVE_LIMIT > 0n && NATIVE_LIMIT < MID);
+    forwarded({ zest: 0, dlmm: 250000, xyk: 200000, velar: 0 },
+      { zest: 0n, dlmm: floorOut(250000, NATIVE_LIMIT), xyk: floorOut(200000, NATIVE_LIMIT), velar: 0n },
+      floorOut(450000, NATIVE_LIMIT), []);
+    equal(lastSplit().jing.value, 0n);
+    sim.mineEmptyBurnBlocks(1);
+    v = ok(call(F, 'router-swap-split-dia', [u(500000), u(200000), ticks, u(150000), u(100000), u(50000)], admin));
+    equal(v.value.payload.value.zest.value, 200000n);
+    forwarded({ zest: 200000, dlmm: 150000, xyk: 100000, velar: 50000 },
+      { zest: floorOut(200000, NATIVE_LIMIT), dlmm: floorOut(150000, NATIVE_LIMIT), xyk: floorOut(100000, NATIVE_LIMIT), velar: floorOut(50000, NATIVE_LIMIT) },
+      floorOut(500000, NATIVE_LIMIT), TICKS);
     ok(call('mock-dia', 'set-stale', [Cl.bool(false)]));
   }
   equal(ok(call(F, 'finalize-swap-vault')).value, 3_040_000_000n);

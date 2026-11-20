@@ -1,10 +1,10 @@
 ;; The signer manager dispatches every vault call through
-;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait
+;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait
 ;; (signer-manager-vault-stx-rewards.clar:26). Declaring it here makes the
 ;; compiler prove conformance at check time instead of leaving a signature drift
 ;; to surface at runtime, after deploy, when the contract can no longer change.
 ;; The Juice vault has always declared its trait; this closes the gap.
-(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait)
+(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait)
 
 (define-constant ERR_RECOVERY_TOO_SOON (err u16046))
 (define-constant ERR_BUSY (err u16045))

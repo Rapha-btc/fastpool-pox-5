@@ -23,7 +23,7 @@
 
 (impl-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
 (use-trait signer-manager-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
-(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v2.swap-vault-trait)
+(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait)
 
 ;;; Errors
 
@@ -790,6 +790,8 @@
 (define-public (router-swap-split
     (amount uint)
     (jing uint)
+    (zest uint)
+    (zest-ticks (list 32 int))
     (dlmm uint)
     (xyk uint)
     (velar uint)
@@ -799,8 +801,8 @@
   (begin
     (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? vault router-swap-split amount jing dlmm xyk velar
-      update
+    (contract-call? vault router-swap-split amount jing zest zest-ticks dlmm xyk
+      velar update
     )
   )
 )
@@ -818,6 +820,8 @@
 
 (define-public (router-swap-split-dia
     (amount uint)
+    (zest uint)
+    (zest-ticks (list 32 int))
     (dlmm uint)
     (xyk uint)
     (velar uint)
@@ -826,7 +830,9 @@
   (begin
     (try! (assert-active-vault vault))
     (try! (authorize-admin))
-    (contract-call? vault router-swap-split-dia amount dlmm xyk velar)
+    (contract-call? vault router-swap-split-dia amount zest zest-ticks dlmm xyk
+      velar
+    )
   )
 )
 
