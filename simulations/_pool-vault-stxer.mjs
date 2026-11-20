@@ -38,11 +38,11 @@ export async function runPoolVaultFork({kind,poolSource,vaultSource,resultDirect
   ev('vault binds market v6-5 + router v6',vid,'(get-config)',v=>v.includes(`(market ${MARKET})`)&&v.includes(`(router ${ROUTER})`));
   ev('router v6 ZEST_POOL_ID = u3 (pool absent on mainnet)',ROUTER,'ZEST_POOL_ID','u3');
   // trait-v3 split shapes: (amount jing zest zest-ticks dlmm xyk velar update) / (amount zest zest-ticks dlmm xyk velar)
-  call('outsider cannot router-swap-split (trait-v3 shape) on the vault',vid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update],'(err u16000)');
-  call('outsider cannot router-swap-split-dia (trait-v3 shape) on the vault',vid,'router-swap-split-dia',[Cl.uint(1),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0)],'(err u16000)');
-  call('outsider cannot use pool router-swap-split wrapper',pid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.contractPrincipal(DEP,vault)],'(err u1001)');
-  call('outsider cannot use pool router-swap-split-dia wrapper',pid,'router-swap-split-dia',[Cl.uint(1),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.contractPrincipal(DEP,vault)],'(err u1001)');
-  call('admin split before a batch is blocked (window not elapsed)',pid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.contractPrincipal(DEP,vault)],'(err u16031)',DEP);
+  call('outsider cannot router-swap-split (trait-v4 shape) on the vault',vid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.none()],'(err u16000)');
+  call('outsider cannot router-swap-split-dia (trait-v4 shape) on the vault',vid,'router-swap-split-dia',[Cl.uint(1),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.none()],'(err u16000)');
+  call('outsider cannot use pool router-swap-split wrapper',pid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.none(),Cl.contractPrincipal(DEP,vault)],'(err u1001)');
+  call('outsider cannot use pool router-swap-split-dia wrapper',pid,'router-swap-split-dia',[Cl.uint(1),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.none(),Cl.contractPrincipal(DEP,vault)],'(err u1001)');
+  call('admin split before a batch is blocked (window not elapsed)',pid,'router-swap-split',[Cl.uint(1),Cl.uint(0),Cl.uint(0),Cl.list([]),Cl.uint(1),Cl.uint(0),Cl.uint(0),update,Cl.none(),Cl.contractPrincipal(DEP,vault)],'(err u16031)',DEP);
  }
  ev('vault clock initially clear',vid,'(get-clock)',v=>v.includes('(batch-start none)')&&v.includes('(window-open false)'));
  call('outsider cannot fund',vid,'fund',[Cl.uint(1)],'(err u16000)');
@@ -198,20 +198,25 @@ export async function runPoolVaultLifecycle({kind,poolSource,vaultSource,resultD
  call('real router: second reward chunk sells the remaining 50k',vid,'router-swap',[update],v=>ok(v)&&v.includes('(amount u50000)')&&v.includes('(unsold u0)'),STRANGER);
  ev('vault drained after two chunks',vid,'(is-empty)','true');
  } else {
- // Remaining 50k leaves through the admin trait-v3 splits on router v6. Zest pool u3
- // is absent on mainnet: a Zest slice > 0 goes unsold and the total min-out fails u3002.
- const fv=Cl.contractPrincipal(DEP,vault),H=25000,ticks=Cl.list([Cl.int(-1),Cl.int(-2),Cl.int(-3)]),none=Cl.list([]);
- const split=(amt,zest,tk,dlmm)=>[Cl.uint(amt),Cl.uint(0),Cl.uint(zest),tk,Cl.uint(dlmm),Cl.uint(0),Cl.uint(0),update,fv];
- const dia=(amt,zest,tk,dlmm)=>[Cl.uint(amt),Cl.uint(zest),tk,Cl.uint(dlmm),Cl.uint(0),Cl.uint(0),fv];
+ // Remaining 50k leaves through the admin trait-v4 splits on router v6 (bounty mwofjt42:
+ // the floor is checked on what sold, and `fallback` re-sells the Zest shortfall). Zest
+ // pool u3 is absent on mainnet, so any Zest slice fills 0: with fallback (some u1) it
+ // re-sells on DLMM, with none it stays in the vault as unsold (no more u3002 revert).
+ const fv=Cl.contractPrincipal(DEP,vault),H=25000,Q=H/2,ticks=Cl.list([Cl.int(-1),Cl.int(-2),Cl.int(-3)]),none=Cl.list([]);
+ const DLMM=Cl.some(Cl.uint(1)),NOFB=Cl.none();
+ const split=(amt,zest,tk,dlmm,fb=NOFB)=>[Cl.uint(amt),Cl.uint(0),Cl.uint(zest),tk,Cl.uint(dlmm),Cl.uint(0),Cl.uint(0),update,fb,fv];
+ const dia=(amt,zest,tk,dlmm,fb=NOFB)=>[Cl.uint(amt),Cl.uint(zest),tk,Cl.uint(dlmm),Cl.uint(0),Cl.uint(0),fb,fv];
  call('admin split: amount != jing+zest+dlmm+xyk+velar (zest counted) -> u16040',pid,'router-swap-split',split(H,1,none,H),'(err u16040)');
- call('admin split with a Zest slice > 0 (pool u3 missing) -> router u3002',pid,'router-swap-split',split(H,H/2,ticks,H-H/2),'(err u3002)');
- call('admin split 25k: zest u0 + empty ticks, dlmm leg (router v6)',pid,'router-swap-split',split(H,0,none,H),v=>ok(v)&&v.includes('(zest u0)')&&v.includes(`(amount u${H})`)&&v.includes('(unsold u0)'));
+ call('admin split: fallback u4 (Zest) refused by the router -> u3003',pid,'router-swap-split',split(H,Q,ticks,H-Q,Cl.some(Cl.uint(4))),'(err u3003)');
+ call('admin split 25k, Zest half unfilled (u3 missing), fallback DLMM: all sold',pid,'router-swap-split',split(H,Q,ticks,H-Q,DLMM),v=>ok(v)&&v.includes(`(amount u${H})`)&&v.includes('(unsold u0)'));
  ev('25k remain after the split',vid,`(contract-call? '${SBTC} get-balance current-contract)`,`(ok u${H})`);
  call('split shares the router cooldown (same-block router-swap u16044)',vid,'router-swap',[update],'(err u16044)',STRANGER);
  advance(1);
- call('admin split-dia with a Zest slice > 0 -> router u3002',pid,'router-swap-split-dia',dia(H,H/2,ticks,H-H/2),'(err u3002)');
- call('admin split-dia 25k: zest u0 + empty ticks, dlmm leg',pid,'router-swap-split-dia',dia(H,0,none,H),v=>ok(v)&&v.includes('(zest u0)')&&v.includes(`(amount u${H})`)&&v.includes('(unsold u0)'));
- ev('vault drained after chunk + two splits',vid,'(is-empty)','true');
+ call('admin split-dia 25k, Zest half unfilled, fallback none: ok, half kept unsold',pid,'router-swap-split-dia',dia(H,Q,ticks,H-Q),v=>ok(v)&&v.includes(`(amount u${H})`)&&v.includes(`(unsold u${Q})`));
+ ev('12.5k remain after the split-dia (the unsold Zest half)',vid,`(contract-call? '${SBTC} get-balance current-contract)`,`(ok u${Q})`);
+ advance(1);
+ call('admin split-dia 12.5k: zest u0 + empty ticks, dlmm leg',pid,'router-swap-split-dia',dia(Q,0,none,Q),v=>ok(v)&&v.includes('(zest u0)')&&v.includes(`(amount u${Q})`)&&v.includes('(unsold u0)'));
+ ev('vault drained after chunk + three splits',vid,'(is-empty)','true');
  }
  }
  const finalSlot=plan.length;

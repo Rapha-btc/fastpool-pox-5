@@ -22,6 +22,8 @@ export const JING_OWNER='SM1N7VX04M1TT23KD7YHVD6H6413QV2ZNJFTWVF9P';
 export const ROUTER_V6='swap-router-sbtc-stx-jing-v6',ROUTER=DEP+'.'+ROUTER_V6;
 export const ROUTER_V5_5=DEP+'.swap-router-sbtc-stx-jing-v5-5'; // live, bound by Juice autoswap v1
 export const TRAIT_V3='juice-swap-vault-trait-v3',TRAIT_V3_ID=DEP+'.'+TRAIT_V3;
+// trait-v4 = trait-v3 + a `fallback` venue on both splits (bounty mwofjt42); not live yet
+export const TRAIT_V4='juice-swap-vault-trait-v4',TRAIT_V4_ID=DEP+'.'+TRAIT_V4;
 export const SBTC='SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token',WSTX='SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.token-stx-v-1-2';
 // Real sBTC holder for fork-only funding (SM2RRFN4... is empty at the tip).
 export const SBTC_WHALE=process.env.SBTC_WHALE||'SP2C7BCAP2NH3EYWCCVHJ6K0DMZBXDFKQ56KR7QN2';
@@ -38,6 +40,9 @@ export function routerV6Source() {
  const source=readFileSync(file,'utf8'),hash=sha256(source);
  if(ROUTER_V6_SHA!=='skip'&&hash!==ROUTER_V6_SHA)throw new Error(`router v6 sha ${hash} != pinned ${ROUTER_V6_SHA} (${file})`);
  return source;
+}
+export function vaultTraitV4Source() {
+ return readFileSync(resolve(dirname(fileURLToPath(import.meta.url)),'../contracts/'+TRAIT_V4+'.clar'),'utf8');
 }
 export function vaultTraitV3Source() {
  return readFileSync(resolve(dirname(fileURLToPath(import.meta.url)),'../contracts/'+TRAIT_V3+'.clar'),'utf8');
@@ -57,8 +62,8 @@ async function liveContract(name,repoSource) {
  if(codeTokens(source)!==codeTokens(repoSource))throw new Error(`${name}: live code at ${DEP} (tx ${txid}) differs from repo bytes`);
  return {height,txid,sha256:sha256(source)};
 }
-const TRAIT_V3_SRC=vaultTraitV3Source(),ROUTER_V6_SRC=routerV6Source();
-export const LIVE={[TRAIT_V3]:await liveContract(TRAIT_V3,TRAIT_V3_SRC),[ROUTER_V6]:await liveContract(ROUTER_V6,ROUTER_V6_SRC)};
+const TRAIT_V3_SRC=vaultTraitV3Source(),TRAIT_V4_SRC=vaultTraitV4Source(),ROUTER_V6_SRC=routerV6Source();
+export const LIVE={[TRAIT_V3]:await liveContract(TRAIT_V3,TRAIT_V3_SRC),[TRAIT_V4]:await liveContract(TRAIT_V4,TRAIT_V4_SRC),[ROUTER_V6]:await liveContract(ROUTER_V6,ROUTER_V6_SRC)};
 const isLiveAt=(name,height)=>LIVE[name]&&(height===undefined||height>=LIVE[name].height);
 // Pushes one {label,kind:'deploy'} plan entry per fork deploy (trait-v3, then router v6).
 // forkHeight: the builder's useBlockHeight when FORK_BLOCK is unset (undefined = tip).
@@ -67,7 +72,7 @@ export function appendJingStack(builder,plan,sourceHashes={},forkHeight) {
  const height=FORK_BLOCK??forkHeight;
  sourceHashes['juice-swap-vault-trait-v2']=sha256(vaultTraitV2Source()); // live, not redeployed
  builder.withSender(DEP);
- for(const [name,source,version] of [[TRAIT_V3,TRAIT_V3_SRC,stacks.ClarityVersion.Clarity6],[ROUTER_V6,ROUTER_V6_SRC,stacks.ClarityVersion.Clarity5]]) {
+ for(const [name,source,version] of [[TRAIT_V3,TRAIT_V3_SRC,stacks.ClarityVersion.Clarity6],[TRAIT_V4,TRAIT_V4_SRC,stacks.ClarityVersion.Clarity6],[ROUTER_V6,ROUTER_V6_SRC,stacks.ClarityVersion.Clarity5]]) {
   sourceHashes[name]=sha256(source);
   if(isLiveAt(name,height)){sourceHashes[name+' (live, code-equal)']=LIVE[name].sha256;continue;}
   builder.addContractDeploy({contract_name:name,source_code:source,clarity_version:version});

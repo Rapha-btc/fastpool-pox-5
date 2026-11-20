@@ -23,7 +23,7 @@
 
 (impl-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
 (use-trait signer-manager-trait 'SP000000000000000000002Q6VF78.pox-5.signer-manager-trait)
-(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait)
+(use-trait swap-vault-interface 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v4.swap-vault-trait)
 
 ;;; Errors
 
@@ -796,13 +796,14 @@
     (xyk uint)
     (velar uint)
     (update (buff 8192))
+    (fallback (optional uint))
     (vault <swap-vault-interface>)
   )
   (begin
     (try! (assert-active-vault vault))
     (try! (authorize-admin))
     (contract-call? vault router-swap-split amount jing zest zest-ticks dlmm xyk
-      velar update
+      velar update fallback
     )
   )
 )
@@ -825,13 +826,14 @@
     (dlmm uint)
     (xyk uint)
     (velar uint)
+    (fallback (optional uint))
     (vault <swap-vault-interface>)
   )
   (begin
     (try! (assert-active-vault vault))
     (try! (authorize-admin))
     (contract-call? vault router-swap-split-dia amount zest zest-ticks dlmm xyk
-      velar
+      velar fallback
     )
   )
 )

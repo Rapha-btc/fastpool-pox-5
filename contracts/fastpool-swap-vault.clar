@@ -1,10 +1,10 @@
 ;; The signer manager dispatches every vault call through
-;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait
+;; 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v4.swap-vault-trait
 ;; (signer-manager-vault-stx-rewards.clar:26). Declaring it here makes the
 ;; compiler prove conformance at check time instead of leaving a signature drift
 ;; to surface at runtime, after deploy, when the contract can no longer change.
 ;; The Juice vault has always declared its trait; this closes the gap.
-(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v3.swap-vault-trait)
+(impl-trait 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.juice-swap-vault-trait-v4.swap-vault-trait)
 
 (define-constant ERR_RECOVERY_TOO_SOON (err u16046))
 (define-constant ERR_BUSY (err u16045))
@@ -541,6 +541,7 @@
     (xyk uint)
     (velar uint)
     (update (buff 8192))
+    (fallback (optional uint))
   )
   (let (
       (mid (try! (vault-mid update)))
@@ -565,17 +566,27 @@
           (with-stx (var-get pyth-fee-budget))
         )
         (try! (contract-call? JING_ROUTER swap-sbtc-for-stx amount jing limit
-          (some update) none {
+          (some update) fallback {
           zest: zest,
           dlmm: dlmm,
           xyk: xyk,
           velar: velar,
         }
           mins
-          (+ (floor-out (+ jing zest dlmm xyk) limit) (floor-out velar velar-limit))
+          (+ (floor-out (+ dlmm xyk) limit) (floor-out velar velar-limit))
           (zest-route zest-ticks)
         ))
       ))))
+      ;; the Jing and Zest legs may fill in part: the rest re-sells on `fallback`
+      ;; or, with none, stays unsold; the floor is checked on what sold
+      ;; (bounty mwofjt42)
+      (asserts!
+        (>= (get out result)
+          (+ (floor-out (- (+ jing zest dlmm xyk) (get unsold result)) limit)
+            (floor-out velar velar-limit)
+          ))
+        ERR_BELOW_FLOOR
+      )
       (close-if-empty)
       (ok (print {
         notification: "router-swap-split",
@@ -604,6 +615,7 @@
     (dlmm uint)
     (xyk uint)
     (velar uint)
+    (fallback (optional uint))
   )
   (begin
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
@@ -624,15 +636,20 @@
         )
         (let ((result (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC amount))
             (try! (contract-call? JING_ROUTER swap-sbtc-for-stx amount u0 limit none
-              none {
+              fallback {
               zest: zest,
               dlmm: dlmm,
               xyk: xyk,
               velar: velar,
             }
-              mins (floor-out amount limit) (zest-route zest-ticks)
+              mins (floor-out (- amount zest) limit) (zest-route zest-ticks)
             ))
           ))))
+          ;; a partial Zest fill re-sells on `fallback` or stays unsold: floor on what sold
+          (asserts!
+            (>= (get out result) (floor-out (- amount (get unsold result)) limit))
+            ERR_BELOW_FLOOR
+          )
           (close-if-empty)
           (ok (print {
             notification: "router-swap-split-dia",
