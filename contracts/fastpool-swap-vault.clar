@@ -453,6 +453,14 @@
   )
 )
 
+;; No update-age check here, on purpose. The market's taker rebate grows with
+;; the age of the update the caller passes: 20 bps up to 30 s old, +1 bp/s,
+;; capped at 70 bps (markets-sbtc-stx-jing-v6-5). The CityCoins vault rejects
+;; anything over 20 bps (bounty mw4761 H3, ERR_STALE_UPDATE). Here the swap is
+;; run by the pool's own keeper, which always sends a fresh update, so the
+;; check would only spend a market read. Accepted risk: a third party calling
+;; with an old update costs the vault at most 50 bps extra rebate on one chunk,
+;; once per router cooldown, and every leg still clears the oracle floor.
 (define-public (router-swap (update (buff 8192)))
   (let (
       ;; permissionless: always the whole balance or one full chunk, never a
