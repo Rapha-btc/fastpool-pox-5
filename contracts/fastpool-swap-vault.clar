@@ -50,7 +50,8 @@
 (define-constant ASSET_WSTX "wstx")
 
 (define-constant JING_MARKET 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-5)
-(define-constant JING_ROUTER 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v5-6)
+(define-constant JING_ROUTER 'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.swap-router-sbtc-stx-jing-v6)
+
 
 (define-constant RECOVERY_DELAY_BLOCKS u432)
 (define-constant MAX_DIA_AGE u7200)
@@ -511,9 +512,23 @@
   )
 )
 
+;; Zest leg of a split sale (router v6). Selling sBTC is Zest's y -> x, so the
+;; caller passes the ticks walking down from the market, as the FE does. The
+;; route price (Zest's min-price) is 0: the leg's floor is `amm-mins.zest`,
+;; floor-out of the same oracle limit as dlmm and xyk, and the router scales
+;; it to what Zest filled. zest u0 with an empty list skips the leg.
+(define-private (zest-route (ticks (list 32 int)))
+  {
+    ticks: ticks,
+    price: u0,
+  }
+)
+
 (define-public (router-swap-split
     (amount uint)
     (jing uint)
+    (zest uint)
+    (zest-ticks (list 32 int))
     (dlmm uint)
     (xyk uint)
     (velar uint)
@@ -524,6 +539,7 @@
       (limit (floor-of mid))
       (velar-limit (/ (* mid (- BPS_PRECISION VELAR_SLIPPAGE_BPS)) BPS_PRECISION))
       (mins {
+        zest: (floor-out zest limit),
         dlmm: (floor-out dlmm limit),
         xyk: (floor-out xyk limit),
         velar: (floor-out velar velar-limit),
@@ -531,7 +547,7 @@
       (market-mins (contract-call? JING_MARKET get-min-deposits))
     )
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
-    (asserts! (is-eq amount (+ jing dlmm xyk velar)) ERR_SPLIT_MISMATCH)
+    (asserts! (is-eq amount (+ jing zest dlmm xyk velar)) ERR_SPLIT_MISMATCH)
     (asserts! (window-elapsed) ERR_WINDOW_OPEN)
     (asserts! (<= amount (var-get max-chunk-sats)) ERR_CHUNK_TOO_BIG)
     (try! (check-amount amount))
@@ -542,12 +558,14 @@
         )
         (try! (contract-call? JING_ROUTER swap-sbtc-for-stx amount jing limit
           (some update) none {
+          zest: zest,
           dlmm: dlmm,
           xyk: xyk,
           velar: velar,
         }
           mins
-          (+ (floor-out (+ jing dlmm xyk) limit) (floor-out velar velar-limit))
+          (+ (floor-out (+ jing zest dlmm xyk) limit) (floor-out velar velar-limit))
+          (zest-route zest-ticks)
         ))
       ))))
       (close-if-empty)
@@ -556,6 +574,7 @@
         payload: {
           amount: amount,
           jing: jing,
+          zest: zest,
           dlmm: dlmm,
           xyk: xyk,
           velar: velar,
@@ -572,13 +591,15 @@
 
 (define-public (router-swap-split-dia
     (amount uint)
+    (zest uint)
+    (zest-ticks (list 32 int))
     (dlmm uint)
     (xyk uint)
     (velar uint)
   )
   (begin
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
-    (asserts! (is-eq amount (+ dlmm xyk velar)) ERR_SPLIT_MISMATCH)
+    (asserts! (is-eq amount (+ zest dlmm xyk velar)) ERR_SPLIT_MISMATCH)
     (asserts! (window-elapsed) ERR_WINDOW_OPEN)
     (asserts! (<= amount (var-get max-chunk-sats)) ERR_CHUNK_TOO_BIG)
     (try! (check-amount amount))
@@ -587,6 +608,7 @@
       (let (
           (limit (get limit price))
           (mins {
+            zest: (floor-out zest limit),
             dlmm: (floor-out dlmm limit),
             xyk: (floor-out xyk limit),
             velar: (floor-out velar limit),
@@ -595,11 +617,12 @@
         (let ((result (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC amount))
             (try! (contract-call? JING_ROUTER swap-sbtc-for-stx amount u0 limit none
               none {
+              zest: zest,
               dlmm: dlmm,
               xyk: xyk,
               velar: velar,
             }
-              mins (floor-out amount limit)
+              mins (floor-out amount limit) (zest-route zest-ticks)
             ))
           ))))
           (close-if-empty)
@@ -607,6 +630,7 @@
             notification: "router-swap-split-dia",
             payload: {
               amount: amount,
+              zest: zest,
               dlmm: dlmm,
               xyk: xyk,
               velar: velar,
