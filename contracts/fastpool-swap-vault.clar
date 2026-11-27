@@ -22,6 +22,7 @@
 (define-constant ERR_SOME_FUNDS (err u16043))
 (define-constant ERR_COOLDOWN (err u16044))
 (define-constant ERR_BELOW_FLOOR (err u16047))
+(define-constant ERR_NOTHING_SOLD (err u16050))
 (define-constant ERR_VAULT_ACTIVE (err u16049))
 ;; the router lets each leg land up to ROUND_SLACK (2) sats under the limit;
 ;; four legs at most (8), plus the Zest walk: up to 32 bins, each rounding up
@@ -560,7 +561,9 @@
       ))))
       ;; the Jing and Zest legs may fill in part: the rest re-sells on `fallback`
       ;; or, with none, stays unsold; the floor is checked on what sold
-      ;; (bounty mwofjt42)
+      ;; (bounty mwofjt42). A split that sold nothing fails, so it doesn't use
+      ;; up the router cooldown (bounty mwofjt42 #32, Rare Jett F-2).
+      (asserts! (> (- amount (get unsold result)) u0) ERR_NOTHING_SOLD)
       (asserts!
         (>= (get out result)
           (+ (floor-out (- (+ jing zest dlmm xyk) (get unsold result)) limit)
@@ -627,6 +630,7 @@
             ))
           ))))
           ;; a partial Zest fill re-sells on `fallback` or stays unsold: floor on what sold
+          (asserts! (> (- amount (get unsold result)) u0) ERR_NOTHING_SOLD)
           (asserts!
             (>= (get out result) (floor-out (- amount (get unsold result)) limit))
             ERR_BELOW_FLOOR
