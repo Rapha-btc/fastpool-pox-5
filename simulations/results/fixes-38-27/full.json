@@ -1,0 +1,226 @@
+{
+  "id": "201e0139a61d54cd4128cfb6176546db",
+  "url": "https://stxer.xyz/simulations/mainnet/201e0139a61d54cd4128cfb6176546db",
+  "mode": "full",
+  "net": "861879",
+  "forkBlock": 9589221,
+  "proofTs": 1795751569,
+  "bidUstx": "2000000000",
+  "checks": [
+    {
+      "label": "deploy swap-router-sbtc-stx-jing-v6-1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fixture: whale STX bid 2000000000 uSTX at mid + 5%",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "keeper settles the bid",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "deploy t27-pre",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy t27-fix",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy t38-pre",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy t38-fix",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#27 pre: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#27 pre: real sBTC to driver",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#27 pre: fund 863603",
+      "passed": true,
+      "actual": "(ok u863603)"
+    },
+    {
+      "label": "#27 fix: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#27 fix: real sBTC to driver",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#27 fix: fund 863603",
+      "passed": true,
+      "actual": "(ok u863603)"
+    },
+    {
+      "label": "#27 capacity seen by the vault taker",
+      "passed": true,
+      "actual": "(tuple (cap (tuple (gross-cap u862602) (mid-cap u859656) (min-taker u0) (net-cap u860880) (rebate-bps u20) (walk-cap u1224))) (mid u23265103101215))"
+    },
+    {
+      "label": "#27 pre: split all-jing 863603, fallback DLMM -> allowance abort (err u0)",
+      "passed": true,
+      "actual": "(err u0)"
+    },
+    {
+      "label": "#27 pre: sBTC untouched after the abort",
+      "passed": true,
+      "actual": "u863603"
+    },
+    {
+      "label": "#27 fix: same split on the same book -> ok, refund re-sold on DLMM",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap-split\") (payload (tuple (amount u863603) (dlmm u0) (jing u863603) (limit-price u23032452070202) (mid u23265103101215) (out u2003154002) (unsold u0) (velar u0) (velar-limit u23125512482607) (xyk u0) (zest u0)))))"
+    },
+    {
+      "label": "#27 fix: vault drained",
+      "passed": true,
+      "actual": "u0"
+    },
+    {
+      "label": "#38 pre: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#38 pre: chunk cap 20000",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#38 pre: real sBTC to driver",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#38 pre: fund 20050",
+      "passed": true,
+      "actual": "(ok u20050)"
+    },
+    {
+      "label": "#38 pre: router-swap sells one 20000 chunk",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u20000) (limit-price u23032452070202) (mid u23265103101215) (out u46204926) (unsold u0)))))"
+    },
+    {
+      "label": "#38 fix: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#38 fix: chunk cap 20000",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#38 fix: real sBTC to driver",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "#38 fix: fund 20050",
+      "passed": true,
+      "actual": "(ok u20050)"
+    },
+    {
+      "label": "#38 fix: router-swap sells one 20000 chunk",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u20000) (limit-price u23032452070202) (mid u23265103101215) (out u46204926) (unsold u0)))))"
+    },
+    {
+      "label": "advance 1 burn block",
+      "passed": true,
+      "actual": "ok"
+    },
+    {
+      "label": "#38 pre: leftover is 3..72 sats",
+      "passed": true,
+      "actual": "u50"
+    },
+    {
+      "label": "#38 pre: after the chunk the batch is still open",
+      "passed": true,
+      "actual": "(tuple (batch-start (some u977748)) (burn-height u977749) (ready-to-finish false) (window-elapsed true) (window-ends (some u977748)) (window-open false))"
+    },
+    {
+      "label": "#38 pre: router-swap on the leftover u16047 (unsellable)",
+      "passed": true,
+      "actual": "(err u16047)"
+    },
+    {
+      "label": "#38 pre: is-empty false",
+      "passed": true,
+      "actual": "false"
+    },
+    {
+      "label": "#38 pre: close-batch u16043 (not empty)",
+      "passed": true,
+      "actual": "(err u16043)"
+    },
+    {
+      "label": "#38 pre: finish u16032",
+      "passed": true,
+      "actual": "(err u16032)"
+    },
+    {
+      "label": "#38 pre: batch clock",
+      "passed": true,
+      "actual": "(tuple (batch-start (some u977748)) (burn-height u977749) (ready-to-finish false) (window-elapsed true) (window-ends (some u977748)) (window-open false))"
+    },
+    {
+      "label": "#38 fix: leftover is 3..72 sats",
+      "passed": true,
+      "actual": "u50"
+    },
+    {
+      "label": "#38 fix: after the chunk the batch is already closed (ready-to-finish)",
+      "passed": true,
+      "actual": "(tuple (batch-start none) (burn-height u977749) (ready-to-finish true) (window-elapsed false) (window-ends none) (window-open false))"
+    },
+    {
+      "label": "#38 fix: router-swap on the leftover u16031 (batch closed)",
+      "passed": true,
+      "actual": "(err u16031)"
+    },
+    {
+      "label": "#38 fix: is-empty true",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "label": "#38 fix: close-batch u16032 (already closed)",
+      "passed": true,
+      "actual": "(err u16032)"
+    },
+    {
+      "label": "#38 fix: finish ok",
+      "passed": true,
+      "actual": "(ok u46204926)"
+    },
+    {
+      "label": "#38 fix: batch clock",
+      "passed": true,
+      "actual": "(tuple (batch-start none) (burn-height u977749) (ready-to-finish false) (window-elapsed false) (window-ends none) (window-open false))"
+    }
+  ]
+}

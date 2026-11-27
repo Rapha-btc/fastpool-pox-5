@@ -25,6 +25,10 @@
 ;; the router lets each leg land up to ROUND_SLACK (2) sats under the limit;
 ;; four legs at most (8), plus the Zest walk: up to 32 bins, each rounding up
 ;; to 2 sats against the seller (64; bounty mwofjt42, Valiant Brio F-01)
+;; Also the dust line: sBTC transfers in are permissionless, and a leftover
+;; at or under the slack can't be sold (a router sale needs more), so it
+;; counts as empty and rides into the next batch instead of holding the
+;; batch open until the 432-block recovery (bounty mwofjt42 #38).
 (define-constant ROUTER_SLACK_SATS u72)
 (define-constant ERR_OUT_OF_RANGE (err u16033))
 (define-constant ERR_SPLIT_MISMATCH (err u16040))
@@ -33,16 +37,6 @@
 (define-constant PRICE_PRECISION u100000000)
 (define-constant DECIMAL_FACTOR u100)
 (define-constant BPS_PRECISION u10000)
-;; most rebate dust the market (markets-sbtc-stx-jing-v6-5) refunds: under
-;; 1 sat per rounding, 1 for net + 1 for the batch share + 49 walk fills.
-;; Router v5-3 sizes the book leg at the market's gross-cap, so the leg
-;; trades in full and only this rounding comes back.
-(define-constant JING_REBATE_DUST_SATS u51)
-;; the market's TAKER_REBATE_MAX_BPS (markets-sbtc-stx-jing-v6-5): the stale-feed
-;; ceiling of the taker rebate. The rebate on a sub-min rest the market
-;; refunds is never spent, so it comes back on top of the rounding dust:
-;; rem * bps / 10000 with rem < min-x and bps <= 70.
-(define-constant MAX_TAKER_REBATE_BPS u70)
 
 (define-constant POOL .signer-manager-vault-stx-rewards)
 (define-constant SBTC_TOKEN 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token)
@@ -63,13 +57,6 @@
 (define-constant MAX_SLIPPAGE_BPS u1000)
 (define-constant MAX_DIA_BAND_BPS u5000)
 (define-constant MAX_CHUNK_SATS u100000000)
-
-;; sBTC transfers in are permissionless, so anyone can leave a sat or two in the
-;; vault. Dust that small cannot be sold - every router stage skips it and the
-;; swap returns zero - so an exact-zero emptiness test would let a 1-sat gift
-;; hold a batch open until the 432-block recovery. Treat it as empty instead;
-;; it simply rides into the next batch.
-(define-constant DUST_SATS u2)
 
 (define-constant MAX_COOLDOWN_BLOCKS u144)
 
@@ -266,12 +253,12 @@
 
 ;; dust on the market (a 1-sat jing-place after the sell-out) would keep
 ;; is-empty false until the window ends: when wallet + market is at most
-;; DUST_SATS, cancel it home first (no oracle), so the batch closes now
+;; ROUTER_SLACK_SATS, cancel it home first (no oracle), so the batch closes now
 (define-public (close-batch)
   (let ((on-market (market-total)))
     (and
       (> on-market u0)
-      (<= (+ on-market (sbtc-balance)) DUST_SATS)
+      (<= (+ on-market (sbtc-balance)) ROUTER_SLACK_SATS)
       (is-ok (reclaim-core))
     )
     (asserts! (is-empty) ERR_SOME_FUNDS)
@@ -299,7 +286,7 @@
     )
     (asserts! (is-eq contract-caller POOL) ERR_UNAUTHORIZED)
     (asserts! (var-get ready-to-finish) ERR_NO_CLOCK)
-    ;; a dust-only batch (<= DUST_SATS, nothing sold) or balance <= reserve
+    ;; a dust-only batch (<= ROUTER_SLACK_SATS, nothing sold) or balance <= reserve
     ;; closes with 0 STX: a 0 transfer fails, so skip it
     (and
       (> amount u0)
@@ -475,22 +462,10 @@
     (try! (check-amount amount))
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
-        ;; the market refunds the unfilled rest (rem < min-x) and the unused
-        ;; rebate, and the router re-sells both: allow that on top of `amount`.
-        ;; Unused rebate < rem * b + 51.007 (b = bps / 10000 <= 0.007; under
-        ;; 1.007 sat from the net rounding, under 1 per floor: batch share plus
-        ;; at most 49 walk fills, the bid list holds 50). So rem + unused
-        ;; rebate < min-x * (1 + b) + 51.007, an integer, hence
-        ;; <= min-x + ceil(min-x * 70 / 10000) + 51.
-        ((with-ft SBTC_TOKEN ASSET_SBTC
-          (+ amount (get min-token-x mins) JING_REBATE_DUST_SATS
-            (/
-              (+ (* (get min-token-x mins) MAX_TAKER_REBATE_BPS)
-                (- BPS_PRECISION u1)
-              )
-              BPS_PRECISION
-            )
-          ))
+        ;; the market refunds the unfilled rest (under min-x), the rebate on it (at
+        ;; most 0.7% of min-x) and rebate rounding dust (at most 51 sats), and the
+        ;; router re-sells them: 2 x min-x covers it while min-x >= 52 (it is 1000)
+        ((with-ft SBTC_TOKEN ASSET_SBTC (+ amount (* u2 (get min-token-x mins))))
           (with-stx (var-get pyth-fee-budget))
         )
         (try! (contract-call? JING_ROUTER smart-swap-sbtc-for-stx amount limit
@@ -563,7 +538,11 @@
     (try! (check-amount amount))
     (try! (cooldown-tick))
     (let ((result (try! (as-contract?
-        ((with-ft SBTC_TOKEN ASSET_SBTC (+ amount (get min-token-x market-mins)))
+        ;; with a fallback the router re-sells the market's refund (unfilled
+        ;; rest < min-x, plus at most 0.7% of min-x and 51 sats of rebate),
+        ;; pulled from the vault again: 2 x min-x covers it (bounty mwofjt42 #27)
+        ((with-ft SBTC_TOKEN ASSET_SBTC
+          (+ amount (* u2 (get min-token-x market-mins))))
           (with-stx (var-get pyth-fee-budget))
         )
         (try! (contract-call? JING_ROUTER swap-sbtc-for-stx amount jing limit
@@ -905,7 +884,7 @@
       get-current-cycle
     )))
     (and
-      (<= (sbtc-balance) DUST_SATS)
+      (<= (sbtc-balance) ROUTER_SLACK_SATS)
       (is-eq
         (contract-call?
           'SPV9K21TBFAK4KNRJXF5DFP8N7W46G4V9RCJDC22.markets-sbtc-stx-jing-v6-5

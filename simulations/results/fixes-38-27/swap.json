@@ -1,0 +1,31 @@
+{
+  "id": "ff0749cb2e4f426d5f87d7cc2bdd93d5",
+  "url": "https://stxer.xyz/simulations/mainnet/ff0749cb2e4f426d5f87d7cc2bdd93d5",
+  "mode": "swap",
+  "net": "861879",
+  "forkBlock": 9589221,
+  "proofTs": 1795751569,
+  "bidUstx": "2000000000",
+  "checks": [
+    {
+      "label": "deploy swap-router-sbtc-stx-jing-v6-1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fixture: whale STX bid 2000000000 uSTX at mid + 5%",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "keeper settles the bid",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "whale taker swap gross 863603 (net 861879) at limit mid-1%: rem/left",
+      "passed": true,
+      "actual": "(ok (tuple (rebate-refunded u3) (token-x-received u0) (token-x-rolled u999) (token-y-received u2000839112) (token-y-rolled u0)))"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "d87d68fc5251cfec1541d8c9e6755b89",
+  "url": "https://stxer.xyz/simulations/mainnet/d87d68fc5251cfec1541d8c9e6755b89",
+  "mode": "cap",
+  "net": null,
+  "forkBlock": 9589221,
+  "proofTs": 1795751569,
+  "bidUstx": "2000000000",
+  "checks": [
+    {
+      "label": "deploy swap-router-sbtc-stx-jing-v6-1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fixture: whale STX bid 2000000000 uSTX at mid + 5%",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "keeper settles the bid",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "mid + taker capacity at the vault limit (mid - 100 bps)",
+      "passed": true,
+      "actual": "(tuple (cap (tuple (gross-cap u862602) (mid-cap u859656) (min-taker u0) (net-cap u860880) (rebate-bps u20) (walk-cap u1224))) (mid u23265103101215))"
+    }
+  ]
+}

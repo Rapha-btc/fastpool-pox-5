@@ -1,0 +1,201 @@
+{
+  "id": "e3ac37e3c45a2f79f18e2bc594e001b0",
+  "url": "https://stxer.xyz/simulations/mainnet/e3ac37e3c45a2f79f18e2bc594e001b0",
+  "mode": "mia",
+  "net": "861879",
+  "forkBlock": 9589221,
+  "proofTs": 1795751569,
+  "bidUstx": "2000000000",
+  "checks": [
+    {
+      "label": "deploy swap-router-sbtc-stx-jing-v6-1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fixture: whale STX bid 2000000000 uSTX at mid + 5%",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "keeper settles the bid",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "deploy ccd015-redemption-book-mia-stx",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy m27-pre",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy m27-fix",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy m38-pre",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "deploy m38-fix",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #27 pre: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #27 pre: real sBTC into the vault (863603)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #27 pre: fixture: batch clock opened one block ago",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "label": "MIA #27 fix: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #27 fix: real sBTC into the vault (863603)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #27 fix: fixture: batch clock opened one block ago",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "label": "MIA #27 pre: split all-jing 863603, fallback DLMM -> allowance abort (err u0)",
+      "passed": true,
+      "actual": "(err u0)"
+    },
+    {
+      "label": "MIA #27 pre: sBTC untouched after the abort",
+      "passed": true,
+      "actual": "u863603"
+    },
+    {
+      "label": "MIA #27 fix: same split on the same book -> ok",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap-split\") (payload (tuple (amount u863603) (dlmm u0) (jing u863603) (limit-price u23032452070202) (mid u23265103101215) (out u2003154002) (unsold u0) (velar u0) (velar-limit u23125512482607) (xyk u0) (zest u0)))))"
+    },
+    {
+      "label": "MIA #27 fix: vault drained",
+      "passed": true,
+      "actual": "u0"
+    },
+    {
+      "label": "MIA #38 pre: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #38 pre: real sBTC into the vault (20050)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #38 pre: fixture: batch clock opened one block ago",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "label": "MIA #38 pre: chunk cap 20000",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #38 pre: router-swap sells one 20000 chunk",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u20000) (limit-price u23032452070202) (mid u23265103101215) (out u46204926) (unsold u0)))))"
+    },
+    {
+      "label": "MIA #38 fix: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #38 fix: real sBTC into the vault (20050)",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #38 fix: fixture: batch clock opened one block ago",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "label": "MIA #38 fix: chunk cap 20000",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "MIA #38 fix: router-swap sells one 20000 chunk",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u20000) (limit-price u23032452070202) (mid u23265103101215) (out u46204926) (unsold u0)))))"
+    },
+    {
+      "label": "advance 1 burn block",
+      "passed": true,
+      "actual": "ok"
+    },
+    {
+      "label": "MIA #38 pre: leftover is 3..72 sats",
+      "passed": true,
+      "actual": "u50"
+    },
+    {
+      "label": "MIA #38 pre: leftover cannot be sold (u16047)",
+      "passed": true,
+      "actual": "(err u16047)"
+    },
+    {
+      "label": "MIA #38 pre: is-empty false",
+      "passed": true,
+      "actual": "false"
+    },
+    {
+      "label": "MIA #38 pre: close-batch u16043 (not empty)",
+      "passed": true,
+      "actual": "(err u16043)"
+    },
+    {
+      "label": "MIA #38 pre: batch clock still set",
+      "passed": true,
+      "actual": "(some u977747)"
+    },
+    {
+      "label": "MIA #38 fix: leftover is 3..72 sats",
+      "passed": true,
+      "actual": "u50"
+    },
+    {
+      "label": "MIA #38 fix: is-empty true",
+      "passed": true,
+      "actual": "true"
+    },
+    {
+      "label": "MIA #38 fix: close-batch u16032 (already closed by the sale)",
+      "passed": true,
+      "actual": "(err u16032)"
+    },
+    {
+      "label": "MIA #38 fix: batch clock cleared",
+      "passed": true,
+      "actual": "none"
+    }
+  ]
+}

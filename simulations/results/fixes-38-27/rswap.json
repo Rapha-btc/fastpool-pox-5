@@ -1,0 +1,61 @@
+{
+  "id": "c13cf0da8ff45ecc1cc9cf3cc0b6f063",
+  "url": "https://stxer.xyz/simulations/mainnet/c13cf0da8ff45ecc1cc9cf3cc0b6f063",
+  "mode": "rswap",
+  "net": "861879",
+  "forkBlock": 9589221,
+  "proofTs": 1795751569,
+  "bidUstx": "2000000000",
+  "checks": [
+    {
+      "label": "deploy swap-router-sbtc-stx-jing-v6-1",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "fixture: whale STX bid 2000000000 uSTX at mid + 5%",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "keeper settles the bid",
+      "passed": true,
+      "actual": "(ok u2000000000)"
+    },
+    {
+      "label": "deploy trs-fix",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "rswap fix: window u0",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "rswap fix: real sBTC to driver",
+      "passed": true,
+      "actual": "(ok true)"
+    },
+    {
+      "label": "rswap fix: fund 863603",
+      "passed": true,
+      "actual": "(ok u863603)"
+    },
+    {
+      "label": "rswap fix: router-swap 863603 (smart swap, Jing leg first) -> ok",
+      "passed": true,
+      "actual": "(ok (tuple (notification \"router-swap\") (payload (tuple (amount u863603) (limit-price u23032452070202) (mid u23265103101215) (out u2003154002) (unsold u0)))))"
+    },
+    {
+      "label": "rswap fix: what is left in the vault",
+      "passed": true,
+      "actual": "u0"
+    },
+    {
+      "label": "rswap fix: bid left resting (STX not taken by Jing)",
+      "passed": true,
+      "actual": "u0"
+    }
+  ]
+}
