@@ -1,0 +1,98 @@
+{
+  "toolchain": {
+    "clarinet": "3.23.2",
+    "sdk": "3.23.2",
+    "vitest": "3.2.4",
+    "rendezvous": "1.0.3"
+  },
+  "sources": {
+    "contracts/fastpool-swap-vault.clar": "5c86fdadf877ce024bd86f563d6416d7731abec38b99d7a326c57c497919c73f"
+  },
+  "test_files": [
+    {
+      "file": "tests/nov27/fastpool-swap-vault.test.ts",
+      "status": "passed",
+      "passed": 21,
+      "failed": 0
+    },
+    {
+      "file": "tests/nov27/rendezvous.test.ts",
+      "status": "passed",
+      "passed": 6,
+      "failed": 0
+    },
+    {
+      "file": "tests/nov27/vault-lifecycle.test.ts",
+      "status": "passed",
+      "passed": 15,
+      "failed": 0
+    }
+  ],
+  "coverage": {
+    "vault": {
+      "source": "contracts/fastpool-swap-vault.clar",
+      "lines": {
+        "covered": 522,
+        "total": 557,
+        "percent": 93.72
+      },
+      "functions": {
+        "covered": 44,
+        "total": 44,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 130,
+        "total": 174,
+        "percent": 74.71
+      },
+      "uncovered_functions": [],
+      "uncovered_lines": [
+        232,
+        302,
+        336,
+        342,
+        356,
+        365,
+        372,
+        401,
+        435,
+        483,
+        489,
+        528,
+        572,
+        577,
+        614,
+        636,
+        641,
+        674,
+        675,
+        767,
+        811,
+        838,
+        841,
+        845,
+        882,
+        936,
+        937,
+        943,
+        950,
+        956,
+        968,
+        1006,
+        1007,
+        1016,
+        1020
+      ]
+    }
+  },
+  "fuzz": {
+    "engine": "Rendezvous SDK strategyFor + fast-check with shrinking",
+    "seeds": [
+      20261126,
+      20261127
+    ],
+    "runs_per_property": 500,
+    "generated_cases": 3000
+  }
+}

@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { defineConfig, configDefaults } from "vitest/config";
 import {
   vitestSetupFilePath,
   getClarinetVitestsArgv,
@@ -21,6 +21,8 @@ import {
 
 export default defineConfig({
   test: {
+    // This suite has its own pinned SDK/Vitest and explicit setup.
+    exclude: [...configDefaults.exclude, "tests/nov27/**"],
     // use vitest-environment-clarinet
     environment: "clarinet",
     pool: "forks",

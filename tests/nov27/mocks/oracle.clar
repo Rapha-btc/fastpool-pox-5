@@ -1,0 +1,5 @@
+(define-data-var failed bool false)
+(define-public (set-failed (b bool)) (ok (var-set failed b)))
+(define-read-only (get-value (key (string-ascii 32)))
+ (begin (asserts! (not (var-get failed)) (err u999)) (ok {value: (if (is-eq key "BTC/USD") u10000000000 u100000000), timestamp: (* u1000 (unwrap-panic (get-stacks-block-info? time (- stacks-block-height u1))))})))
+(define-read-only (get-native-price) (if true (ok u10000000000) (err u999)))

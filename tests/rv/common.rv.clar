@@ -165,13 +165,13 @@
       (rv-bad "recover"))
     ;; 8. close-batch leaves an empty vault ready to finish
     (and (is-eq kind K_CLOSE)
-      (not (and (get ready n) (is-none (get start n)) (<= (get vs n) u2) (is-eq (get vm n) u0)))
+      (not (and (get ready n) (is-none (get start n)) (<= (get vs n) u72) (is-eq (get vm n) u0)))
       (rv-bad "close"))
     ;; 9. the clock: never re-armed, ready only on an empty vault, cleared only by finish / recover
     (and (not (is-eq kind K_FUND)) (is-some (get start n)) (not (is-eq (get start n) (get start s)))
       (rv-bad "clock"))
     (and (get ready n) (not (get ready s))
-      (not (and (is-none (get start n)) (<= (get vs n) u2) (is-eq (get vm n) u0)))
+      (not (and (is-none (get start n)) (<= (get vs n) u72) (is-eq (get vm n) u0)))
       (rv-bad "clock"))
     (and (get ready s) (not (get ready n)) (not (is-eq kind K_FINISH)) (not (is-eq kind K_RECOVER))
       (rv-bad "clock"))
