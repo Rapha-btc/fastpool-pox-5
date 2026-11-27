@@ -22,6 +22,7 @@
 (define-constant ERR_SOME_FUNDS (err u16043))
 (define-constant ERR_COOLDOWN (err u16044))
 (define-constant ERR_BELOW_FLOOR (err u16047))
+(define-constant ERR_VAULT_ACTIVE (err u16049))
 ;; the router lets each leg land up to ROUND_SLACK (2) sats under the limit;
 ;; four legs at most (8), plus the Zest walk: up to 32 bins, each rounding up
 ;; to 2 sats against the seller (64; bounty mwofjt42, Valiant Brio F-01)
@@ -761,6 +762,54 @@
       balance
       chunk
     )
+  )
+)
+
+;; Sweep a retired vault. After the pool switches to a new vault, this one
+;; keeps its dust (<= ROUTER_SLACK_SATS sBTC) and the Pyth fee reserve (STX,
+;; <= MAX_PYTH_FEE_BUDGET), and nothing else can move them. The pool admin
+;; sends both to `recipient` once the vault is neither active nor pending (the
+;; pool only rotates an idle vault, so nothing else needs checking).
+(define-public (sweep (recipient principal))
+  (let (
+      (sbtc (sbtc-balance))
+      (stx (stx-get-balance current-contract))
+    )
+    ;; the pool's admin, signing directly (not through a contract)
+    (asserts!
+      (and (is-eq contract-caller tx-sender) (contract-call? POOL is-admin tx-sender))
+      ERR_UNAUTHORIZED
+    )
+    ;; only a retired vault: not the pool's active vault, nor the one pending
+    (asserts! (not (is-eq (contract-call? POOL get-swap-vault) current-contract))
+      ERR_VAULT_ACTIVE
+    )
+    (asserts!
+      (not (is-eq (get vault (contract-call? POOL get-pending-swap-vault))
+        (some current-contract)
+      ))
+      ERR_VAULT_ACTIVE
+    )
+    (and
+      (> sbtc u0)
+      (try! (as-contract? ((with-ft SBTC_TOKEN ASSET_SBTC sbtc))
+        (try! (contract-call? SBTC_TOKEN transfer sbtc current-contract recipient none))
+      ))
+    )
+    (and
+      (> stx u0)
+      (try! (as-contract? ((with-stx stx))
+        (try! (stx-transfer? stx current-contract recipient))
+      ))
+    )
+    (ok (print {
+      notification: "sweep",
+      payload: {
+        recipient: recipient,
+        sbtc: sbtc,
+        stx: stx,
+      },
+    }))
   )
 )
 
